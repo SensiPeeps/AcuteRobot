@@ -16,7 +16,6 @@
 
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html
 
 from acutebot import dp, typing
 import acutebot.helpers.strings as st

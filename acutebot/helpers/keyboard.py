@@ -25,7 +25,7 @@ def keyboard(ytkey, homepage, title=None, imdbid=None):
         yt_url = f"https://www.youtube.com/watch?v={ytkey}"
         keyblist[0].append(InlineKeyboardButton(text="📹 Trailer", url=yt_url))
 
-    if homepage is not "" and homepage != None:
+    if homepage != "" and homepage != None:
         keyblist.append([InlineKeyboardButton(text="📃 Homepage", url=homepage)])
 
     if imdbid and imdbid is not None:
