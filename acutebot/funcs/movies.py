@@ -75,7 +75,7 @@ def movie_entry(update, context):
     context.bot.sendMessage(
         update.effective_chat.id,
         st.TOSEARCHMOVIE,
-        reply_markup=ForceReply(force_reply=True),
+        reply_markup=ForceReply(force_reply=True, selective=True),
     )
 
     return 1

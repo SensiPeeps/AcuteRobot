@@ -76,7 +76,7 @@ def tv_entry(update, context):
     context.bot.sendMessage(
         update.effective_chat.id,
         st.TOSEARCHTV,
-        reply_markup=ForceReply(force_reply=True),
+        reply_markup=ForceReply(force_reply=True, selective=True),
     )
 
     return 1

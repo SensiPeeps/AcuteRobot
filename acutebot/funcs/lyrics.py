@@ -19,7 +19,7 @@ if GENIUS is not None:
 @typing
 def songname(update, context):
     update.effective_message.reply_text(
-        st.SONGNAME, reply_markup=ForceReply(force_reply=True)
+        st.SONGNAME, reply_markup=ForceReply(force_reply=True, selective=True)
     )
 
     return ARTIST
@@ -33,7 +33,7 @@ def artistname(update, context):
     song = update.message.text
 
     SONGDICT[user.id] = song
-    msg.reply_text(st.ARTISTNAME, reply_markup=ForceReply(force_reply=True))
+    msg.reply_text(st.ARTISTNAME, reply_markup=ForceReply(force_reply=True, selective=True))
 
     return LYRICS
 
