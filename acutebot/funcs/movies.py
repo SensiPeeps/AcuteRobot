@@ -72,8 +72,7 @@ def moviedata(id):
 @typing
 def movie_entry(update, context):
 
-    context.bot.sendMessage(
-        update.effective_chat.id,
+    update.effective_message.reply_text(
         st.TOSEARCHMOVIE,
         reply_markup=ForceReply(force_reply=True, selective=True),
     )

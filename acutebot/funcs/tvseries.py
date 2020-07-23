@@ -73,8 +73,7 @@ def tvdata(id):
 @typing
 def tv_entry(update, context):
 
-    context.bot.sendMessage(
-        update.effective_chat.id,
+    update.effective_message.reply_text(
         st.TOSEARCHTV,
         reply_markup=ForceReply(force_reply=True, selective=True),
     )
