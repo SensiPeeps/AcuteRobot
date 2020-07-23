@@ -132,7 +132,7 @@ def rmemes(update, context):
 def stats(update, context):
     msg = update.effective_message
     return msg.reply_text(
-        st.STATS.format(sql.users_count(), sql.chats_count(), fav_count()),
+        st.STATS.format(sql.users_count(), fav_count()),
         parse_mode=None,
     )
 
@@ -163,6 +163,23 @@ def neofetch(update, context):
     except FileNotFoundError:
         msg.reply_text("Install neofetch!")
 
+@run_async
+def log_user(update, context):
+    chat = update.effective_chat
+    msg = update.effective_message
+
+    sql.update_user(msg.from_user.id, msg.from_user.username, chat.id, chat.title)
+
+    if msg.reply_to_message:
+        sql.update_user(
+            msg.reply_to_message.from_user.id,
+            msg.reply_to_message.from_user.username,
+        )
+
+    if msg.forward_from:
+        sql.update_user(msg.forward_from.id, msg.forward_from.username)
+
+
 
 IP_HANDLER = CommandHandler("ip", get_ip, filters=Filters.chat(DEV_ID))
 PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(DEV_ID))
@@ -171,6 +188,8 @@ REDDIT_HANDLER = CommandHandler("reddit", rmemes)
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
 NEOFETCH_HANDLER = CommandHandler("neofetch", neofetch, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
+LOG_HANDLER = MessageHandler(Filters.all, log_user)
+
 
 dp.add_handler(IP_HANDLER)
 dp.add_handler(PING_HANDLER)
@@ -179,3 +198,4 @@ dp.add_handler(REDDIT_HANDLER)
 dp.add_handler(STATS_HANDLER)
 dp.add_handler(NEOFETCH_HANDLER)
 dp.add_handler(GREET_HANDLER)
+dp.add_handler(LOG_HANDLER, 1)

@@ -83,8 +83,8 @@ FAV_EXIST = "Hey there this title is already in your watchlist, Go & finish it i
 
 #Stats
 STATS = """
+📊 Current Stats;
 👥 Total users : {}
-💬 Total chats : {}
 💛 Watchlist saved : {}
 """
 

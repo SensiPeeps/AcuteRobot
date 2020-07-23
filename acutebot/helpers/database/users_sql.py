@@ -16,7 +16,7 @@
 
 import threading
 
-from sqlalchemy import Column, Integer, UnicodeText, String
+from sqlalchemy import Column, Integer, UnicodeText
 from acutebot.helpers.database import SESSION, BASE
 from acutebot import dp
 
@@ -33,20 +33,7 @@ class Users(BASE):
         return "<User {} ({})>".format(self.username, self.user_id)
 
 
-class Chats(BASE):
-    __tablename__ = "chats"
-    chat_id = Column(String(14), primary_key=True)
-    chat_name = Column(UnicodeText, nullable=False)
-
-    def __init__(self, chat_id, chat_name):
-        self.chat_id = str(chat_id)
-        self.chat_name = chat_name
-
-    def __repr__(self):
-        return "<Chat {} ({})>".format(self.chat_name, self.chat_id)
-
 Users.__table__.create(checkfirst=True)
-Chats.__table__.create(checkfirst=True)
 INSERTION_LOCK = threading.RLock()
 
 def ensure_bot_in_db():
@@ -65,26 +52,10 @@ def update_user(user_id, username, chat_id=None, chat_name=None):
             SESSION.flush()
         else:
             user.username = username
-
-        if not chat_id or not chat_name:
-            SESSION.commit()
-            return
-
-        chat = SESSION.query(Chats).get(str(chat_id))
-        if not chat:
-            chat = Chats(str(chat_id), chat_name)
-            SESSION.add(chat)
-            SESSION.flush()
-
         SESSION.commit()
 
-ensure_bot_in_db()
 
-def chats_count():
-    try:
-        return SESSION.query(Chats).count()
-    finally:
-        SESSION.close()
+ensure_bot_in_db()
 
 
 def users_count():
