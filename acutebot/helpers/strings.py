@@ -92,8 +92,8 @@ STATS = """
 GREET = "Hey {}! Thank you for adding me in {} :)"
 
 # Lyrics
-SONGNAME = "Please tell me the song name you want lyrics for."
-ARTISTNAME = "Great! now tell me the artist name of this song."
+SONGNAME = "Please tell me name of the song you want lyrics for."
+ARTISTNAME = "Great! now tell me the name of artist of this song."
 
 LYRICS_ERR = """Sorry, looks like i forgot your song name, possibly due to restart \
 Would you mind sending me again with: /lyrics ;)
