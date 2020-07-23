@@ -8,6 +8,7 @@
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/95bd36f0a833434f8488252b0f39538d)](https://www.codacy.com/manual/starry69/AcuteRobot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=starry69/AcuteRobot&amp;utm_campaign=Badge_Grade)
 
 <details>
   <summary>Commands Available: </summary>
