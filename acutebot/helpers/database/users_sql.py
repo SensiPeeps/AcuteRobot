@@ -16,7 +16,7 @@
 
 import threading
 
-from sqlalchemy import Column, Integer, UnicodeText, String, func
+from sqlalchemy import Column, Integer, UnicodeText, String
 from acutebot.helpers.database import SESSION, BASE
 from acutebot import dp
 

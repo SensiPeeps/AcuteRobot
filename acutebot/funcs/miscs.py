@@ -26,6 +26,7 @@ from acutebot import dp, typing, DEV_ID, LOG
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram.error import BadRequest
 
 
 @run_async

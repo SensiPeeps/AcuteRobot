@@ -3,7 +3,7 @@ import lyricsgenius
 from os import remove
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
-from telegram import InlineKeyboardMarkup, ForceReply
+from telegram import ForceReply
 
 from acutebot import dp, typing, GENIUS
 from acutebot.helpers import strings as st
@@ -15,6 +15,8 @@ if GENIUS is not None:
     genius = lyricsgenius.Genius(GENIUS)
 
 
+@run_async
+@typing
 def songname(update, context):
     update.effective_message.reply_text(
         st.SONGNAME, reply_markup=ForceReply(force_reply=True)
@@ -23,6 +25,8 @@ def songname(update, context):
     return ARTIST
 
 
+@run_async
+@typing
 def artistname(update, context):
     msg = update.effective_message
     user = update.effective_user
@@ -34,6 +38,8 @@ def artistname(update, context):
     return LYRICS
 
 
+@run_async
+@typing
 def lyrics(update, context):
     chat = update.effective_chat
     msg = update.effective_message
@@ -66,6 +72,8 @@ def lyrics(update, context):
     return -1
 
 
+@run_async
+@typing
 def cancel(update, context):
     update.effective_message.reply_text(st.CANCEL)
     return ConversationHandler.END

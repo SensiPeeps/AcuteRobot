@@ -18,10 +18,9 @@ import requests as r
 
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
-from telegram import InlineKeyboardMarkup, ForceReply
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply
 
-from acutebot import dp, LOG, TMDBAPI, typing
+from acutebot import dp, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.getid import getid
 from acutebot.helpers.parsedata import sort_text
