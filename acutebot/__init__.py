@@ -27,6 +27,7 @@ if ENV:
     DB_URI = os.environ.get("DATABASE_URL")
     GENIUS = os.environ.get("GENIUS")
     DEBUG = bool(os.environ.get("DEBUG", False))
+    ARLTOKEN = os.environ.get("ARL")
 
 else:
     from acutebot.config import Config
@@ -36,7 +37,7 @@ else:
     DB_URI = Config.DB_URI
     GENIUS = Config.GENIUS
     DEBUG = Config.DEBUG
-
+    ARLTOKEN = Config.ARL
 
 if DEBUG:
     logging.basicConfig(

@@ -18,13 +18,16 @@
 <pre>/movies</pre>: Gets you movie details.
 <pre>/reviews</pre>: Get reviews of Movies & TV shows.
 <pre>/lyrics</pre>: Get lyrics of your favourite songs :)
+<pre>/music</pre>: Download your favourite songs in FLAC & 320kbs quality!
 <pre>watchlist</pre>: Get your saved watchlist :D
 <pre>/clearlist</pre>: Clear your watchlist.
 <pre>/reddit</pre>: Fun command to get memes scraped from reddit.
+<pre>/cancel</pre>: Cancels the current ongoing task.
 </details>
 
 Built with [Python telegram bot](https://github.com/python-telegram-bot/python-telegram-bot) library.
-This bot scrapes details of movies and TV shows, using [TheMovieDB](https://developers.themoviedb.org) API,
+This bot scrapes details of movies and TV shows, using [TheMovieDB](https://developers.themoviedb.org) API &
+Music stuffs from from [deezloader](https://github.com/An0nimia/deezloader).
 Can be found in telegram as [𝙰𝚌𝚞𝚝𝚎𝙱𝚘𝚝](https://t.me/acutebot)!
 
 

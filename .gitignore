@@ -2,6 +2,7 @@
 acutebot/config.py
 logfile
 acute-lyrics.txt
+temp/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

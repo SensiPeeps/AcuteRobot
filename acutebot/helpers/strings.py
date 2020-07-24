@@ -96,7 +96,12 @@ SONGNAME = "Please tell me name of the song you want lyrics for."
 ARTISTNAME = "Great! now tell me name of the artist for this song."
 
 LYRICS_ERR = """Sorry, looks like i forgot your song name, possibly due to restart \
-Would you mind sending me again with: /lyrics ;)
+Would you mind sending me again?
 """
 LYRIC_NOT_FOUND = "Sorry i couldn't find lyrics for that song."
 LYRICS_TOO_BIG = "Lyrics of this song is too big for telegram, I'm sending it as a file..."
+
+# Music
+MUSICQ = "Please choose the quality of music :)"
+MUSICNAME = "Okay! tell me name of the song you're looking for."
+MUSICNOTFOUND = "Sorry i couldn't find that song :("
