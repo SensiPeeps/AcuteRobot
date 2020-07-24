@@ -43,7 +43,7 @@ def ensure_bot_in_db():
         SESSION.commit()
 
 
-def update_user(user_id, username, chat_id=None, chat_name=None):
+def update_user(user_id, username):
     with INSERTION_LOCK:
         user = SESSION.query(Users).get(user_id)
         if not user:
