@@ -28,7 +28,8 @@ from telegram import InlineKeyboardMarkup, ForceReply
 
 from acutebot import dp, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
-from acutebot.helpers.parsedata import byname, byindex, sort_caps
+from acutebot.helpers.parsedata import (byname, byindex,
+                                        sort_caps, indexwoname)
 from acutebot.helpers.keyboard import keyboard
 from acutebot.helpers.getid import getid
 
@@ -53,7 +54,7 @@ def tvdata(id):
         creator = byindex(data.get("created_by"))
         genres = byname(data.get("genres"))
         language = data.get("original_language")
-        runtime = data.get("episode_run_time")[0]
+        runtime = indexwoname(data.get("episode_run_time"))
         faired = data.get("first_air_date")
         laired = data.get("last_air_date")
         status = data.get("status")

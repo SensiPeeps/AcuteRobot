@@ -39,6 +39,12 @@ def byindex(val):
     except IndexError:
        return "Not Available"
 
+def indexwoname(val):
+    try:
+       return val[0]
+    except IndexError:
+       return "Not Available"
+
 # Cut down text to fit in tg limited chars.
 def sort_caps(text):
     if len(text) > MAX_CAP_LEN:
