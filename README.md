@@ -27,7 +27,7 @@
 
 Built with [Python telegram bot](https://github.com/python-telegram-bot/python-telegram-bot) library.
 This bot scrapes details of movies and TV shows, using [TheMovieDB](https://developers.themoviedb.org) API &
-Music stuffs from from [deezloader](https://github.com/An0nimia/deezloader).
+Music stuffs from deezer using [deezloader](https://github.com/An0nimia/deezloader).
 Can be found in telegram as [𝙰𝚌𝚞𝚝𝚎𝙱𝚘𝚝](https://t.me/acutebot)!
 
 
