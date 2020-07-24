@@ -37,7 +37,9 @@ pic_url = "https://image.tmdb.org/t/p"
 
 
 def tvdata(id):
-    """Parse TV series data for the id and return class obj"""
+    """
+    Parse TV shows data for the id and return class obj
+    """
 
     data = r.get(
         f"{base_url}/tv/{id}?api_key={TMDBAPI}"

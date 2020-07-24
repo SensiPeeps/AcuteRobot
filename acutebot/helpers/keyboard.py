@@ -17,7 +17,9 @@
 from telegram import InlineKeyboardButton
 
 def keyboard(ytkey, homepage, title=None, imdbid=None):
-    """Attach buttons dynamically from data"""
+    """
+    Attach InlineKeyboardButton dynamically from data
+    """
 
     keyblist = [[]]
     if len(ytkey["results"]) > 0:

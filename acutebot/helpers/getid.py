@@ -20,7 +20,9 @@ from acutebot import TMDBAPI
 base_url = "https://api.themoviedb.org/3"
 
 def getid(query, type=None):
-    """Return TV // MOVIE id for the query"""
+    """
+    Returns TV or movie id for the query
+    """
 
     query = query.replace(" ", "%20")
     id = 0

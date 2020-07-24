@@ -36,7 +36,9 @@ pic_url = "https://image.tmdb.org/t/p"
 
 
 def moviedata(id):
-    """Parse movie data for the id and return class obj"""
+    """
+    Parse movie data for the id and return class obj
+    """
 
     data = r.get(
         f"{base_url}/movie/{id}?api_key={TMDBAPI}"
