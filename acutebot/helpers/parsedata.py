@@ -39,9 +39,9 @@ def byindex(val):
     except IndexError:
        return "Not Available"
 
-def indexwoname(val):
+def tvruntime(val):
     try:
-       return val[0]
+       return str(val[0]) + " minutes"
     except IndexError:
        return "Not Available"
 

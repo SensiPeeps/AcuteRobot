@@ -37,7 +37,7 @@ TV_STR = """
 • Created by : <pre>{}</pre>
 • Genres : <pre>{}</pre>
 • Languages : <pre>{}</pre>
-• Episodes Runtime : <pre>{} minutes</pre>
+• Episodes Runtime : <pre>{}</pre>
 • First aired : <pre>{}</pre>
 • Last aired : <pre>{}</pre>
 • Status : <pre>{}</pre>
