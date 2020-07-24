@@ -3,5 +3,6 @@ requests==2.24.0
 sqlalchemy
 psycopg2
 lyricsgenius
+deezloader
 speedtest-cli>=2.0.2
 pythonping
