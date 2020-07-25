@@ -149,19 +149,23 @@ def greet(update, context):
             msg.reply_text(
                 st.GREET.format(user.first_name, chat.title))
 
+
 @run_async
-@typing
-def neofetch(update, context):
+def shell(update, context):
+    bot = context.bot
     msg = update.effective_message
+    chat = update.effective_chat
+    cmd = " ".join(context.args).split()
+    rep = msg.reply_text("Running command...")
     try:
         res = subprocess.Popen(
-            ["neofetch", "--stdout",], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         )
         stdout, stderr = res.communicate()
         result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-        msg.reply_text("<code>" + result + "</code>")
-    except FileNotFoundError:
-        msg.reply_text("Install neofetch!")
+        bot.editMessageText("<pre>" + result + "</pre>", chat.id, rep.message_id)
+    except Exception as e:
+        bot.editMessageText(str(e), chat.id, rep.message_id)
 
 
 @run_async
@@ -186,8 +190,8 @@ PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(DEV_ID))
 SPEEDTEST_HANDLER = CommandHandler("speedtest", speed, filters=Filters.user(DEV_ID))
 REDDIT_HANDLER = CommandHandler("reddit", rmemes)
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
-NEOFETCH_HANDLER = CommandHandler("neofetch", neofetch, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
+SHELL_HANDLER = CommandHandler("shell", shell, filters=Filters.user(DEV_ID))
 LOG_HANDLER = MessageHandler(Filters.all, log_user)
 
 
@@ -196,6 +200,6 @@ dp.add_handler(PING_HANDLER)
 dp.add_handler(SPEEDTEST_HANDLER)
 dp.add_handler(REDDIT_HANDLER)
 dp.add_handler(STATS_HANDLER)
-dp.add_handler(NEOFETCH_HANDLER)
 dp.add_handler(GREET_HANDLER)
+dp.add_handler(SHELL_HANDLER)
 dp.add_handler(LOG_HANDLER, 1)
