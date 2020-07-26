@@ -131,7 +131,7 @@ def sendmusic(update, context):
         artist = str(artist[0])
     duration = aud.get("length")
     if duration:
-        duration = str(duration[0])
+        duration = int(duration[0])
 
     if Path(file).stat().st_size < 50000000:
         rep = msg.reply_text(st.UPLOAD_BOTAPI)
