@@ -129,7 +129,7 @@ def sendmusic(update, context):
     if duration:
        duration = str(duration[0])
 
-    if Path(file).stat().st_size < 49000000:
+    if Path(file).stat().st_size < 50000000:
         rep = msg.reply_text("🎧 uploading song please wait...")
         context.bot.sendAudio(
             chat.id,
