@@ -147,13 +147,15 @@ def sendmusic(update, context):
     else:
         rep = msg.reply_text(st.UPLOAD_TELETHON)
         loop = asyncio.new_event_loop()
-        send_file_telethon(context.bot.token, file, chat.id, loop)
+        send_file_telethon(
+            context.bot.token, file, chat.id, loop, title, artist, duration
+        )
     remove(file)
     rep.delete()
     return -1
 
 
-def send_file_telethon(bot_token, file, chatid, loop):
+def send_file_telethon(bot_token, file, chatid, loop, title, artist, duration):
     api_id = APIID
     api_hash = APIHASH
     bot = TelegramClient("acute", api_id, api_hash, loop=loop).start(
