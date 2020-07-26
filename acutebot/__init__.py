@@ -28,6 +28,9 @@ if ENV:
     GENIUS = os.environ.get("GENIUS")
     DEBUG = bool(os.environ.get("DEBUG", False))
     ARLTOKEN = os.environ.get("ARL")
+    APIID = os.environ.get("APIID")
+    APIHASH = os.environ.get("APIHASH")
+
 
 else:
     from acutebot.config import Config
@@ -38,6 +41,8 @@ else:
     GENIUS = Config.GENIUS
     DEBUG = Config.DEBUG
     ARLTOKEN = Config.ARL
+    APIID = Config.APIID
+    APIHASH = Config.APIHASH
 
 if DEBUG:
     logging.basicConfig(
