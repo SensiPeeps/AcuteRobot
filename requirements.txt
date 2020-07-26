@@ -4,6 +4,7 @@ requests==2.24.0
 sqlalchemy
 psycopg2
 cryptg
+hachoir
 lyricsgenius
 deezloader
 mutagen
