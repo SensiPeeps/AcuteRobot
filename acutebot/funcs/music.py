@@ -132,18 +132,18 @@ def sendmusic(update, context):
        duration = str(duration[0])
 
     if Path(file).stat().st_size < 50000000:
-        rep = msg.reply_text("🎧 uploading song please wait...")
+        rep = msg.reply_text(st.UPLOAD_BOTAPI)
         context.bot.sendAudio(
             chat.id,
             open(file, "rb"),
-            caption="By @acutebot 🎧",
+            caption="Via @acutebot 🎧",
             title=title,
             performer=artist,
             duration=duration,
             timeout=120,
         )
     else:
-        rep = msg.reply_text("Hmm, file size is > 50MBs, uploading via mtproto this might take 2 - 3 mins...")
+        rep = msg.reply_text(st.UPLOAD_TELETHON)
         loop = asyncio.new_event_loop()
         send_file_telethon(context.bot.token, file, chat.id, loop)
     remove(file)
