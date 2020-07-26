@@ -12,17 +12,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import asyncio
+import deezloader, mutagen
+from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
 
-
-import deezloader
-from deezloader.exceptions import BadCredentials, TrackNotFound
-
+from pathlib import Path
 from os import remove
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ForceReply, ReplyKeyboardMarkup
+from telethon import TelegramClient
 
-from acutebot import dp, typing, ARLTOKEN
+from acutebot import dp, typing, ARLTOKEN, APIID, APIHASH
 from acutebot.helpers import strings as st
 
 MUSIC, ARTIST, SENDMUSIC = range(3)
@@ -96,7 +97,6 @@ def sendmusic(update, context):
         msg.reply_text(st.LYRICS_ERR)
         return -1
 
-    rep = msg.reply_text("Uploading your music... 🎧")
     if quality == "🎧 320KBs":
         ql = "MP3_320"
     elif quality == "🎶 FLAC":
@@ -113,15 +113,50 @@ def sendmusic(update, context):
             recursive_download=True,
             not_interface=True,
         )
-    except TrackNotFound:
+    except (TrackNotFound, NoDataApi):
         msg.reply_text(st.MUSICNOTFOUND)
-        rep.delete()
         return -1
 
-    context.bot.sendAudio(chat.id, open(file, 'rb'), caption="By @acutebot 🎧", timeout=120)
+    # Fetch correct details from metadata:
+    aud = mutagen.File(file)
+    title = aud.get("title")
+    if title:
+       title = str(title[0])
+    artist = aud.get("artist")
+    if artist:
+       artist = str(artist[0])
+    duration = aud.get("length")
+    if duration:
+       duration = str(duration[0])
+
+    if Path(file).stat().st_size < 49000000:
+        rep = msg.reply_text("🎧 uploading song please wait...")
+        context.bot.sendAudio(
+            chat.id,
+            open(file, "rb"),
+            caption="By @acutebot 🎧",
+            title=title,
+            performer=artist,
+            duration=duration,
+            timeout=120,
+        )
+    else:
+        rep = msg.reply_text("Hmm, file size is > 50MBs, uploading via mtproto this might take 2 - 3 mins...")
+        loop = asyncio.new_event_loop()
+        send_file_telethon(context.bot.token, file, chat.id, loop)
     remove(file)
     rep.delete()
     return -1
+
+
+def send_file_telethon(bot_token, file, chatid, loop):
+    api_id = APIID
+    api_hash = APIHASH
+    bot = TelegramClient("acute", api_id, api_hash, loop=loop).start(
+        bot_token=bot_token
+    )
+    with bot:
+       loop.run_until_complete(bot.send_file(chatid, open(file, "rb")))
 
 
 @run_async

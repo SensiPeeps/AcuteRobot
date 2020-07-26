@@ -1,8 +1,11 @@
 python-telegram-bot==12.8
+telethon
 requests==2.24.0
 sqlalchemy
 psycopg2
+cryptg
 lyricsgenius
 deezloader
+mutagen
 speedtest-cli>=2.0.2
 pythonping
