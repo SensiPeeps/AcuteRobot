@@ -39,7 +39,7 @@ if ARLTOKEN is not None:
 @run_async
 @typing
 def musicq(update, context):
-    reply_keyboard = [["🎧 320KBs", "🎶 FLAC"]]
+    reply_keyboard = [["🎵 256KBs", "🎧 320KBs", "🎶 FLAC"]]
 
     update.effective_message.reply_text(
         st.MUSICQ,
@@ -57,9 +57,9 @@ def music(update, context):
     msg = update.effective_message
     musicq = update.message.text
 
-    if musicq in ("🎧 320KBs", "🎶 FLAC"):
+    if musicq in ("🎵 256KBs", "🎧 320KBs", "🎶 FLAC"):
         # save quality data in temp.dict:
-        MUSICDICT[user.id] = {"q": musicq, "mn": ""}
+        MUSICDICT[user.id] = {"q": musicq}
         msg.reply_text(
             st.MUSICNAME, reply_markup=ForceReply(force_reply=True, selective=True)
         )
@@ -101,6 +101,8 @@ def sendmusic(update, context):
         ql = "MP3_320"
     elif quality == "🎶 FLAC":
         ql = "FLAC"
+    elif quality == "🎵 256KBs":
+        ql = "MP3_256"
 
     try:
         context.bot.send_chat_action(chat.id, "upload_document")
