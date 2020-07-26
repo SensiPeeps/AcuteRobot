@@ -105,5 +105,5 @@ LYRICS_TOO_BIG = "Lyrics of this song is too big for telegram, I'm sending it as
 MUSICQ = "Please choose the quality of music :)"
 MUSICNAME = "Okay! tell me name of the song you're looking for."
 UPLOAD_BOTAPI = "🎧 uploading song please wait..."
-UPLOAD_TELETHON = "Hmm, file size is more than 50MBs, uploading via mtproto this might take 2 - 3 mins, please wait..."
+UPLOAD_TELETHON = "Hmm, file size is more than 50MBs, uploading via mtproto this might take around 5 mins, please wait..."
 MUSICNOTFOUND = "Sorry i couldn't find that song :("

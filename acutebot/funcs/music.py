@@ -12,6 +12,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
 import asyncio
 import deezloader, mutagen
 from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
@@ -22,6 +23,7 @@ from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ForceReply, ReplyKeyboardMarkup
 from telethon import TelegramClient
+from telethon.tl import types
 
 from acutebot import dp, typing, ARLTOKEN, APIID, APIHASH
 from acutebot.helpers import strings as st
@@ -123,13 +125,13 @@ def sendmusic(update, context):
     aud = mutagen.File(file)
     title = aud.get("title")
     if title:
-       title = str(title[0])
+        title = str(title[0])
     artist = aud.get("artist")
     if artist:
-       artist = str(artist[0])
+        artist = str(artist[0])
     duration = aud.get("length")
     if duration:
-       duration = str(duration[0])
+        duration = str(duration[0])
 
     if Path(file).stat().st_size < 50000000:
         rep = msg.reply_text(st.UPLOAD_BOTAPI)
@@ -158,7 +160,18 @@ def send_file_telethon(bot_token, file, chatid, loop):
         bot_token=bot_token
     )
     with bot:
-       loop.run_until_complete(bot.send_file(chatid, open(file, "rb")))
+        loop.run_until_complete(
+            bot.send_file(
+                chatid,
+                open(file, "rb"),
+                caption="Via @acutebot 🎧",
+                attributes=[
+                    types.DocumentAttributeAudio(
+                        title=title, performer=artist, duration=duration
+                    )
+                ],
+            )
+        )
 
 
 @run_async
