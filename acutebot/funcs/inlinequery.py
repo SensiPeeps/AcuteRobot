@@ -14,6 +14,7 @@
 
 
 from telegram.ext import InlineQueryHandler
+from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 from acutebot import dp, LOG
@@ -23,12 +24,18 @@ from acutebot.helpers.keyboard import keyboard
 from acutebot.helpers.getid import getid
 from acutebot.funcs.movies import moviedata
 from acutebot.funcs.tvseries import tvdata
+from acutebot.helpers.database import users_sql as sql
+
 
 pic_url = "https://image.tmdb.org/t/p"
 
 
+@run_async
 def inlinequery(update, context):
     query = update.inline_query.query
+    sql.update_user(
+        update.inline_query.from_user.id, update.inline_query.from_user.username
+    )
     results = [][:50]
     if len(query) > 0:
         if query.startswith("<tv>"):
