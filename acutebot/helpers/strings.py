@@ -51,11 +51,13 @@ TV_STR = """
 
 # Start
 START_STRING = """
-Hey there, my name is Acute & you can ask me \
+Hey there, my name is acutebot & you can ask me \
 about details of any movies or TV shows, i can \
 also save them into your watchlist & much more! \
-click: [<pre>/</pre>] in your keyboard to see list of possible commands. \
-and don't forget to smile, atleast once in a while :)
+just click: [<pre>/</pre>] in your keyboard to see list of possible commands. \
+or buttons below to search movies and TV shows inline!
+
+And don't forget to smile, atleast once in a while :)
 """
 START_STRING_GRP = "Hmmm?"
 
@@ -107,3 +109,13 @@ MUSICNAME = "Okay! tell me name of the song you're looking for."
 UPLOAD_BOTAPI = "🎧 uploading song please wait..."
 UPLOAD_TELETHON = "Hmm, file size is more than 50MBs, uploading via mtproto this might take around 5 mins, please wait..."
 MUSICNOTFOUND = "Sorry i couldn't find that song :("
+
+# Inline
+INLINE_DESC = """
+<b>Usage:</b> <pre>&lt;tv&gt; title</pre> <b>or</b> <pre>&lt;movie&gt; title</pre> <b>in inline query.</b>
+
+Examples:
+× <pre>&lt;movie&gt; Avengers Endgame</pre>.
+× <pre>&lt;tv&gt; Breaking Bad</pre>
+• You can try on buttons below!
+"""

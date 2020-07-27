@@ -50,10 +50,10 @@ def name(update, context):
     msg = update.message
     name = msg.text
     if name == "TV series":
-        msg.reply_text(st.TOSEARCHTV, reply_markup=ForceReply(force_reply=True, selective=True))
+        msg.reply_text(st.TOSEARCHTV, reply_markup=ForceReply(selective=True))
         return TV
     elif name == "Movies":
-        msg.reply_text(st.TOSEARCHMOVIE, reply_markup=ForceReply(force_reply=True, selective=True))
+        msg.reply_text(st.TOSEARCHMOVIE, reply_markup=ForceReply(selective=True))
         return MOVIE
     else:
         msg.reply_text(st.INVALIDREVIEWNAME, reply_markup=ReplyKeyboardRemove())

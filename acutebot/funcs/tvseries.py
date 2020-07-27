@@ -78,7 +78,7 @@ def tv_entry(update, context):
 
     update.effective_message.reply_text(
         st.TOSEARCHTV,
-        reply_markup=ForceReply(force_reply=True, selective=True),
+        reply_markup=ForceReply(selective=True),
     )
 
     return 1

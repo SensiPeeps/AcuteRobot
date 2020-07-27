@@ -63,7 +63,7 @@ def music(update, context):
         # save quality data in temp.dict:
         MUSICDICT[user.id] = {"q": musicq}
         msg.reply_text(
-            st.MUSICNAME, reply_markup=ForceReply(force_reply=True, selective=True)
+            st.MUSICNAME, reply_markup=ForceReply(selective=True)
         )
         return ARTIST
     msg.reply_text(st.INVALIDREVIEWNAME)
@@ -79,7 +79,7 @@ def artist(update, context):
     # update music title in dict:
     MUSICDICT[user.id]["mn"] = musicn
     msg.reply_text(
-        st.ARTISTNAME, reply_markup=ForceReply(force_reply=True, selective=True)
+        st.ARTISTNAME, reply_markup=ForceReply(selective=True)
     )
     return SENDMUSIC
 

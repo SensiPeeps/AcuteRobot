@@ -20,6 +20,7 @@ from acutebot import LOG, dp, updater, typing, DEV_ID
 from acutebot.funcs import ALL_FUNCS
 import acutebot.helpers.strings as st
 
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, Filters
 
@@ -34,7 +35,23 @@ for func_name in ALL_FUNCS:
 def start(update, context):
     msg = update.effective_message
     if update.effective_chat.type == "private":
-        msg.reply_text(st.START_STRING)
+        msg.reply_text(
+            st.START_STRING,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Search Movies",
+                            switch_inline_query_current_chat="<movie> ",
+                        ),
+                        InlineKeyboardButton(
+                            text="Search TVshows",
+                            switch_inline_query_current_chat="<tv> ",
+                        ),
+                    ]
+                ]
+            ),
+        )
     else:
         msg.reply_text(st.START_STRING_GRP)
 

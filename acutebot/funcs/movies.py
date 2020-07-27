@@ -76,7 +76,7 @@ def movie_entry(update, context):
 
     update.effective_message.reply_text(
         st.TOSEARCHMOVIE,
-        reply_markup=ForceReply(force_reply=True, selective=True),
+        reply_markup=ForceReply(selective=True),
     )
 
     return 1
