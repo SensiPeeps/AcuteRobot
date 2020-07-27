@@ -13,7 +13,6 @@
 # SOFTWARE.
 
 
-
 # Contents
 MOVIE_STR = """
 ️<b>{}</b> : {}
@@ -51,12 +50,10 @@ TV_STR = """
 
 # Start
 START_STRING = """
-Hey there, my name is acutebot & you can ask me \
-about details of any movies or TV shows, i can \
-also save them into your watchlist & much more! \
-just click: [<pre>/</pre>] in your keyboard to see list of possible commands. \
-or buttons below to search movies and TV shows inline!
-
+Hey {}, my name is acutebot and i can help you to get \
+info about your favorite movies or tv shows, you can also download \
+music & can view song lyrics using me. click [<pre>/</pre>] \
+to see list of possible commands.
 And don't forget to smile, atleast once in a while :)
 """
 START_STRING_GRP = "Hmmm?"
@@ -65,8 +62,12 @@ START_STRING_GRP = "Hmmm?"
 # Errors
 API_ERR = "Sorry, couldn't reach API at the moment :("
 NOT_FOUND = "Sorry, couldn't find any results for the query :("
-REVIEW_NOT_FOUND = "Sorry, It looks like i don't have reviews for that title in my database :("
-INVALIDREVIEWNAME = "Hmmm.. maybe you've sent wrong category to look for, please try again!"
+REVIEW_NOT_FOUND = (
+    "Sorry, It looks like i don't have reviews for that title in my database :("
+)
+INVALIDREVIEWNAME = (
+    "Hmmm.. maybe you've sent wrong category to look for, please try again!"
+)
 
 # Cancel
 CANCEL = "Cancelled the current task!"
@@ -80,17 +81,19 @@ TOSEARCHREVIEW = "Hi! Please tell me for what category you want reviews for."
 NOFAVS = "Hmmm 🤔 looks like you don't have any title saved in your watchlist yet!"
 REMFAV = "Successfully cleared your watchlist."
 SAVED_FAV = "Added {} to your Watchlist!"
-FAV_EXIST = "Hey there this title is already in your watchlist, Go & finish it instead ;)"
+FAV_EXIST = (
+    "Hey there this title is already in your watchlist, Go & finish it instead ;)"
+)
 
 
-#Stats
+# Stats
 STATS = """
 📊 Current Stats;
 👥 Total users : {}
 💛 Watchlist saved : {}
 """
 
-#Greet
+# Greet
 GREET = "Hey {}! Thank you for adding me in {} :)"
 
 # Lyrics
@@ -101,7 +104,9 @@ LYRICS_ERR = """Sorry, looks like i forgot your song name, possibly due to resta
 Would you mind sending me again?
 """
 LYRIC_NOT_FOUND = "Sorry i couldn't find lyrics for that song."
-LYRICS_TOO_BIG = "Lyrics of this song is too big for telegram, I'm sending it as a file..."
+LYRICS_TOO_BIG = (
+    "Lyrics of this song is too big for telegram, I'm sending it as a file..."
+)
 
 # Music
 MUSICQ = "Please choose the quality of music :)"

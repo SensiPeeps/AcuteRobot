@@ -36,7 +36,7 @@ def start(update, context):
     msg = update.effective_message
     if update.effective_chat.type == "private":
         msg.reply_text(
-            st.START_STRING,
+            st.START_STRING.format(update.effective_user.first_name),
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
