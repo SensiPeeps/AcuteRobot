@@ -13,7 +13,6 @@
 # SOFTWARE.
 
 
-
 import requests as r
 
 from telegram.ext.dispatcher import run_async
@@ -23,7 +22,6 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply
 from acutebot import dp, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.getid import getid
-from acutebot.helpers.parsedata import sort_text
 
 NAME, TV, MOVIE = range(3)
 base_url = "https://api.themoviedb.org/3"
@@ -80,7 +78,9 @@ def tvreview(update, context):
         ).json()
 
         text = reviewdata(res, msg.text)
-        msg.reply_text(text, reply_markup=ReplyKeyboardRemove())
+        msg.reply_text(
+            text, reply_markup=ReplyKeyboardRemove(), disable_web_page_preview=True
+        )
 
     finally:
         return -1
@@ -105,7 +105,9 @@ def moviereview(update, context):
         ).json()
 
         text = reviewdata(res, msg.text)
-        msg.reply_text(text, reply_markup=ReplyKeyboardRemove())
+        msg.reply_text(
+            text, reply_markup=ReplyKeyboardRemove(), disable_web_page_preview=True,
+        )
 
     finally:
         return -1
@@ -116,36 +118,31 @@ def reviewdata(res: dict, title: str):
 
     results = res["results"]
     author = []
-    content = []
+    url = []
 
     if len(results) > 0:
         for dic in results:
             author.append(dic["author"])
-            content.append(dic["content"])
+            url.append(dic["url"])
     else:
         return st.REVIEW_NOT_FOUND
 
     text = f"💬 Reviews for <b>{title}</b>\n\n"
     num = 0
-    loop = 0
     for a in author:
-        if loop < 2:  # we only want 2 reviews
-            text += f"<b>☃️ By {a}</b> :\n"
-            for c in content:
-                text += f"<em>{content[num]}</em>\n\n"
-                num += 1
-                break
-            loop += 1
-        else:
+        text += f"<b>🎖 By {a}</b> :\n"
+        for c in url:
+            text += f"🏷 Link: {url[num]}\n\n"
+            num += 1
             break
-    return sort_text(text)
+
+    return text
 
 
 @run_async
 def cancel(update, context):
     update.effective_message.reply_text(st.CANCEL)
     return ConversationHandler.END
-
 
 
 REVIEW_HANDLER = ConversationHandler(
