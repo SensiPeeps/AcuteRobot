@@ -59,6 +59,16 @@ INLINE_STR = """
 • <b>OverView</b> : <em>{}</em>
 """
 
+INLINE_DESC = """
+<b>Usage:</b> <pre>&lt;tv&gt; title</pre> <b>or</b> <pre>&lt;movie&gt; title</pre> <b>in inline query.</b>
+
+Examples:
+× <pre>&lt;movie&gt; Avengers Endgame</pre>.
+× <pre>&lt;tv&gt; Breaking Bad</pre>
+• You can try on buttons below!
+"""
+
+
 # Start
 START_STRING = """
 Hey {}, my name is acutebot and i can help you to get \
@@ -90,7 +100,7 @@ TOSEARCHREVIEW = "Hi! Please tell me for what category you want reviews for."
 
 # Favs
 NOFAVS = "Hmmm 🤔 looks like you don't have any title saved in your watchlist yet!"
-REMFAV = "Successfully cleared your watchlist."
+REMFAV = "Great work! Successfully cleared your watchlist :)"
 SAVED_FAV = "Added {} to your Watchlist!"
 FAV_EXIST = (
     "Hey there this title is already in your watchlist, Go & finish it instead ;)"
@@ -125,13 +135,3 @@ MUSICNAME = "Okay! tell me name of the song you're looking for."
 UPLOAD_BOTAPI = "🎧 uploading song please wait..."
 UPLOAD_TELETHON = "Hmm, file size is more than 50MBs, uploading via mtproto this might take around 5 mins, please wait..."
 MUSICNOTFOUND = "Sorry i couldn't find that song :("
-
-# Inline
-INLINE_DESC = """
-<b>Usage:</b> <pre>&lt;tv&gt; title</pre> <b>or</b> <pre>&lt;movie&gt; title</pre> <b>in inline query.</b>
-
-Examples:
-× <pre>&lt;movie&gt; Avengers Endgame</pre>.
-× <pre>&lt;tv&gt; Breaking Bad</pre>
-• You can try on buttons below!
-"""
