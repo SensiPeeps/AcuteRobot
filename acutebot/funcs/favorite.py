@@ -45,7 +45,7 @@ def list_favorite(update, context):
         text = "🎬 Your watchlist:\n\n"
         for title in fav:
             text += f"• {title.data}\n"
-            keyb = [
+        keyb = [
                 [
                     InlineKeyboardButton(
                         text="Watched ✅", callback_data=f"remfav_{user.id}"
