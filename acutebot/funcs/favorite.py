@@ -16,6 +16,7 @@
 
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 from acutebot import dp, typing
 import acutebot.helpers.strings as st
@@ -45,28 +46,30 @@ def list_favorite(update, context):
        text = "🎬 Your watchlist:\n\n"
        for title in fav:
            text += f"• {title.data}\n"
-       msg.reply_text(text)
+           keyb = [[InlineKeyboardButton(text="Watched ✅", callback_data=f"remfav_{user.id}")]]
+       msg.reply_text(text, reply_markup=InlineKeyboardMarkup(keyb))
     else:
        msg.reply_text(st.NOFAVS)
 
 
 @run_async
-@typing
 def rem_favorite(update, context):
-    msg = update.effective_message
+    query = update.callback_query
     user = update.effective_user
-    rem = sql.remove_fav(user.id)
-    if rem:
-       msg.reply_text(st.REMFAV)
+    user_id = query.data.split("_")[1]
+
+    if user.id == int(user_id):
+       sql.remove_fav(user_id)
+       query.message.edit_text(st.REMFAV)
     else:
-       msg.reply_text(st.NOFAVS)
+       query.answer(st.NOT_ALLOWED, show_alert=True)
 
 
 LIST_FAV_HANDLER = CommandHandler("watchlist", list_favorite)
-FAV_CLEAR_HANDLER = CommandHandler("clearlist", rem_favorite)
-FAV_CALLBACK_HANDLER = CallbackQueryHandler(add_favorite, pattern=r"fav_")
+FAV_CLEAR_HANDLER = CallbackQueryHandler(rem_favorite, pattern=r"remfav_")
+FAV_ADD_HANDLER = CallbackQueryHandler(add_favorite, pattern=r"addfav_")
 
 
 dp.add_handler(LIST_FAV_HANDLER)
 dp.add_handler(FAV_CLEAR_HANDLER)
-dp.add_handler(FAV_CALLBACK_HANDLER)
+dp.add_handler(FAV_ADD_HANDLER)

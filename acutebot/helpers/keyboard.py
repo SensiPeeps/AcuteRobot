@@ -36,7 +36,7 @@ def keyboard(ytkey, homepage, title=None, imdbid=None):
         )
 
     if title:
-        keyblist.append([InlineKeyboardButton(text="Save to watchlist 🔖", callback_data=f"fav_{title}")])
+        keyblist.append([InlineKeyboardButton(text="Save to watchlist 🔖", callback_data=f"addfav_{title}")])
 
     return keyblist
 

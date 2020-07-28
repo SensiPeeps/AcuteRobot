@@ -84,7 +84,7 @@ SAVED_FAV = "Added {} to your Watchlist!"
 FAV_EXIST = (
     "Hey there this title is already in your watchlist, Go & finish it instead ;)"
 )
-
+NOT_ALLOWED = "You're not allowed to do this!"
 
 # Stats
 STATS = """

@@ -20,7 +20,6 @@
 <pre>/lyrics</pre>: Get lyrics of your favourite songs :)
 <pre>/music</pre>: Download your favourite songs in FLAC & 320kbs quality!
 <pre>watchlist</pre>: Get your saved watchlist :D
-<pre>/clearlist</pre>: Clear your watchlist.
 <pre>/reddit</pre>: Fun command to get memes scraped from reddit.
 <pre>/cancel</pre>: Cancels the current ongoing task.
 </details>
