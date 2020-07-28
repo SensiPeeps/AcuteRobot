@@ -48,6 +48,17 @@ TV_STR = """
 • OverView : <em>{}</em>
 """
 
+# Inline Content
+INLINE_STR = """
+• <b>Title</b> : {}
+• <b>Release</b> : <pre>{}</pre>
+• <b>Popularity</b> : <pre>{}</pre>
+• <b>Language</b> : <pre>{}</pre>
+• <b>Average Rating</b> : <pre>{}</pre>
+
+• <b>OverView</b> : <em>{}</em>
+"""
+
 # Start
 START_STRING = """
 Hey {}, my name is acutebot and i can help you to get \

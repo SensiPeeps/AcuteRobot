@@ -12,22 +12,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import requests as r
 
 from telegram.ext import InlineQueryHandler
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
-from acutebot import dp, LOG
+from acutebot import dp, TMDBAPI
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import article
 from acutebot.helpers.keyboard import keyboard
-from acutebot.helpers.getid import getid
-from acutebot.funcs.movies import moviedata
-from acutebot.funcs.tvseries import tvdata
 from acutebot.helpers.database import users_sql as sql
 
 
 pic_url = "https://image.tmdb.org/t/p"
+base_url = "https://api.themoviedb.org/3"
 
 
 @run_async
@@ -40,74 +39,71 @@ def inlinequery(update, context):
     if len(query) > 0:
         if query.startswith("<tv>"):
             query = query.replace("<tv>", "")
-            id = getid(query, type="TV")
-            res = tvdata(id)
-            try:
-                results.append(
-                    article(
-                        title=res.title,
-                        description=f"Created by : {res.creator}",
-                        message_text=st.TV_STR.format(
-                            res.title,
-                            res.creator,
-                            res.genres,
-                            res.language,
-                            res.runtime,
-                            res.faired,
-                            res.laired,
-                            res.status,
-                            res.seasons,
-                            res.numeps,
-                            res.rating,
-                            res.company,
-                            res.overview,
+            res = r.get(
+                f"{base_url}/search/tv?api_key={TMDBAPI}"
+                + f"&language=en&query={query}"
+                + "&page=1&include_adult=true"
+            )
+
+            if res.status_code != 200:
+                return
+            res = res.json()
+
+            if len(res["results"]) > 0:
+                for con in res["results"]:
+                    results.append(
+                        article(
+                            title=con.get("name", "N/A"),
+                            description=con.get("first_air_date", "N/A"),
+                            thumb_url=f"{pic_url}/w500/{con['poster_path']}",
+                            message_text=st.INLINE_STR.format(
+                                con.get("original_name", "N/A"),
+                                con.get("first_air_date", "N/A"),
+                                con.get("popularity", "N/A"),
+                                con.get("original_language", "N/A"),
+                                con.get("vote_average", "N/A"),
+                                con.get("overview", "N/A"),
+                            )
+                            + f"<a href='{pic_url}/w500/{con['poster_path']}'>&#xad</a>",
+                            reply_markup=InlineKeyboardMarkup(
+                                keyboard(title=con["original_name"], tv_id=con["id"])
+                            ),
                         )
-                        + f"<a href='{pic_url}/w500/{res.posterpath}'>&#xad</a>",
-                        thumb_url=f"{pic_url}/w500/{res.posterpath}",
-                        reply_markup=InlineKeyboardMarkup(
-                            keyboard(res.ytkey, res.homepage, res.title)
-                        ),
                     )
-                )
-            except TypeError:
-                pass
-            except Exception as e:
-                LOG.error(e)
 
         elif query.startswith("<movie>"):
             query = query.replace("<movie>", "")
-            id = getid(query, type="MOVIE")
-            res = moviedata(id)
-            try:
-                results.append(
-                    article(
-                        title=res.title,
-                        description=res.tagline,
-                        message_text=st.MOVIE_STR.format(
-                            res.title,
-                            res.tagline,
-                            res.status,
-                            res.genres,
-                            res.language,
-                            res.runtime,
-                            res.budget,
-                            res.revenue,
-                            res.release,
-                            res.rating,
-                            res.popularity,
-                            res.overview,
+            res = r.get(
+                f"{base_url}/search/movie?api_key={TMDBAPI}"
+                + f"&language=en&query={query}"
+                + "&page=1&include_adult=true"
+            )
+
+            if res.status_code != 200:
+                return
+            res = res.json()
+
+            if len(res["results"]) > 0:
+                for con in res["results"]:
+                    results.append(
+                        article(
+                            title=con.get("title", "N/A"),
+                            description=con.get("release_date", "N/A"),
+                            thumb_url=f"{pic_url}/w500/{con['poster_path']}",
+                            message_text=st.INLINE_STR.format(
+                                con.get("original_title", "N/A"),
+                                con.get("release_date", "N/A"),
+                                con.get("popularity", "N/A"),
+                                con.get("original_language", "N/A"),
+                                con.get("vote_average", "N/A"),
+                                con.get("overview", "N/A"),
+                            )
+                            + f"<a href='{pic_url}/w500/{con['poster_path']}'>&#xad</a>",
+                            reply_markup=InlineKeyboardMarkup(
+                                keyboard(title=con["original_title"], mv_id=con["id"])
+                            ),
                         )
-                        + f"<a href='{pic_url}/w500/{res.posterpath}'>&#xad</a>",
-                        thumb_url=f"{pic_url}/w500/{res.posterpath}",
-                        reply_markup=InlineKeyboardMarkup(
-                            keyboard(res.ytkey, res.homepage, res.title, res.imdbid)
-                        ),
                     )
-                )
-            except TypeError:
-                pass
-            except Exception as e:
-                LOG.error(e)
 
     else:
         results.append(

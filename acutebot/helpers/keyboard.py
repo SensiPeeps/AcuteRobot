@@ -16,18 +16,24 @@
 from telegram import InlineKeyboardButton
 
 
-def keyboard(ytkey, homepage, title=None, imdbid=None):
+def keyboard(
+    ytkey=None, homepage=None, title=None, imdbid=None, tv_id=None, mv_id=None
+):
     """
     Attach InlineKeyboardButton dynamically from data
     """
 
     keyblist = [[]]
-    if len(ytkey["results"]) > 0:
-        ytkey = ytkey["results"][0]["key"]
-        yt_url = f"https://www.youtube.com/watch?v={ytkey}"
-        keyblist[0].append(InlineKeyboardButton(text="📹 Trailer", url=yt_url))
+    if ytkey:
+        if len(ytkey["results"]) > 0:
+            ytkey = ytkey["results"][0]["key"]
+            keyblist[0].append(
+                InlineKeyboardButton(
+                    text="📹 Trailer", url=f"https://www.youtube.com/watch?v={ytkey}"
+                )
+            )
 
-    if homepage != "" and homepage != None:
+    if homepage and homepage != "":
         keyblist.append([InlineKeyboardButton(text="📃 Homepage", url=homepage)])
 
     if imdbid and imdbid is not None:
@@ -42,6 +48,24 @@ def keyboard(ytkey, homepage, title=None, imdbid=None):
             [
                 InlineKeyboardButton(
                     text="Save to watchlist 🔖", callback_data=f"addfav_{title}"
+                )
+            ]
+        )
+
+    if tv_id:
+        keyblist.append(
+            [
+                InlineKeyboardButton(
+                    text="More info ℹ️", url=f"https://www.themoviedb.org/tv/{tv_id}"
+                )
+            ]
+        )
+
+    if mv_id:
+        keyblist.append(
+            [
+                InlineKeyboardButton(
+                    text="More info ℹ️", url=f"https://www.themoviedb.org/movie/{mv_id}"
                 )
             ]
         )

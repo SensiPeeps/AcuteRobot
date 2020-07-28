@@ -20,40 +20,35 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 
 
 def byname(val):
-    if val != None:
-
-        if val == "":
-            return "Not available"
-        datalist = list()
-        for x in val:
-            datalist.append(x["name"])
-        data = ", ".join(datalist)
-        return data
+    if val == "":
+        return "Not available"
+    datalist = list()
+    for x in val:
+        datalist.append(x["name"])
+    data = ", ".join(datalist)
+    return data
 
 
 def currency(val):
     """Format currency"""
-    if val != None:
-        if val == "":
-            return "Not available"
-        curr = "${:,.2f}".format(val)
-        return curr
+    if val == "":
+        return "Not available"
+    curr = "${:,.2f}".format(val)
+    return curr
 
 
 def byindex(val):
-    if val != None:
-        try:
-            return val[0]["name"]
-        except IndexError:
-            return "Not Available"
+    try:
+        return val[0]["name"]
+    except IndexError:
+        return "Not Available"
 
 
 def tvruntime(val):
-    if val != None:
-        try:
-            return str(val[0]) + " minutes"
-        except IndexError:
-            return "Not Available"
+    try:
+        return str(val[0]) + " minutes"
+    except IndexError:
+        return "Not Available"
 
 
 def article(
