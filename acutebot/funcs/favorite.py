@@ -13,7 +13,6 @@
 # SOFTWARE.
 
 
-
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
@@ -31,9 +30,9 @@ def add_favorite(update, context):
 
     add = sql.add_fav(userid, match)
     if add:
-       query.answer(st.SAVED_FAV.format(match), show_alert=True)
+        query.answer(st.SAVED_FAV.format(match), show_alert=True)
     else:
-       query.answer(st.FAV_EXIST, show_alert=True)
+        query.answer(st.FAV_EXIST, show_alert=True)
 
 
 @run_async
@@ -43,13 +42,19 @@ def list_favorite(update, context):
     user = update.effective_user
     fav = sql.get_fav(user.id)
     if fav:
-       text = "🎬 Your watchlist:\n\n"
-       for title in fav:
-           text += f"• {title.data}\n"
-           keyb = [[InlineKeyboardButton(text="Watched ✅", callback_data=f"remfav_{user.id}")]]
-       msg.reply_text(text, reply_markup=InlineKeyboardMarkup(keyb))
+        text = "🎬 Your watchlist:\n\n"
+        for title in fav:
+            text += f"• {title.data}\n"
+            keyb = [
+                [
+                    InlineKeyboardButton(
+                        text="Watched ✅", callback_data=f"remfav_{user.id}"
+                    )
+                ]
+            ]
+        msg.reply_text(text, reply_markup=InlineKeyboardMarkup(keyb))
     else:
-       msg.reply_text(st.NOFAVS)
+        msg.reply_text(st.NOFAVS)
 
 
 @run_async
@@ -59,10 +64,10 @@ def rem_favorite(update, context):
     user_id = query.data.split("_")[1]
 
     if user.id == int(user_id):
-       sql.remove_fav(user_id)
-       query.message.edit_text(st.REMFAV)
+        sql.remove_fav(user_id)
+        query.message.edit_text(st.REMFAV)
     else:
-       query.answer(st.NOT_ALLOWED, show_alert=True)
+        query.answer(st.NOT_ALLOWED, show_alert=True)
 
 
 LIST_FAV_HANDLER = CommandHandler("watchlist", list_favorite)

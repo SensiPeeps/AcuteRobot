@@ -13,8 +13,8 @@
 # SOFTWARE.
 
 
-
 from telegram import InlineKeyboardButton
+
 
 def keyboard(ytkey, homepage, title=None, imdbid=None):
     """
@@ -32,11 +32,18 @@ def keyboard(ytkey, homepage, title=None, imdbid=None):
 
     if imdbid and imdbid is not None:
         keyblist[0].append(
-            InlineKeyboardButton(text="🎞️ IMDb", url=f"https://m.imdb.com/title/{imdbid}")
+            InlineKeyboardButton(
+                text="🎞️ IMDb", url=f"https://m.imdb.com/title/{imdbid}"
+            )
         )
 
     if title:
-        keyblist.append([InlineKeyboardButton(text="Save to watchlist 🔖", callback_data=f"addfav_{title}")])
+        keyblist.append(
+            [
+                InlineKeyboardButton(
+                    text="Save to watchlist 🔖", callback_data=f"addfav_{title}"
+                )
+            ]
+        )
 
     return keyblist
-
