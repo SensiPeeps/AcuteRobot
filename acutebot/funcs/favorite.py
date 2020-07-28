@@ -46,12 +46,8 @@ def list_favorite(update, context):
         for title in fav:
             text += f"• {title.data}\n"
         keyb = [
-                [
-                    InlineKeyboardButton(
-                        text="Watched ✅", callback_data=f"remfav_{user.id}"
-                    )
-                ]
-            ]
+            [InlineKeyboardButton(text="Watched ✅", callback_data=f"remfav_{user.id}")]
+        ]
         msg.reply_text(text, reply_markup=InlineKeyboardMarkup(keyb))
     else:
         msg.reply_text(st.NOFAVS)

@@ -13,21 +13,24 @@
 # SOFTWARE.
 
 
-
 import requests as r
 from acutebot import TMDBAPI
 
 base_url = "https://api.themoviedb.org/3"
 
-def getid(query, type=None):
+
+def getid(query, type):
     """
-    Returns TV or movie id for the query
+    rtype: TV or movie id for the query
     """
 
     query = query.replace(" ", "%20")
     id = 0
 
-    if type and type == "TV":
+    if type not in ("TV", "MOVIE"):
+        raise Exception("type parameter must be either 'TV' or 'MOVIE'")
+
+    if type == "TV":
 
         id = r.get(
             f"{base_url}/search/tv?api_key={TMDBAPI}"
@@ -35,7 +38,7 @@ def getid(query, type=None):
             + "&page=1&include_adult=true"
         )
 
-    if type and type == "MOVIE":
+    elif type == "MOVIE":
 
         id = r.get(
             f"{base_url}/search/movie?api_key={TMDBAPI}"
