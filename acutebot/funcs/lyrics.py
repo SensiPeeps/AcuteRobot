@@ -77,12 +77,13 @@ def lyrics(update, context):
         with open("acute-lyrics.txt", "w+") as f:
             f.write(f"🎧 {song} by {artist}\n\n{lyrics.lyrics}")
         context.bot.sendDocument(
-            chat_id=chat.id, document=open("acute-lyrics.txt", "rb")
+            chat_id=chat.id,
+            document=open("acute-lyrics.txt", "rb"),
+            caption=f"🎧 {song} - {artist}\n🎸 @acutebot",
         )
         remove("acute-lyrics.txt")
     else:
-        msg.reply_text(f"🎧 <b>{song}</b> by <b>{artist}</b>: "
-                       f"\n\n{lyrics.lyrics}")
+        msg.reply_text(f"🎧 <b>{song}</b> by <b>{artist}</b>: " f"\n\n{lyrics.lyrics}")
     rep.delete()
     return -1
 
