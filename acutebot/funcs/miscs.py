@@ -47,45 +47,6 @@ def ping(update, context):
     update.effective_message.reply_text(text)
 
 
-# Taken from PaperPlane Extended userbot
-def speed_convert(size):
-    """
-    Hi human, you can't read bytes?
-    """
-    power = 2 ** 10
-    zero = 0
-    units = {0: "", 1: "Kb/s", 2: "Mb/s", 3: "Gb/s", 4: "Tb/s"}
-    while size > power:
-        size /= power
-        zero += 1
-    return f"{round(size, 2)} {units[zero]}"
-
-
-@run_async
-@typing
-def speed(update, context):
-    message = update.effective_message
-    ed_msg = message.reply_text("<pre>Running speed test . . .</pre>")
-    test = speedtest.Speedtest()
-    test.get_best_server()
-    test.download()
-    test.upload()
-    test.results.share()
-    result = test.results.dict()
-    context.bot.editMessageText(
-        "Download: "
-        f"<pre>{speed_convert(result['download'])}</pre> \n"
-        "Upload: "
-        f"<pre>{speed_convert(result['upload'])}</pre> \n"
-        "Ping: "
-        f"<pre>{result['ping']}</pre> \n"
-        "ISP: "
-        f"<pre>{result['client']['isp']}</pre>",
-        update.effective_chat.id,
-        ed_msg.message_id,
-    )
-
-
 @run_async
 def rmemes(update, context):
     msg = update.effective_message
@@ -187,7 +148,6 @@ def log_user(update, context):
 
 IP_HANDLER = CommandHandler("ip", get_ip, filters=Filters.chat(DEV_ID))
 PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(DEV_ID))
-SPEEDTEST_HANDLER = CommandHandler("speedtest", speed, filters=Filters.user(DEV_ID))
 REDDIT_HANDLER = CommandHandler("reddit", rmemes)
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
@@ -197,7 +157,6 @@ LOG_HANDLER = MessageHandler(Filters.all, log_user)
 
 dp.add_handler(IP_HANDLER)
 dp.add_handler(PING_HANDLER)
-dp.add_handler(SPEEDTEST_HANDLER)
 dp.add_handler(REDDIT_HANDLER)
 dp.add_handler(STATS_HANDLER)
 dp.add_handler(GREET_HANDLER)
