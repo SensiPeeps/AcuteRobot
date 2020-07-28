@@ -13,12 +13,11 @@
 # SOFTWARE.
 
 
-import asyncio
+import asyncio, os
 import deezloader, mutagen
 from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
 
 from pathlib import Path
-from os import remove
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ForceReply, ReplyKeyboardMarkup
@@ -62,9 +61,7 @@ def music(update, context):
     if musicq in ("🎵 256KBs", "🎧 320KBs", "🎶 FLAC"):
         # save quality data in temp.dict:
         MUSICDICT[user.id] = {"q": musicq}
-        msg.reply_text(
-            st.MUSICNAME, reply_markup=ForceReply(selective=True)
-        )
+        msg.reply_text(st.MUSICNAME, reply_markup=ForceReply(selective=True))
         return ARTIST
     msg.reply_text(st.INVALIDREVIEWNAME)
     return -1
@@ -78,9 +75,7 @@ def artist(update, context):
     musicn = update.message.text
     # update music title in dict:
     MUSICDICT[user.id]["mn"] = musicn
-    msg.reply_text(
-        st.ARTISTNAME, reply_markup=ForceReply(selective=True)
-    )
+    msg.reply_text(st.ARTISTNAME, reply_markup=ForceReply(selective=True))
     return SENDMUSIC
 
 
@@ -121,38 +116,42 @@ def sendmusic(update, context):
         msg.reply_text(st.MUSICNOTFOUND)
         return -1
 
-    # Fetch correct details from metadata:
-    aud = mutagen.File(file)
-    title = aud.get("title")
-    if title:
-        title = str(title[0])
-    artist = aud.get("artist")
-    if artist:
-        artist = str(artist[0])
-    duration = aud.get("length")
-    if duration:
-        duration = int(duration[0])
+    try:
+        # Fetch correct details from metadata:
+        aud = mutagen.File(file)
+        title = aud.get("title")
+        if title:
+            title = str(title[0])
+        artist = aud.get("artist")
+        if artist:
+            artist = str(artist[0])
+        duration = aud.get("length")
+        if duration:
+            duration = int(duration[0])
 
-    if Path(file).stat().st_size < 50000000:
-        rep = msg.reply_text(st.UPLOAD_BOTAPI)
-        context.bot.sendAudio(
-            chat.id,
-            open(file, "rb"),
-            caption="Via @acutebot 🎧",
-            title=title,
-            performer=artist,
-            duration=duration,
-            timeout=120,
-        )
-    else:
-        rep = msg.reply_text(st.UPLOAD_TELETHON)
-        loop = asyncio.new_event_loop()
-        send_file_telethon(
-            context.bot.token, file, chat.id, loop, title, artist, duration
-        )
-    remove(file)
-    rep.delete()
-    return -1
+        if Path(file).stat().st_size < 50000000:
+            rep = msg.reply_text(st.UPLOAD_BOTAPI)
+            context.bot.sendAudio(
+                chat.id,
+                open(file, "rb"),
+                caption="Via @acutebot 🎧",
+                title=title,
+                performer=artist,
+                duration=duration,
+                timeout=120,
+            )
+        else:
+            rep = msg.reply_text(st.UPLOAD_TELETHON)
+            loop = asyncio.new_event_loop()
+            send_file_telethon(
+                context.bot.token, file, chat.id, loop, title, artist, duration
+            )
+
+    finally:
+        if os.path.isfile(file):
+            os.remove(file)
+        rep.delete()
+        return -1
 
 
 def send_file_telethon(bot_token, file, chatid, loop, title, artist, duration):

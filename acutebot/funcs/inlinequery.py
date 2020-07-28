@@ -113,7 +113,7 @@ def inlinequery(update, context):
         results.append(
             article(
                 title="Usage: <movie> or <tv> ",
-                description="Example: '<movie> Avengers endgame'",
+                description="Example: <movie> Avengers endgame",
                 message_text=st.INLINE_DESC,
                 thumb_url="https://telegra.ph/file/292eb6f335bdb3b397806.jpg",
                 reply_markup=InlineKeyboardMarkup(
