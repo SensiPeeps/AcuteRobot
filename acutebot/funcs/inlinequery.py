@@ -129,7 +129,7 @@ def inlinequery(update, context):
             )
         )
 
-    update.inline_query.answer(results)
+    update.inline_query.answer(results, cache_time=10)
 
 
 INLINE_HANDLER = InlineQueryHandler(inlinequery)

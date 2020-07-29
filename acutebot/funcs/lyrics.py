@@ -79,7 +79,7 @@ def lyrics(update, context):
         context.bot.sendDocument(
             chat_id=chat.id,
             document=open("acute-lyrics.txt", "rb"),
-            caption=f"🎧 {song} - {artist}\n🎸 @acutebot",
+            caption=f"🎸 {song} - {artist}",
         )
         remove("acute-lyrics.txt")
     else:
