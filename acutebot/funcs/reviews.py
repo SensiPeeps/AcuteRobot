@@ -82,8 +82,9 @@ def tvreview(update, context):
             text, reply_markup=ReplyKeyboardRemove(), disable_web_page_preview=True
         )
 
-    finally:
-        return -1
+    except Exception as e:
+        LOG.error(e)
+    return -1
 
 
 @run_async
