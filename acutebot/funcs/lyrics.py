@@ -55,7 +55,7 @@ def artistname(update, context):
 
 @run_async
 @typing
-def lyrics(update, context):
+def sendlyrics(update, context):
     chat = update.effective_chat
     msg = update.effective_message
     user = update.effective_user
@@ -99,7 +99,7 @@ LYRICS_HANDLER = ConversationHandler(
     entry_points=[CommandHandler("lyrics", songname)],
     states={
         ARTIST: [MessageHandler(Filters.text & ~Filters.command, artistname)],
-        LYRICS: [MessageHandler(Filters.text & ~Filters.command, lyrics)],
+        LYRICS: [MessageHandler(Filters.text & ~Filters.command, sendlyrics)],
     },
     fallbacks=[CommandHandler("cancel", cancel)],
     conversation_timeout=120,

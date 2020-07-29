@@ -138,8 +138,7 @@ def movie(update, context):
     except Exception as e:
         LOG.error(e)
 
-    finally:
-        return ConversationHandler.END
+    return ConversationHandler.END
 
 
 def cancel(update, context):

@@ -56,7 +56,7 @@ def start(update, context):
         msg.reply_text(st.START_STRING_GRP)
 
 
-BANNER = """
+BANNER = r"""
   ___            ___     ______      ___
  / _ \           | |     | ___ \     | |
 / /_\ \ ___ _   _| |_ ___| |_/ / ___ | |_

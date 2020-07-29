@@ -19,7 +19,7 @@ from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply
 
-from acutebot import dp, TMDBAPI, typing
+from acutebot import dp, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.getid import getid
 
@@ -44,7 +44,7 @@ def review_entry(update, context):
 
 @run_async
 @typing
-def name(update, context):
+def rname(update, context):
     msg = update.message
     name = msg.text
     if name == "TV series":
@@ -109,8 +109,9 @@ def moviereview(update, context):
             text, reply_markup=ReplyKeyboardRemove(), disable_web_page_preview=True,
         )
 
-    finally:
-        return -1
+    except Exception as e:
+        LOG.error(e)
+    return ConversationHandler.END
 
 
 def reviewdata(res: dict, title: str):
@@ -149,7 +150,7 @@ def cancel(update, context):
 REVIEW_HANDLER = ConversationHandler(
     entry_points=[CommandHandler("reviews", review_entry)],
     states={
-        NAME: [MessageHandler(Filters.text & ~Filters.command, name)],
+        NAME: [MessageHandler(Filters.text & ~Filters.command, rname)],
         TV: [MessageHandler(Filters.text & ~Filters.command, tvreview)],
         MOVIE: [MessageHandler(Filters.text & ~Filters.command, moviereview)],
     },

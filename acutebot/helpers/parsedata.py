@@ -21,7 +21,7 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 def byname(val):
     if val == "":
         return "Not available"
-    datalist = list()
+    datalist = []
     for x in val:
         datalist.append(x["name"])
     data = ", ".join(datalist)

@@ -24,7 +24,7 @@ from telegram import ForceReply, ReplyKeyboardMarkup
 from telethon import TelegramClient
 from telethon.tl import types
 
-from acutebot import dp, typing, ARLTOKEN, APIID, APIHASH
+from acutebot import dp, typing, ARLTOKEN, APIID, APIHASH, LOG
 from acutebot.helpers import strings as st
 
 MUSIC, ARTIST, SENDMUSIC = range(3)
@@ -56,11 +56,11 @@ def musicq(update, context):
 def music(update, context):
     user = update.effective_user
     msg = update.effective_message
-    musicq = update.message.text
+    songq = update.message.text
 
-    if musicq in ("🎵 256KBs", "🎧 320KBs", "🎶 FLAC"):
+    if songq in ("🎵 256KBs", "🎧 320KBs", "🎶 FLAC"):
         # save quality data in temp.dict:
-        MUSICDICT[user.id] = {"q": musicq}
+        MUSICDICT[user.id] = {"q": songq}
         msg.reply_text(st.MUSICNAME, reply_markup=ForceReply(selective=True))
         return ARTIST
     msg.reply_text(st.INVALIDREVIEWNAME)
@@ -69,7 +69,7 @@ def music(update, context):
 
 @run_async
 @typing
-def artist(update, context):
+def _artist(update, context):
     user = user = update.effective_user
     msg = update.effective_message
     musicn = update.message.text
@@ -147,11 +147,12 @@ def sendmusic(update, context):
                 context.bot.token, file, chat.id, loop, title, artist, duration
             )
 
-    finally:
-        if os.path.isfile(file):
-            os.remove(file)
-        rep.delete()
-        return -1
+    except Exception as e:
+        LOG.error(e)
+    if os.path.isfile(file):
+        os.remove(file)
+    rep.delete()
+    return -1
 
 
 def send_file_telethon(bot_token, file, chatid, loop, title, artist, duration):
@@ -186,7 +187,7 @@ MUSIC_HANDLER = ConversationHandler(
     entry_points=[CommandHandler("music", musicq)],
     states={
         MUSIC: [MessageHandler(Filters.text & ~Filters.command, music)],
-        ARTIST: [MessageHandler(Filters.text & ~Filters.command, artist)],
+        ARTIST: [MessageHandler(Filters.text & ~Filters.command, _artist)],
         SENDMUSIC: [MessageHandler(Filters.text & ~Filters.command, sendmusic)],
     },
     fallbacks=[CommandHandler("cancel", cancel)],
