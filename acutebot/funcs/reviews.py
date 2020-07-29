@@ -116,6 +116,7 @@ def moviereview(update, context):
 def reviewdata(res: dict, title: str):
     """build review text from dict"""
 
+    # TODO: use single loop?
     results = res["results"]
     author = []
     url = []
@@ -153,6 +154,7 @@ REVIEW_HANDLER = ConversationHandler(
         MOVIE: [MessageHandler(Filters.text & ~Filters.command, moviereview)],
     },
     fallbacks=[CommandHandler("cancel", cancel)],
+    conversation_timeout=120,
 )
 
 dp.add_handler(REVIEW_HANDLER)

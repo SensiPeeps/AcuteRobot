@@ -102,6 +102,7 @@ LYRICS_HANDLER = ConversationHandler(
         LYRICS: [MessageHandler(Filters.text & ~Filters.command, lyrics)],
     },
     fallbacks=[CommandHandler("cancel", cancel)],
+    conversation_timeout=120,
 )
 
 dp.add_handler(LYRICS_HANDLER)

@@ -190,6 +190,7 @@ MUSIC_HANDLER = ConversationHandler(
         SENDMUSIC: [MessageHandler(Filters.text & ~Filters.command, sendmusic)],
     },
     fallbacks=[CommandHandler("cancel", cancel)],
+    conversation_timeout=120,
 )
 
 

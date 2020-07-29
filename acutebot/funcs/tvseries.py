@@ -154,6 +154,7 @@ TV_HANDLER = ConversationHandler(
     entry_points=[CommandHandler("tvshows", tv_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, tv)]},
     fallbacks=[CommandHandler("cancel", cancel)],
+    conversation_timeout=120,
 )
 
 

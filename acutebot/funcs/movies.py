@@ -151,6 +151,7 @@ MOVIE_HANDLER = ConversationHandler(
     entry_points=[CommandHandler("movies", movie_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, movie)]},
     fallbacks=[CommandHandler("cancel", cancel)],
+    conversation_timeout=120,
 )
 
 dp.add_handler(MOVIE_HANDLER)
