@@ -36,7 +36,7 @@ def keyboard(
     if homepage and homepage != "":
         keyblist.append([InlineKeyboardButton(text="📃 Homepage", url=homepage)])
 
-    if imdbid and imdbid is not None:
+    if imdbid:
         keyblist[0].append(
             InlineKeyboardButton(
                 text="🎞️ IMDb", url=f"https://m.imdb.com/title/{imdbid}"
@@ -56,7 +56,7 @@ def keyboard(
         keyblist.append(
             [
                 InlineKeyboardButton(
-                    text="More info ℹ️", url=f"https://www.themoviedb.org/tv/{tv_id}"
+                    text="More information", url=f"https://www.themoviedb.org/tv/{tv_id}"
                 )
             ]
         )
@@ -65,7 +65,7 @@ def keyboard(
         keyblist.append(
             [
                 InlineKeyboardButton(
-                    text="More info ℹ️", url=f"https://www.themoviedb.org/movie/{mv_id}"
+                    text="More information", url=f"https://www.themoviedb.org/movie/{mv_id}"
                 )
             ]
         )
