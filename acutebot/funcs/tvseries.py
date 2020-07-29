@@ -13,7 +13,6 @@
 # SOFTWARE.
 
 
-
 import requests as r
 
 from telegram.ext import (
@@ -28,8 +27,7 @@ from telegram import InlineKeyboardMarkup, ForceReply
 
 from acutebot import dp, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
-from acutebot.helpers.parsedata import (byname, byindex,
-                                        sort_caps, tvruntime)
+from acutebot.helpers.parsedata import byname, byindex, sort_caps, tvruntime
 from acutebot.helpers.keyboard import keyboard
 from acutebot.helpers.getid import getid
 
@@ -50,6 +48,7 @@ def tvdata(id):
 
     class res(object):
 
+        id = data.get("id")
         title = data.get("original_name")
         creator = byindex(data.get("created_by"))
         genres = byname(data.get("genres"))
@@ -77,8 +76,7 @@ def tvdata(id):
 def tv_entry(update, context):
 
     update.effective_message.reply_text(
-        st.TOSEARCHTV,
-        reply_markup=ForceReply(selective=True),
+        st.TOSEARCHTV, reply_markup=ForceReply(selective=True),
     )
 
     return 1
@@ -94,12 +92,12 @@ def tv(update, context):
     id = getid(msg.text, type="TV")
 
     if id == "api_error":
-       msg.reply_text(st.API_ERR)
-       return -1
+        msg.reply_text(st.API_ERR)
+        return -1
 
     elif id == "not_found":
-       msg.reply_text(st.NOT_FOUND)
-       return -1
+        msg.reply_text(st.NOT_FOUND)
+        return -1
 
     res = tvdata(id)
     caption = st.TV_STR.format(
@@ -121,17 +119,22 @@ def tv(update, context):
     try:
         if res.posterpath:
             bot.sendPhoto(
-            chat_id=chat.id,
-            photo=f"{pic_url}/w500/{res.posterpath}",
-            caption=sort_caps(caption),
-            reply_markup=InlineKeyboardMarkup(keyboard(res.ytkey, res.homepage, res.title)),
-            timeout=60)
+                chat_id=chat.id,
+                photo=f"{pic_url}/w500/{res.posterpath}",
+                caption=sort_caps(caption, id=res.id, tv=True),
+                reply_markup=InlineKeyboardMarkup(
+                    keyboard(res.ytkey, res.homepage, res.title)
+                ),
+                disable_web_page_preview=True,
+                timeout=60,
+            )
         else:
             bot.sendMessage(
                 chat.id,
                 text=caption,
                 reply_markup=InlineKeyboardMarkup(
-                    keyboard(res.ytkey, res.homepage, res.title)
+                    keyboard(res.ytkey, res.homepage, res.title),
+                    disable_web_page_preview=True,
                 ),
             )
 
@@ -147,7 +150,6 @@ def cancel(update, context):
     return ConversationHandler.END
 
 
-
 TV_HANDLER = ConversationHandler(
     entry_points=[CommandHandler("tvshows", tv_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, tv)]},
@@ -156,4 +158,3 @@ TV_HANDLER = ConversationHandler(
 
 
 dp.add_handler(TV_HANDLER)
-

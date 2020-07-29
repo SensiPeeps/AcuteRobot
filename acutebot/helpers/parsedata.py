@@ -15,7 +15,6 @@
 
 from uuid import uuid4
 from telegram.constants import MAX_CAPTION_LENGTH as MAX_CAP_LEN
-from telegram.constants import MAX_MESSAGE_LENGTH as MAX_MSG_LEN
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 
 
@@ -67,13 +66,12 @@ def article(
 
 
 # Cut down text to fit in tg limited chars.
-def sort_caps(text):
+def sort_caps(text, id, tv=False, mv=False):
     if len(text) > MAX_CAP_LEN:
-        text = text[: MAX_CAP_LEN - 5] + "</em>"
-    return text
-
-
-def sort_text(text):
-    if len(text) > MAX_MSG_LEN:
-        text = text[: MAX_MSG_LEN - 9] + "</em>"
+        text = text[: MAX_CAP_LEN - 80]
+        text += "</em>"
+        if tv:
+            text += f"<a href='https://www.themoviedb.org/tv/{id}'>...read more</a>"
+        if mv:
+            text += f"<a href='https://www.themoviedb.org/movie/{id}'>...read more</a>"
     return text

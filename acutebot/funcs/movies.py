@@ -48,6 +48,7 @@ def moviedata(id):
 
     class res(object):
 
+        id = data.get("id")
         title = data.get("title")
         tagline = data.get("tagline")
         status = data.get("status")
@@ -75,8 +76,7 @@ def moviedata(id):
 def movie_entry(update, context):
 
     update.effective_message.reply_text(
-        st.TOSEARCHMOVIE,
-        reply_markup=ForceReply(selective=True),
+        st.TOSEARCHMOVIE, reply_markup=ForceReply(selective=True),
     )
 
     return 1
@@ -119,18 +119,20 @@ def movie(update, context):
             bot.sendPhoto(
                 chat_id=chat.id,
                 photo=f"{pic_url}/w500/{res.posterpath}",
-                caption=sort_caps(caption),
+                caption=sort_caps(caption, id=res.id, mv=True),
                 reply_markup=InlineKeyboardMarkup(
                     keyboard(res.ytkey, res.homepage, res.title, res.imdbid)
                 ),
                 timeout=60,
+                disable_web_page_preview=True,
             )
         else:
             bot.sendMessage(
                 chat.id,
                 text=caption,
                 reply_markup=InlineKeyboardMarkup(
-                    keyboard(res.ytkey, res.homepage, res.title, res.imdbid)
+                    keyboard(res.ytkey, res.homepage, res.title, res.imdbid),
+                    disable_web_page_preview=True,
                 ),
             )
     except Exception as e:
