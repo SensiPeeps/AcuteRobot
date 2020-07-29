@@ -12,7 +12,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import speedtest
 import requests as r
 import subprocess
 import random
