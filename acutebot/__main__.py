@@ -41,11 +41,11 @@ def start(update, context):
                 [
                     [
                         InlineKeyboardButton(
-                            text="Search Movies",
+                            text="Movies",
                             switch_inline_query_current_chat="<movie> ",
                         ),
                         InlineKeyboardButton(
-                            text="Search TVshows",
+                            text="TVshows",
                             switch_inline_query_current_chat="<tv> ",
                         ),
                     ],
