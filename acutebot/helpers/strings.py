@@ -13,6 +13,7 @@
 # SOFTWARE.
 
 from acutebot import __version__
+from platform import python_version
 
 # Contents
 MOVIE_STR = """
@@ -76,6 +77,7 @@ Hey {}, my name is acutebot and i can help you to get \
 info about your favorite movies or tv shows, you can also download \
 music & can view song lyrics using me. click [<pre>/</pre>] \
 to see list of possible commands.
+
 And don't forget to smile, atleast once in a while :)
 """
 START_STRING_GRP = "Hmmm?"
@@ -83,11 +85,12 @@ START_STRING_GRP = "Hmmm?"
 
 # Help
 ABOUT_STR = f"""
-Hey there! My name is acutebot, i'm fully written in \
-python3 by <a href="tg://user?id=894380120">starry</a> 💫
+Hey there! My name is acutebot, I'm fully written in \
+python3 by <a href="tg://user?id=894380120">starry</a> ✨
 
-× Bot version : {__version__}
-× Powered by : themoviedb.org
+× Bot version : <pre>{__version__}</pre>
+× Py version : <pre>{python_version()}</pre>
+× Powered by : <pre>themoviedb.org</pre>
 × Built with : <a href="https://github.com/python-telegram-bot">PTB Library</a>
 """
 

@@ -56,7 +56,7 @@ else:
     )
 
 cmd = ["!", "/", "?"]
-__version__ = "6.0.0-rev02"
+__version__ = "6.0.0-rev03"
 
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)

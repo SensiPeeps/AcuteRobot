@@ -35,7 +35,7 @@ for func_name in ALL_FUNCS:
 def start(update, context):
     msg = update.effective_message
     if update.effective_chat.type == "private":
-        msg.reply_text(
+        msg.reply_photo("https://telegra.ph/file/041f3315022a6ca8f94fe.jpg",
             st.START_STRING.format(update.effective_user.first_name),
             reply_markup=InlineKeyboardMarkup(
                 [
@@ -60,7 +60,7 @@ def start(update, context):
 @run_async
 def help_button(update, context):
     query = update.callback_query
-    query.message.edit_text(
+    query.message.reply_text(
         st.ABOUT_STR,
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
