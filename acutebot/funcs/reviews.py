@@ -16,10 +16,10 @@
 import requests as r
 
 from telegram.ext.dispatcher import run_async
-from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
+from telegram.ext import PrefixHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, ForceReply
 
-from acutebot import dp, LOG, TMDBAPI, typing
+from acutebot import dp, cmd, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.getid import getid
 
@@ -62,19 +62,19 @@ def rname(update, context):
 @typing
 def tvreview(update, context):
     msg = update.message
-    id = getid(msg.text, type="TV")
+    r_id = getid(msg.text, category="TV")
 
-    if id == "api_error":
+    if r_id == "api_error":
         msg.reply_text(st.API_ERR)
         return -1
 
-    elif id == "not_found":
+    elif r_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 
     try:
         res = r.get(
-            f"{base_url}/tv/{id}/reviews?api_key={TMDBAPI}&language=en&page=1"
+            f"{base_url}/tv/{r_id}/reviews?api_key={TMDBAPI}&language=en&page=1"
         ).json()
 
         text = reviewdata(res, msg.text)
@@ -91,18 +91,18 @@ def tvreview(update, context):
 @typing
 def moviereview(update, context):
     msg = update.message
-    id = getid(msg.text, type="MOVIE")
+    r_id = getid(msg.text, category="MOVIE")
 
-    if id == "api_error":
+    if r_id == "api_error":
         msg.reply_text(st.API_ERR)
         return -1
-    elif id == "not_found":
+    elif r_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 
     try:
         res = r.get(
-            f"{base_url}/movie/{id}/reviews?api_key={TMDBAPI}&language=en&page=1"
+            f"{base_url}/movie/{r_id}/reviews?api_key={TMDBAPI}&language=en&page=1"
         ).json()
 
         text = reviewdata(res, msg.text)
@@ -143,19 +143,20 @@ def reviewdata(res: dict, title: str):
 
 
 @run_async
+@typing
 def cancel(update, context):
-    update.effective_message.reply_text(st.CANCEL)
+    context.bot.sendMessage(update.effective_chat.id, (st.CANCEL))
     return ConversationHandler.END
 
 
 REVIEW_HANDLER = ConversationHandler(
-    entry_points=[CommandHandler("reviews", review_entry)],
+    entry_points=[PrefixHandler(cmd, "reviews", review_entry)],
     states={
         NAME: [MessageHandler(Filters.text & ~Filters.command, rname)],
         TV: [MessageHandler(Filters.text & ~Filters.command, tvreview)],
         MOVIE: [MessageHandler(Filters.text & ~Filters.command, moviereview)],
     },
-    fallbacks=[CommandHandler("cancel", cancel)],
+    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
     conversation_timeout=120,
 )
 

@@ -20,11 +20,11 @@ from pythonping import ping as pingger
 from acutebot.helpers.database import users_sql as sql
 from acutebot.helpers.database.favorites_sql import fav_count
 import acutebot.helpers.strings as st
-from acutebot import dp, typing, DEV_ID, LOG
+from acutebot import dp, cmd, typing, DEV_ID, LOG
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram.ext import PrefixHandler, MessageHandler, Filters
 from telegram.error import BadRequest
 
 
@@ -92,8 +92,7 @@ def rmemes(update, context):
 def stats(update, context):
     msg = update.effective_message
     return msg.reply_text(
-        st.STATS.format(sql.users_count(), fav_count()),
-        parse_mode=None,
+        st.STATS.format(sql.users_count(), fav_count()), parse_mode=None,
     )
 
 
@@ -106,8 +105,7 @@ def greet(update, context):
     new_members = msg.new_chat_members
     for new_mem in new_members:
         if new_mem.id == context.bot.id:
-            msg.reply_text(
-                st.GREET.format(user.first_name, chat.title))
+            msg.reply_text(st.GREET.format(user.first_name, chat.title))
 
 
 @run_async
@@ -118,9 +116,7 @@ def shell(update, context):
     cmd = " ".join(context.args).split()
     rep = msg.reply_text("Running command...")
     try:
-        res = subprocess.Popen(
-            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        )
+        res = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,)
         stdout, stderr = res.communicate()
         result = str(stdout.decode().strip()) + str(stderr.decode().strip())
         bot.editMessageText("<pre>" + result + "</pre>", chat.id, rep.message_id)
@@ -136,21 +132,19 @@ def log_user(update, context):
 
     if msg.reply_to_message:
         sql.update_user(
-            msg.reply_to_message.from_user.id,
-            msg.reply_to_message.from_user.username,
+            msg.reply_to_message.from_user.id, msg.reply_to_message.from_user.username,
         )
 
     if msg.forward_from:
         sql.update_user(msg.forward_from.id, msg.forward_from.username)
 
 
-
-IP_HANDLER = CommandHandler("ip", get_ip, filters=Filters.chat(DEV_ID))
-PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(DEV_ID))
-REDDIT_HANDLER = CommandHandler("reddit", rmemes)
-STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
+IP_HANDLER = PrefixHandler(cmd, "ip", get_ip, filters=Filters.chat(DEV_ID))
+PING_HANDLER = PrefixHandler(cmd, "ping", ping, filters=Filters.user(DEV_ID))
+REDDIT_HANDLER = PrefixHandler(cmd, "reddit", rmemes)
+STATS_HANDLER = PrefixHandler(cmd, "stats", stats, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
-SHELL_HANDLER = CommandHandler("shell", shell, filters=Filters.user(DEV_ID))
+SHELL_HANDLER = PrefixHandler(cmd, "shell", shell, filters=Filters.user(DEV_ID))
 LOG_HANDLER = MessageHandler(Filters.all, log_user)
 
 

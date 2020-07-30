@@ -17,14 +17,14 @@ import requests as r
 
 from telegram.ext import (
     MessageHandler,
-    CommandHandler,
+    PrefixHandler,
     Filters,
     ConversationHandler,
 )
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, ForceReply
 
-from acutebot import dp, LOG, TMDBAPI, typing
+from acutebot import dp, cmd, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import byname, currency, sort_caps
 from acutebot.helpers.keyboard import keyboard
@@ -35,20 +35,20 @@ base_url = "https://api.themoviedb.org/3"
 pic_url = "https://image.tmdb.org/t/p"
 
 
-def moviedata(id):
+def moviedata(c_id):
     """
     Parse movie data for the id and return class obj
     """
 
     data = r.get(
-        f"{base_url}/movie/{id}?api_key={TMDBAPI}"
+        f"{base_url}/movie/{c_id}?api_key={TMDBAPI}"
         + "&language=en"
         + "&append_to_response=videos"
     ).json()
 
     class res(object):
 
-        id = data.get("id")
+        c_id = data.get("id")
         title = data.get("title")
         tagline = data.get("tagline")
         status = data.get("status")
@@ -89,16 +89,16 @@ def movie(update, context):
     msg = update.message
     chat = update.effective_chat
 
-    id = getid(msg.text, type="MOVIE")
-    if id == "api_error":
+    c_id = getid(msg.text, category="MOVIE")
+    if c_id == "api_error":
         msg.reply_text(st.API_ERR)
         return -1
 
-    elif id == "not_found":
+    elif c_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 
-    res = moviedata(id)
+    res = moviedata(c_id)
     caption = st.MOVIE_STR.format(
         res.title,
         res.tagline,
@@ -119,7 +119,7 @@ def movie(update, context):
             bot.sendPhoto(
                 chat_id=chat.id,
                 photo=f"{pic_url}/w500/{res.posterpath}",
-                caption=sort_caps(caption, id=res.id, mv=True),
+                caption=sort_caps(caption, c_id=res.c_id, mv=True),
                 reply_markup=InlineKeyboardMarkup(
                     keyboard(res.ytkey, res.homepage, res.title, res.imdbid)
                 ),
@@ -141,15 +141,17 @@ def movie(update, context):
     return ConversationHandler.END
 
 
+@run_async
+@typing
 def cancel(update, context):
-    update.effective_message.reply_text(st.CANCEL)
+    context.bot.sendMessage(update.effective_chat.id, (st.CANCEL))
     return ConversationHandler.END
 
 
 MOVIE_HANDLER = ConversationHandler(
-    entry_points=[CommandHandler("movies", movie_entry)],
+    entry_points=[PrefixHandler(cmd, "movies", movie_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, movie)]},
-    fallbacks=[CommandHandler("cancel", cancel)],
+    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
     conversation_timeout=120,
 )
 

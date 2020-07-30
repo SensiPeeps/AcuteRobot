@@ -17,10 +17,10 @@ import lyricsgenius
 
 from os import remove
 from telegram.ext.dispatcher import run_async
-from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
+from telegram.ext import PrefixHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ForceReply
 
-from acutebot import dp, typing, GENIUS
+from acutebot import dp, cmd, typing, GENIUS
 from acutebot.helpers import strings as st
 
 ARTIST, LYRICS = range(2)
@@ -91,17 +91,17 @@ def sendlyrics(update, context):
 @run_async
 @typing
 def cancel(update, context):
-    update.effective_message.reply_text(st.CANCEL)
+    context.bot.sendMessage(update.effective_chat.id, (st.CANCEL))
     return ConversationHandler.END
 
 
 LYRICS_HANDLER = ConversationHandler(
-    entry_points=[CommandHandler("lyrics", songname)],
+    entry_points=[PrefixHandler(cmd, "lyrics", songname)],
     states={
         ARTIST: [MessageHandler(Filters.text & ~Filters.command, artistname)],
         LYRICS: [MessageHandler(Filters.text & ~Filters.command, sendlyrics)],
     },
-    fallbacks=[CommandHandler("cancel", cancel)],
+    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
     conversation_timeout=120,
 )
 

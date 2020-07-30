@@ -17,7 +17,7 @@ import requests as r
 
 from telegram.ext import (
     MessageHandler,
-    CommandHandler,
+    PrefixHandler,
     Filters,
     ConversationHandler,
 )
@@ -25,7 +25,7 @@ from telegram.ext import (
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, ForceReply
 
-from acutebot import dp, LOG, TMDBAPI, typing
+from acutebot import dp, cmd, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import byname, byindex, sort_caps, tvruntime
 from acutebot.helpers.keyboard import keyboard
@@ -35,20 +35,20 @@ base_url = "https://api.themoviedb.org/3"
 pic_url = "https://image.tmdb.org/t/p"
 
 
-def tvdata(id):
+def tvdata(c_id):
     """
     Parse TV shows data for the id and return class obj
     """
 
     data = r.get(
-        f"{base_url}/tv/{id}?api_key={TMDBAPI}"
+        f"{base_url}/tv/{c_id}?api_key={TMDBAPI}"
         + "&language=en"
         + "&append_to_response=videos"
     ).json()
 
     class res(object):
 
-        id = data.get("id")
+        c_id = data.get("id")
         title = data.get("original_name")
         creator = byindex(data.get("created_by"))
         genres = byname(data.get("genres"))
@@ -89,17 +89,17 @@ def tv(update, context):
     msg = update.message
     chat = update.effective_chat
 
-    id = getid(msg.text, type="TV")
+    c_id = getid(msg.text, category="TV")
 
-    if id == "api_error":
+    if c_id == "api_error":
         msg.reply_text(st.API_ERR)
         return -1
 
-    elif id == "not_found":
+    elif c_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 
-    res = tvdata(id)
+    res = tvdata(c_id)
     caption = st.TV_STR.format(
         res.title,
         res.creator,
@@ -121,7 +121,7 @@ def tv(update, context):
             bot.sendPhoto(
                 chat_id=chat.id,
                 photo=f"{pic_url}/w500/{res.posterpath}",
-                caption=sort_caps(caption, id=res.id, tv=True),
+                caption=sort_caps(caption, c_id=res.c_id, tv=True),
                 reply_markup=InlineKeyboardMarkup(
                     keyboard(res.ytkey, res.homepage, res.title)
                 ),
@@ -144,15 +144,17 @@ def tv(update, context):
     return ConversationHandler.END
 
 
+@run_async
+@typing
 def cancel(update, context):
-    update.effective_message.reply_text(st.CANCEL)
+    context.bot.sendMessage(update.effective_chat.id, (st.CANCEL))
     return ConversationHandler.END
 
 
 TV_HANDLER = ConversationHandler(
-    entry_points=[CommandHandler("tvshows", tv_entry)],
+    entry_points=[PrefixHandler(cmd, "tvshows", tv_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, tv)]},
-    fallbacks=[CommandHandler("cancel", cancel)],
+    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
     conversation_timeout=120,
 )
 

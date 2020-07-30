@@ -16,13 +16,13 @@
 import os, sys, importlib
 from threading import Thread
 
-from acutebot import LOG, dp, updater, typing, DEV_ID
+from acutebot import LOG, dp, cmd, updater, typing, DEV_ID
 from acutebot.funcs import ALL_FUNCS
 import acutebot.helpers.strings as st
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
-from telegram.ext import CommandHandler, Filters
+from telegram.ext import PrefixHandler, Filters
 
 
 # Import all funcs in main
@@ -76,8 +76,10 @@ def main():
         update.effective_message.reply_text("Rebooted ✨")
         Thread(target=stop_and_restart).start()
 
-    restart_handler = CommandHandler("reboot", restart, filters=Filters.user(DEV_ID))
-    start_handler = CommandHandler("start", start)
+    restart_handler = PrefixHandler(
+        cmd, "reboot", restart, filters=Filters.user(DEV_ID)
+    )
+    start_handler = PrefixHandler(cmd, "start", start)
 
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)

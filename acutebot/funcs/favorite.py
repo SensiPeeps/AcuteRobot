@@ -13,11 +13,11 @@
 # SOFTWARE.
 
 
-from telegram.ext import CommandHandler, CallbackQueryHandler
+from telegram.ext import PrefixHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
-from acutebot import dp, typing
+from acutebot import dp, cmd, typing
 import acutebot.helpers.strings as st
 import acutebot.helpers.database.favorites_sql as sql
 
@@ -66,7 +66,7 @@ def rem_favorite(update, context):
         query.answer(st.NOT_ALLOWED, show_alert=True)
 
 
-LIST_FAV_HANDLER = CommandHandler("watchlist", list_favorite)
+LIST_FAV_HANDLER = PrefixHandler(cmd, "watchlist", list_favorite)
 FAV_CLEAR_HANDLER = CallbackQueryHandler(rem_favorite, pattern=r"remfav_")
 FAV_ADD_HANDLER = CallbackQueryHandler(add_favorite, pattern=r"addfav_")
 

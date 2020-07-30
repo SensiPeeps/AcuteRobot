@@ -19,39 +19,39 @@ from acutebot import TMDBAPI
 base_url = "https://api.themoviedb.org/3"
 
 
-def getid(query, type):
+def getid(query, category):
     """
     rtype: TV or movie id for the query
     """
 
     query = query.replace(" ", "%20")
-    id = 0
+    c_id = 0
 
-    if type not in ("TV", "MOVIE"):
+    if category not in ("TV", "MOVIE"):
         raise Exception("type parameter must be either 'TV' or 'MOVIE'")
 
-    if type == "TV":
+    if category == "TV":
 
-        id = r.get(
+        c_id = r.get(
             f"{base_url}/search/tv?api_key={TMDBAPI}"
             + f"&language=en&query={query}"
             + "&page=1&include_adult=true"
         )
 
-    elif type == "MOVIE":
+    elif category == "MOVIE":
 
-        id = r.get(
+        c_id = r.get(
             f"{base_url}/search/movie?api_key={TMDBAPI}"
             + f"&language=en&query={query}"
             + "&page=1&include_adult=true"
         )
 
-    if id.status_code != 200:
+    if c_id.status_code != 200:
         return "api_error"
 
     try:
-        id = id.json()["results"][0]["id"]
+        c_id = c_id.json()["results"][0]["id"]
     except IndexError:
         return "not_found"
 
-    return id
+    return c_id
