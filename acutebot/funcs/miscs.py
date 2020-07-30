@@ -20,11 +20,11 @@ from pythonping import ping as pingger
 from acutebot.helpers.database import users_sql as sql
 from acutebot.helpers.database.favorites_sql import fav_count
 import acutebot.helpers.strings as st
-from acutebot import dp, cmd, typing, DEV_ID, LOG
+from acutebot import dp, typing, DEV_ID, LOG
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
-from telegram.ext import PrefixHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.error import BadRequest
 
 
@@ -138,12 +138,12 @@ def log_user(update, context):
         sql.update_user(msg.forward_from.id, msg.forward_from.username)
 
 
-IP_HANDLER = PrefixHandler(cmd, "ip", get_ip, filters=Filters.chat(DEV_ID))
-PING_HANDLER = PrefixHandler(cmd, "ping", ping, filters=Filters.user(DEV_ID))
-REDDIT_HANDLER = PrefixHandler(cmd, "reddit", rmemes)
-STATS_HANDLER = PrefixHandler(cmd, "stats", stats, filters=Filters.user(DEV_ID))
+IP_HANDLER = CommandHandler("ip", get_ip, filters=Filters.chat(DEV_ID))
+PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(DEV_ID))
+REDDIT_HANDLER = CommandHandler("reddit", rmemes)
+STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
-SHELL_HANDLER = PrefixHandler(cmd, "shell", shell, filters=Filters.user(DEV_ID))
+SHELL_HANDLER = CommandHandler("shell", shell, filters=Filters.user(DEV_ID))
 LOG_HANDLER = MessageHandler(Filters.all, log_user)
 
 

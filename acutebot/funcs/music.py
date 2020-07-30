@@ -19,12 +19,12 @@ from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
 
 from pathlib import Path
 from telegram.ext.dispatcher import run_async
-from telegram.ext import PrefixHandler, MessageHandler, Filters, ConversationHandler
+from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ForceReply, ReplyKeyboardMarkup
 from telethon import TelegramClient
 from telethon.tl import types
 
-from acutebot import dp, cmd, typing, ARLTOKEN, APIID, APIHASH, LOG
+from acutebot import dp, typing, ARLTOKEN, APIID, APIHASH, LOG
 from acutebot.helpers import strings as st
 
 MUSIC, ARTIST, SENDMUSIC = range(3)
@@ -184,13 +184,13 @@ def cancel(update, context):
 
 
 MUSIC_HANDLER = ConversationHandler(
-    entry_points=[PrefixHandler(cmd, "music", musicq)],
+    entry_points=[CommandHandler("music", musicq)],
     states={
         MUSIC: [MessageHandler(Filters.text & ~Filters.command, music)],
         ARTIST: [MessageHandler(Filters.text & ~Filters.command, _artist)],
         SENDMUSIC: [MessageHandler(Filters.text & ~Filters.command, sendmusic)],
     },
-    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
+    fallbacks=[CommandHandler("cancel", cancel)],
     conversation_timeout=120,
 )
 

@@ -17,14 +17,14 @@ import requests as r
 
 from telegram.ext import (
     MessageHandler,
-    PrefixHandler,
+    CommandHandler,
     Filters,
     ConversationHandler,
 )
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, ForceReply
 
-from acutebot import dp, cmd, LOG, TMDBAPI, typing
+from acutebot import dp, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import byname, currency, sort_caps
 from acutebot.helpers.keyboard import keyboard
@@ -149,9 +149,9 @@ def cancel(update, context):
 
 
 MOVIE_HANDLER = ConversationHandler(
-    entry_points=[PrefixHandler(cmd, "movies", movie_entry)],
+    entry_points=[CommandHandler("movies", movie_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, movie)]},
-    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
+    fallbacks=[CommandHandler("cancel", cancel)],
     conversation_timeout=120,
 )
 

@@ -17,7 +17,7 @@ import requests as r
 
 from telegram.ext import (
     MessageHandler,
-    PrefixHandler,
+    CommandHandler,
     Filters,
     ConversationHandler,
 )
@@ -25,7 +25,7 @@ from telegram.ext import (
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, ForceReply
 
-from acutebot import dp, cmd, LOG, TMDBAPI, typing
+from acutebot import dp, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import byname, byindex, sort_caps, tvruntime
 from acutebot.helpers.keyboard import keyboard
@@ -152,11 +152,12 @@ def cancel(update, context):
 
 
 TV_HANDLER = ConversationHandler(
-    entry_points=[PrefixHandler(cmd, "tvshows", tv_entry)],
+    entry_points=[CommandHandler("tvshows", tv_entry)],
     states={1: [MessageHandler(Filters.text & ~Filters.command, tv)]},
-    fallbacks=[PrefixHandler(cmd, "cancel", cancel)],
+    fallbacks=[CommandHandler("cancel", cancel)],
     conversation_timeout=120,
 )
 
 
 dp.add_handler(TV_HANDLER)
+
