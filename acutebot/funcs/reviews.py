@@ -117,28 +117,15 @@ def moviereview(update, context):
 def reviewdata(res: dict, title: str):
     """build review text from dict"""
 
-    # TODO: use single loop?
     results = res["results"]
-    author = []
-    url = []
 
     if len(results) > 0:
-        for dic in results:
-            author.append(dic["author"])
-            url.append(dic["url"])
-    else:
-        return st.REVIEW_NOT_FOUND
+        text = f"💬 Reviews for <b>{title}</b>\n\n"
+        for rev in results:
+            text += f"<b>🎖 By {rev['author']}</b> :\n🏷 Link: {rev['url']}\n\n"
+        return text
 
-    text = f"💬 Reviews for <b>{title}</b>\n\n"
-    num = 0
-    for a in author:
-        text += f"<b>🎖 By {a}</b> :\n"
-        for c in url:
-            text += f"🏷 Link: {url[num]}\n\n"
-            num += 1
-            break
-
-    return text
+    return st.REVIEW_NOT_FOUND
 
 
 @run_async

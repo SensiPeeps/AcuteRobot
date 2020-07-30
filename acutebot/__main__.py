@@ -64,6 +64,7 @@ BANNER = r"""
 | | | | (__| |_| | ||  __/ |_/ / (_) | |_
 \_| |_/\___|\__,_|\__\___\____/ \___/ \__|
 
+Is Running 🎶🎶🎵
 """
 
 
@@ -84,7 +85,7 @@ def main():
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)
 
-    LOG.info("%s" + "\nIs Running 🎶🎶🎵", BANNER)
+    LOG.info("%s", BANNER)
     updater.start_polling(timeout=15, read_latency=4)
     updater.idle()
 
