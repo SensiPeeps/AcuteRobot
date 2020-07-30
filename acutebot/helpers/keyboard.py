@@ -47,7 +47,7 @@ def keyboard(
         keyblist.append(
             [
                 InlineKeyboardButton(
-                    text="Save to watchlist 🔖", callback_data=f"addfav_{title}"
+                    text="Save to watchlist 🔖", callback_data=f"addfav_{title[:54]}"
                 )
             ]
         )
@@ -56,7 +56,8 @@ def keyboard(
         keyblist.append(
             [
                 InlineKeyboardButton(
-                    text="More information", url=f"https://www.themoviedb.org/tv/{tv_id}"
+                    text="More information",
+                    url=f"https://www.themoviedb.org/tv/{tv_id}",
                 )
             ]
         )
@@ -65,7 +66,8 @@ def keyboard(
         keyblist.append(
             [
                 InlineKeyboardButton(
-                    text="More information", url=f"https://www.themoviedb.org/movie/{mv_id}"
+                    text="More information",
+                    url=f"https://www.themoviedb.org/movie/{mv_id}",
                 )
             ]
         )
