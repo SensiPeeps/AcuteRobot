@@ -12,6 +12,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from acutebot import __version__
 
 # Contents
 MOVIE_STR = """
@@ -78,6 +79,17 @@ to see list of possible commands.
 And don't forget to smile, atleast once in a while :)
 """
 START_STRING_GRP = "Hmmm?"
+
+
+# Help
+ABOUT_STR = f"""
+Hey there! My name is acutebot, i'm fully written in \
+python3 by <a href="tg://user?id=894380120">starry</a> 💫
+
+× Bot version : {__version__}
+× Powered by : themoviedb.org
+× Built with : <a href="https://github.com/python-telegram-bot">PTB Library</a>
+"""
 
 
 # Errors

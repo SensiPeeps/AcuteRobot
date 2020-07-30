@@ -22,7 +22,7 @@ import acutebot.helpers.strings as st
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
-from telegram.ext import PrefixHandler, Filters
+from telegram.ext import PrefixHandler, CallbackQueryHandler, Filters
 
 
 # Import all funcs in main
@@ -48,12 +48,32 @@ def start(update, context):
                             text="Search TVshows",
                             switch_inline_query_current_chat="<tv> ",
                         ),
-                    ]
+                    ],
+                    [InlineKeyboardButton(text="🐾  About me  🐾", callback_data="help")],
                 ]
             ),
         )
     else:
         msg.reply_text(st.START_STRING_GRP)
+
+
+@run_async
+def help_button(update, context):
+    query = update.callback_query
+    query.message.edit_text(
+        st.ABOUT_STR,
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Github 🔭", url="https://github.com/starry69"
+                    ),
+                    InlineKeyboardButton(text="Donate 🖤", url="paypal.me/starryrays"),
+                ]
+            ]
+        ),
+    )
 
 
 BANNER = r"""
@@ -81,9 +101,11 @@ def main():
         cmd, "reboot", restart, filters=Filters.user(DEV_ID)
     )
     start_handler = PrefixHandler(cmd, "start", start)
+    help_handler = CallbackQueryHandler(help_button, pattern=r"help")
 
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)
+    dp.add_handler(help_handler)
 
     LOG.info("%s", BANNER)
     updater.start_polling(timeout=15, read_latency=4)
