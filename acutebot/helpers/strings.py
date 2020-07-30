@@ -74,10 +74,11 @@ Examples:
 # Start
 START_STRING = """
 Hey {}, my name is acutebot and i can help you to get \
-info about your favorite 🎞️ movies or tv shows, you can also download \
-🎸 music & can view song lyrics using me! Just click: <pre>/</pre> \
-to get started with possible commands...
-And don't forget to smile, atleast once in a while 😸
+information about your favorite movies or tv shows, you can also download \
+music & can view song lyrics using me! Just click: <pre>/</pre> \
+to get started with list of possible commands...
+
+And don't forget to smile, atleast once in a while ;)
 """
 START_STRING_GRP = "Hmmm?"
 
