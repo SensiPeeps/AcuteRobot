@@ -50,12 +50,11 @@ def rname(update, context):
     if name == "TV series":
         msg.reply_text(st.TOSEARCHTV, reply_markup=ForceReply(selective=True))
         return TV
-    elif name == "Movies":
+    if name == "Movies":
         msg.reply_text(st.TOSEARCHMOVIE, reply_markup=ForceReply(selective=True))
         return MOVIE
-    else:
-        msg.reply_text(st.INVALIDREVIEWNAME, reply_markup=ReplyKeyboardRemove())
-        return -1
+    msg.reply_text(st.INVALIDREVIEWNAME, reply_markup=ReplyKeyboardRemove())
+    return -1
 
 
 @run_async
@@ -68,7 +67,7 @@ def tvreview(update, context):
         msg.reply_text(st.API_ERR)
         return -1
 
-    elif r_id == "not_found":
+    if r_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 
@@ -96,7 +95,7 @@ def moviereview(update, context):
     if r_id == "api_error":
         msg.reply_text(st.API_ERR)
         return -1
-    elif r_id == "not_found":
+    if r_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 

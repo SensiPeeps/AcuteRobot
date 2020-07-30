@@ -70,8 +70,7 @@ def rmemes(update, context):
 
     if res.status_code != 200:  # Like if api is down?
         return msg.reply_text(st.API_ERR)
-    else:
-        res = res.json()
+    res = res.json()
 
     keyb = [[InlineKeyboardButton(text=f"r/{res['subreddit']}", url=res["postLink"])]]
     try:
@@ -113,10 +112,10 @@ def shell(update, context):
     bot = context.bot
     msg = update.effective_message
     chat = update.effective_chat
-    cmd = " ".join(context.args).split()
+    command = " ".join(context.args).split()
     rep = msg.reply_text("Running command...")
     try:
-        res = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,)
+        res = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,)
         stdout, stderr = res.communicate()
         result = str(stdout.decode().strip()) + str(stderr.decode().strip())
         bot.editMessageText("<pre>" + result + "</pre>", chat.id, rep.message_id)

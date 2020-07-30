@@ -46,7 +46,7 @@ def tvdata(c_id):
         + "&append_to_response=videos"
     ).json()
 
-    class res(object):
+    class res:
 
         c_id = data.get("id")
         title = data.get("original_name")
@@ -95,7 +95,7 @@ def tv(update, context):
         msg.reply_text(st.API_ERR)
         return -1
 
-    elif c_id == "not_found":
+    if c_id == "not_found":
         msg.reply_text(st.NOT_FOUND)
         return -1
 

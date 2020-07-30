@@ -55,9 +55,9 @@ else:
         level=logging.INFO,
     )
 
+cmd = ["!", "/", "?"]
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)
-cmd = ["!", "/", "?"]
 
 # Check python version:
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:

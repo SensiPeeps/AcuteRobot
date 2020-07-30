@@ -73,7 +73,7 @@ def main():
         os.execl(sys.executable, sys.executable, *sys.argv)
 
     def restart(update, context):
-        update.effective_message.reply_text("Rebooted ✨")
+        context.bot.sendMessage(update.effective_chat.id, "Rebooted ✨")
         Thread(target=stop_and_restart).start()
 
     restart_handler = PrefixHandler(
@@ -84,7 +84,7 @@ def main():
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)
 
-    LOG.info(BANNER + "\nIs Running 🎶🎶🎵")
+    LOG.info("%s" + "\nIs Running 🎶🎶🎵", BANNER)
     updater.start_polling(timeout=15, read_latency=4)
     updater.idle()
 

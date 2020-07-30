@@ -55,8 +55,7 @@ def add_fav(user_id, data):
             SESSION.add(adder)
             SESSION.commit()
             return True
-        else:
-            return False
+        return False
 
 
 def remove_fav(user_id):
@@ -64,11 +63,10 @@ def remove_fav(user_id):
         to_check = get_fav(user_id)
         if not to_check:
             return False
-        else:
-            rem = SESSION.query(Favourites).filter(Favourites.user_id == user_id)
-            rem.delete()
-            SESSION.commit()
-            return True
+        rem = SESSION.query(Favourites).filter(Favourites.user_id == user_id)
+        rem.delete()
+        SESSION.commit()
+        return True
 
 
 def fav_count():
