@@ -143,6 +143,7 @@ def sendmusic(update, context):
         else:
             rep = msg.reply_text(st.UPLOAD_TELETHON)
             loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
             send_file_telethon(
                 context.bot.token, file, chat.id, loop, title, artist, duration
             )
