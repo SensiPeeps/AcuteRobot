@@ -55,7 +55,7 @@ else:
         level=logging.INFO,
     )
 
-__version__ = "6.0.0-rev04"
+__version__ = "1.0.6-rev05"
 
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)
