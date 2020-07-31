@@ -76,8 +76,8 @@ Examples:
 START_STRING = """
 Hey {}, my name is acutebot and i can help you to get \
 information about your favorite movies or tv shows, you can also download \
-music & can view song lyrics using me! Just click: <pre>/</pre> \
-to get started with list of possible commands...
+music & can view song lyrics using me! Just click the button \
+below to get started with list of possible commands...
 
 And don't forget to smile, atleast once in a while ;)
 """
@@ -99,6 +99,30 @@ feel free to report him if you find any rough edge inside me.
 If you enjoyed using me & wanna support my creator \
 hit the donate button below, since he's just a student so \
 every little helps to pay for my server, and ofcourse boosting morale ;)
+
+"""
+
+# Help
+HELP_STR = """
+<b>🗒️ Documentation for possible commands :</b>
+
+🎬 <b>Movie & TV related commands~</b>
+• <pre>/movies</pre> : Get information about movies.
+• <pre>/tvshows</pre> : Get information about tvshows.
+• <pre>/reviews</pre> : Get reviews of movies & tvshows.
+
+🎸 <b>Music & lyrics related commands~</b>
+• <pre>/music</pre> : Download your favorite songs in high resolution
+• <pre>/lyrics</pre> : Get lyrics for your favorite songs.
+
+💫 <b>Miscellaneous commands for fun~</b>
+• <pre>/reddit</pre> : Gets you random memes scraped from popular subreddits.
+• <pre>/watchlist</pre> : Get list of saved shows from your watchlist :D.
+• <pre>/cancel</pre> : Do this when you get stuck & bot is not replying to you.
+
+🏷 Notes: You can also search movies & tvshows inline \
+just type <pre>@acutebot</pre> in your message box \
+and follow the instructions.
 
 """
 

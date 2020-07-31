@@ -30,35 +30,30 @@ for func_name in ALL_FUNCS:
     imported_module = importlib.import_module("acutebot.funcs." + func_name)
 
 
-@run_async
-@typing
-def start(update, context):
+def send_start(update, context):
     msg = update.effective_message
-    if update.effective_chat.type == "private":
-        msg.reply_photo("https://telegra.ph/file/041f3315022a6ca8f94fe.jpg",
-            st.START_STRING.format(update.effective_user.first_name),
-            reply_markup=InlineKeyboardMarkup(
+    msg.reply_photo(
+        "https://telegra.ph/file/041f3315022a6ca8f94fe.jpg",
+        st.START_STRING.format(update.effective_user.first_name),
+        reply_markup=InlineKeyboardMarkup(
+            [
                 [
-                    [
-                        InlineKeyboardButton(
-                            text="Movies",
-                            switch_inline_query_current_chat="<movie> ",
-                        ),
-                        InlineKeyboardButton(
-                            text="TVshows",
-                            switch_inline_query_current_chat="<tv> ",
-                        ),
-                    ],
-                    [InlineKeyboardButton(text="🐾  About me  🐾", callback_data="help")],
-                ]
-            ),
-        )
-    else:
-        msg.reply_text(st.START_STRING_GRP)
+                    InlineKeyboardButton(
+                        text="Movies", switch_inline_query_current_chat="<movie> ",
+                    ),
+                    InlineKeyboardButton(
+                        text="TVshows", switch_inline_query_current_chat="<tv> ",
+                    ),
+                ],
+                [InlineKeyboardButton(text="🐾  About me  🐾", callback_data="about")],
+                [InlineKeyboardButton(text="Help and Commands❔", callback_data="help")],
+            ]
+        ),
+    )
 
 
 @run_async
-def help_button(update, context):
+def about_button(update, context):
     query = update.callback_query
     query.message.reply_text(
         st.ABOUT_STR,
@@ -74,6 +69,19 @@ def help_button(update, context):
             ]
         ),
     )
+
+
+@run_async
+def help_button(update, context):
+    query = update.callback_query
+    query.message.reply_text(st.HELP_STR)
+
+
+@run_async
+def start(update, context):
+    if update.effective_chat.type == "private":
+        return send_start(update, context)
+    update.effective_message.reply_text(st.START_STRING_GRP)
 
 
 BANNER = r"""
@@ -97,14 +105,14 @@ def main():
         context.bot.sendMessage(update.effective_chat.id, "Rebooted ✨")
         Thread(target=stop_and_restart).start()
 
-    restart_handler = CommandHandler(
-        "reboot", restart, filters=Filters.user(DEV_ID)
-    )
+    restart_handler = CommandHandler("reboot", restart, filters=Filters.user(DEV_ID))
     start_handler = CommandHandler("start", start)
+    about_handler = CallbackQueryHandler(about_button, pattern=r"about")
     help_handler = CallbackQueryHandler(help_button, pattern=r"help")
 
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)
+    dp.add_handler(about_handler)
     dp.add_handler(help_handler)
 
     LOG.info("%s", BANNER)
