@@ -14,6 +14,7 @@
 
 from acutebot import __version__
 from platform import python_version
+from telegram import __version__ as _libv_
 
 # Contents
 MOVIE_STR = """
@@ -83,15 +84,22 @@ And don't forget to smile, atleast once in a while ;)
 START_STRING_GRP = "Hmmm?"
 
 
-# Help
+# About
 ABOUT_STR = f"""
-Hey there! My name is acutebot, I'm fully written in \
-python3 by <a href="tg://user?id=894380120">starry</a> ✨
+I'm fully written in \
+Python3 by <a href="tg://user?id=894380120">starry</a>, \
+feel free to report him if you find any rough edge inside me.
 
 × Bot version : <pre>{__version__}</pre>
 × Py version : <pre>{python_version()}</pre>
+× Lib version : <pre>PTB {_libv_}</pre>
 × Powered by : <pre>themoviedb.org</pre>
-× Built with : <a href="https://github.com/python-telegram-bot">PTB Library</a>
+× Music data from : <pre>deezer.com</pre>
+
+If you enjoyed using me & wanna support my creator \
+hit the donate button below, since he's just a student so \
+every little helps to pay for my server, and ofcourse boosting morale ;)
+
 """
 
 
