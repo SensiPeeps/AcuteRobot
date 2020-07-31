@@ -16,7 +16,7 @@
 import os, sys, importlib
 from threading import Thread
 
-from acutebot import LOG, dp, updater, typing, DEV_ID
+from acutebot import LOG, dp, updater, DEV_ID
 from acutebot.funcs import ALL_FUNCS
 import acutebot.helpers.strings as st
 
