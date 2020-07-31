@@ -12,6 +12,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
 import requests as r
 import subprocess
 import random
@@ -63,6 +64,9 @@ def rmemes(update, context):
         "memesIRL",
         "insanepeoplefacebook",
         "terriblefacebookmemes",
+        "animememes",
+        "Animemes",
+        "memeeconomy",
     ]
 
     subreddit = random.choice(SUBREDS)
