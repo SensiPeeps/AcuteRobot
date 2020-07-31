@@ -106,16 +106,16 @@ every little helps to pay for my server, and ofcourse boosting morale ;)
 HELP_STR = """
 <b>🗒️ Documentation for possible commands :</b>
 
-🎬 <b>Movie & TV related commands~</b>
+🎬 <b>Movie & TV related commands :</b>
 • <pre>/movies</pre> : Get information about movies.
 • <pre>/tvshows</pre> : Get information about tvshows.
 • <pre>/reviews</pre> : Get reviews of movies & tvshows.
 
-🎸 <b>Music & lyrics related commands~</b>
+🎸 <b>Music & lyrics related commands :</b>
 • <pre>/music</pre> : Download your favorite songs in high resolution
 • <pre>/lyrics</pre> : Get lyrics for your favorite songs.
 
-💫 <b>Miscellaneous commands for fun~</b>
+💫 <b>Miscellaneous commands :</b>
 • <pre>/reddit</pre> : Gets you random memes scraped from popular subreddits.
 • <pre>/watchlist</pre> : Get list of saved shows from your watchlist :D.
 • <pre>/cancel</pre> : Do this when you get stuck & bot is not replying to you.

@@ -30,7 +30,7 @@ for func_name in ALL_FUNCS:
     imported_module = importlib.import_module("acutebot.funcs." + func_name)
 
 
-def send_start(update, context):
+def send_start(update):
     msg = update.effective_message
     msg.reply_photo(
         "https://telegra.ph/file/041f3315022a6ca8f94fe.jpg",
@@ -55,6 +55,7 @@ def send_start(update, context):
 @run_async
 def about_button(update, context):
     query = update.callback_query
+    query.message.delete()
     query.message.reply_text(
         st.ABOUT_STR,
         disable_web_page_preview=True,
@@ -65,7 +66,8 @@ def about_button(update, context):
                         text="Github 🔭", url="https://github.com/starry69"
                     ),
                     InlineKeyboardButton(text="Donate 🖤", url="paypal.me/starryrays"),
-                ]
+                ],
+              [InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")],
             ]
         ),
     )
@@ -74,14 +76,23 @@ def about_button(update, context):
 @run_async
 def help_button(update, context):
     query = update.callback_query
-    query.message.reply_text(st.HELP_STR)
+    query.message.delete()
+    query.message.reply_text(st.HELP_STR,
+    reply_markup=InlineKeyboardMarkup(
+    [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")]]))
 
 
 @run_async
 def start(update, context):
     if update.effective_chat.type == "private":
-        return send_start(update, context)
+        return send_start(update)
     update.effective_message.reply_text(st.START_STRING_GRP)
+
+@run_async
+def back_btn(update, context):
+    query = update.callback_query
+    query.message.delete()
+    return send_start(update)
 
 
 BANNER = r"""
@@ -109,11 +120,13 @@ def main():
     start_handler = CommandHandler("start", start)
     about_handler = CallbackQueryHandler(about_button, pattern=r"about")
     help_handler = CallbackQueryHandler(help_button, pattern=r"help")
+    back_btn_handler = CallbackQueryHandler(back_btn, pattern=r"back_btn")
 
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)
     dp.add_handler(about_handler)
     dp.add_handler(help_handler)
+    dp.add_handler(back_btn_handler)
 
     LOG.info("%s", BANNER)
     updater.start_polling(timeout=15, read_latency=4)
