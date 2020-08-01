@@ -67,7 +67,7 @@ def about_button(update, context):
                     ),
                     InlineKeyboardButton(text="Donate 🖤", url="paypal.me/starryrays"),
                 ],
-              [InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")],
+                [InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")],
             ]
         ),
     )
@@ -77,9 +77,13 @@ def about_button(update, context):
 def help_button(update, context):
     query = update.callback_query
     query.message.delete()
-    query.message.reply_text(st.HELP_STR,
-    reply_markup=InlineKeyboardMarkup(
-    [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")]]))
+    query.message.reply_text(
+        st.HELP_STR,
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")]]
+        ),
+    )
+    context.bot.answer_callback_query(query.id)
 
 
 @run_async
@@ -88,11 +92,13 @@ def start(update, context):
         return send_start(update)
     update.effective_message.reply_text(st.START_STRING_GRP)
 
+
 @run_async
 def back_btn(update, context):
     query = update.callback_query
     query.message.delete()
-    return send_start(update)
+    send_start(update)
+    context.bot.answer_callback_query(query.id)
 
 
 BANNER = r"""
