@@ -33,7 +33,7 @@ for func_name in ALL_FUNCS:
 def send_start(update):
     msg = update.effective_message
     msg.reply_photo(
-        "https://telegra.ph/file/041f3315022a6ca8f94fe.jpg",
+        "https://telegra.ph/file/35c83c568502b9944c76d.jpg",
         st.START_STRING.format(update.effective_user.first_name),
         reply_markup=InlineKeyboardMarkup(
             [
