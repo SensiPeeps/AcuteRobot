@@ -85,7 +85,7 @@ def anime(update, context):
                 caption=sort_caps(caption, c_id=res[0]["links"]["self"], anime=True),
                 reply_markup=InlineKeyboardMarkup(
                     keyboard(
-                        title=data.get("canonicalTitle"),
+                        title=data["titles"].get("en"),
                         anime_ytkey=data.get("youtubeVideoId"),
                     )
                 ),

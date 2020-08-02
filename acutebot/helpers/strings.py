@@ -121,23 +121,23 @@ every little helps to pay for my server, and ofcourse boosting morale ;)
 HELP_STR = """
 <b>🗒️ Documentation for possible commands :</b>
 
-🎬 <b>Movie & TV related commands :</b>
-• <pre>/movies</pre> : Get information about movies.
-• <pre>/tvshows</pre> : Get information about tvshows.
-• <pre>/reviews</pre> : Get reviews of movies & tvshows.
+🎬 <b>Movies, TV & Anime commands :</b>
+× <pre>/movies</pre> : Get information about movies.
+× <pre>/tvshows</pre> : Get information about tvshows.
+× <pre>/anime</pre> : Get information about your favorite anime.
 
 🎸 <b>Music & lyrics related commands :</b>
-• <pre>/music</pre> : Download your favorite songs in high resolution
-• <pre>/lyrics</pre> : Get lyrics for your favorite songs.
+× <pre>/music</pre> : Download your favorite songs in high resolution
+× <pre>/lyrics</pre> : Get lyrics for your favorite songs.
 
 💫 <b>Miscellaneous commands :</b>
-• <pre>/reddit</pre> : Gets you random memes scraped from popular subreddits.
-• <pre>/watchlist</pre> : Get list of saved shows from your watchlist :D.
-• <pre>/cancel</pre> : Do this when you get stuck & bot is not replying to you.
+× <pre>/reddit</pre> : Gets you random memes scraped from popular subreddits.
+× <pre>/watchlist</pre> : Get list of saved shows from your watchlist :D.
+× <pre>/cancel</pre> : Do this when you get stuck & bot is not replying to you.
 
 🏷 Notes: You can also search movies & tvshows inline \
 just type <pre>@acutebot</pre> in your message box \
-and follow the instructions.
+and follow the instructions. [Anime inline search coming soon]
 
 """
 
@@ -164,7 +164,7 @@ TOSEARCH_ANIME = "Please reply with the anime title you want to look for."
 # Favs
 NOFAVS = "Hmmm 🤔 looks like you don't have any title saved in your watchlist yet!"
 REMFAV = "Great work! Successfully cleared your watchlist :)"
-SAVED_FAV = "Added {} to your Watchlist!"
+SAVED_FAV = "Added '{}' to your Watchlist!"
 FAV_EXIST = (
     "Hey there this title is already in your watchlist, Go & finish it instead ;)"
 )
