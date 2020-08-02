@@ -58,10 +58,11 @@ def anime(update, context):
         return -1
 
     res = res.json()["data"]
-    if len(res) < 0:
+    try:
+        data = res[0]["attributes"]
+    except IndexError:
         msg.reply_text(st.NOT_FOUND)
         return -1
-    data = res[0]["attributes"]
 
     caption = st.ANIME_STR.format(
         data["titles"].get("en", ""),
