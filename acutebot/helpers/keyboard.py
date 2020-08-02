@@ -17,7 +17,13 @@ from telegram import InlineKeyboardButton
 
 
 def keyboard(
-    ytkey=None, homepage=None, title=None, imdbid=None, tv_id=None, mv_id=None
+    ytkey=None,
+    homepage=None,
+    title=None,
+    imdbid=None,
+    tv_id=None,
+    mv_id=None,
+    anime_ytkey=None,
 ):
     """
     Attach InlineKeyboardButton dynamically from data
@@ -70,6 +76,13 @@ def keyboard(
                     url=f"https://www.themoviedb.org/movie/{mv_id}",
                 )
             ]
+        )
+
+    if anime_ytkey:
+        keyblist[0].append(
+            InlineKeyboardButton(
+                text="📹 Trailer", url=f"https://www.youtube.com/watch?v={anime_ytkey}"
+            )
         )
 
     return keyblist

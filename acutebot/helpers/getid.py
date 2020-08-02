@@ -28,7 +28,7 @@ def getid(query, category):
     c_id = 0
 
     if category not in ("TV", "MOVIE"):
-        raise Exception("type parameter must be either 'TV' or 'MOVIE'")
+        raise Exception("Category parameter must be either 'TV' or 'MOVIE'")
 
     if category == "TV":
 

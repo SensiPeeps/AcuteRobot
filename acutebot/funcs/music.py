@@ -134,7 +134,7 @@ def sendmusic(update, context):
             context.bot.sendAudio(
                 chat.id,
                 open(file, "rb"),
-                caption="Via @acutebot 🎧",
+                caption="Via @acutebot 🎸",
                 title=title,
                 performer=artist,
                 duration=duration,
@@ -167,7 +167,7 @@ def send_file_telethon(bot_token, file, chatid, loop, title, artist, duration):
             bot.send_file(
                 chatid,
                 open(file, "rb"),
-                caption="Via @acutebot 🎧",
+                caption="Via @acutebot 🎸",
                 attributes=[
                     types.DocumentAttributeAudio(
                         title=title, performer=artist, duration=duration

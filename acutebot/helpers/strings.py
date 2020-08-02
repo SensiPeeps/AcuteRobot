@@ -51,6 +51,21 @@ TV_STR = """
 • OverView : <em>{}</em>
 """
 
+ANIME_STR = """
+<b>{}</b> | <b>{}</b>
+
+• Category : <pre>{}</pre>
+• Type : <pre>{}</pre>
+• Average Rating : <pre>{}</pre>
+• Status : <pre>{}</pre>
+• First aired : <pre>{}</pre>
+• Last aired : <pre>{}</pre>
+• Runtime : <pre>{} minutes</pre>
+• No of episodes : <pre>{}</pre>
+
+• Synopsis : <em>{}</em>
+"""
+
 # Inline Content
 INLINE_STR = """
 • <b>Title</b> : {}
@@ -141,9 +156,10 @@ INVALIDREVIEWNAME = (
 CANCEL = "Cancelled the current task!"
 
 # To search
-TOSEARCHMOVIE = "Please reply with the movie title you wanna look for!"
-TOSEARCHTV = "Please reply with the TV title you wanna look for!"
+TOSEARCHMOVIE = "Please reply with the movie title you wanna look for."
+TOSEARCHTV = "Please reply with the TV title you wanna look for."
 TOSEARCHREVIEW = "Hi! Please tell me for what category you want reviews for."
+TOSEARCH_ANIME = "Please reply with the anime title you want to look for."
 
 # Favs
 NOFAVS = "Hmmm 🤔 looks like you don't have any title saved in your watchlist yet!"

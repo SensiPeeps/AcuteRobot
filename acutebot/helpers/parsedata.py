@@ -66,12 +66,17 @@ def article(
 
 
 # Cut down text to fit in tg limited chars.
-def sort_caps(text, c_id, tv=False, mv=False):
+def sort_caps(text, c_id, tv=False, mv=False, anime=False):
     if len(text) > MAX_CAP_LEN:
         text = text[: MAX_CAP_LEN - 80]
         text += "</em>"
         if tv:
             text += f"<a href='https://www.themoviedb.org/tv/{c_id}'>...read more</a>"
         if mv:
-            text += f"<a href='https://www.themoviedb.org/movie/{c_id}'>...read more</a>"
+            text += (
+                f"<a href='https://www.themoviedb.org/movie/{c_id}'>...read more</a>"
+            )
+        if anime:
+            text += f"<a href='{c_id}'>...read more</a>"
+
     return text
