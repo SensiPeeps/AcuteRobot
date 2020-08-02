@@ -95,7 +95,15 @@ def anime(update, context):
 
         else:
             bot.sendMessage(
-                chat.id, text=caption, reply_markup=InlineKeyboardMarkup(keyboard())
+                chat.id,
+                text=caption,
+                reply_markup=InlineKeyboardMarkup(
+                    keyboard(
+                        title=data["titles"].get("en"),
+                        anime_ytkey=data.get("youtubeVideoId"),
+                    )
+                ),
+                disable_web_page_preview=True,
             )
 
     except Exception as e:
