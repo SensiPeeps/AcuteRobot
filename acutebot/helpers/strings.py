@@ -106,9 +106,10 @@ Python3 by <a href="tg://user?id=894380120">starry</a>, \
 feel free to report him if you find any rough edge inside me.
 
 × Bot version : <pre>{__version__}</pre>
-× Py version : <pre>{python_version()}</pre>
-× Lib version : <pre>PTB {_libv_}</pre>
-× Powered by : <pre>themoviedb.org</pre>
+× Python version : <pre>{python_version()}</pre>
+× Library version : <pre>PTB {_libv_}</pre>
+× Movies & TV data : <pre>themoviedb.org</pre>
+× Anime data from : <pre>kitsu.io</pre>
 × Music data from : <pre>deezer.com</pre>
 
 If you enjoyed using me & wanna support my creator \
