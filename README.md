@@ -15,7 +15,7 @@
 <pre>/start</pre>: Cool command to check if bot is working.
 <pre>/tvshows</pre>: Gets you tv shows details.
 <pre>/movies</pre>: Gets you movie details.
-<pre>/reviews</pre>: Get reviews of Movies & TV shows.
+<pre>/anime</pre>: Gets your favorite anime details.
 <pre>/lyrics</pre>: Get lyrics of your favourite songs :)
 <pre>/music</pre>: Download your favourite songs in FLAC & 320kbs quality!
 <pre>watchlist</pre>: Get your saved watchlist :D
