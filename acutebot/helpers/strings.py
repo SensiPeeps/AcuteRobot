@@ -146,12 +146,7 @@ and follow the instructions. [Anime inline search coming soon]
 # Errors
 API_ERR = "Sorry, couldn't reach API at the moment :("
 NOT_FOUND = "Sorry, couldn't find any results for the query :("
-REVIEW_NOT_FOUND = (
-    "Sorry, It looks like i don't have reviews for that title in my database :("
-)
-INVALIDREVIEWNAME = (
-    "Hmmm.. maybe you've sent wrong category to look for, please try again!"
-)
+INVALIDCAT = "Hmmm.. maybe you've sent wrong category to look for, please try again!"
 
 # Cancel
 CANCEL = "Cancelled the current task!"
@@ -159,7 +154,6 @@ CANCEL = "Cancelled the current task!"
 # To search
 TOSEARCHMOVIE = "Please reply with the movie title you wanna look for."
 TOSEARCHTV = "Please reply with the TV title you wanna look for."
-TOSEARCHREVIEW = "Hi! Please tell me for what category you want reviews for."
 TOSEARCH_ANIME = "Please reply with the anime title you want to look for."
 
 # Favs

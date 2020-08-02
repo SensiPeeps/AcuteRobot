@@ -63,7 +63,7 @@ def music(update, context):
         MUSICDICT[user.id] = {"q": songq}
         msg.reply_text(st.MUSICNAME, reply_markup=ForceReply(selective=True))
         return ARTIST
-    msg.reply_text(st.INVALIDREVIEWNAME)
+    msg.reply_text(st.INVALIDCAT)
     return -1
 
 
