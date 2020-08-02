@@ -77,6 +77,6 @@ def sort_caps(text, c_id, tv=False, mv=False, anime=False):
                 f"<a href='https://www.themoviedb.org/movie/{c_id}'>...read more</a>"
             )
         if anime:
-            text += f"<a href='{c_id}'>...read more</a>"
+            text += f"<a href='https://kitsu.io/anime/{c_id}'>...read more</a>"
 
     return text

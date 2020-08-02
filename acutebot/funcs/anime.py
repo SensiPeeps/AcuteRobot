@@ -22,7 +22,7 @@ from telegram.ext import (
     ConversationHandler,
 )
 from telegram.ext.dispatcher import run_async
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
+from telegram import InlineKeyboardMarkup, ForceReply
 
 from acutebot import dp, typing, LOG
 from acutebot.helpers import strings as st
@@ -82,7 +82,7 @@ def anime(update, context):
             bot.sendPhoto(
                 chat_id=chat.id,
                 photo=data["posterImage"]["original"],
-                caption=sort_caps(caption, c_id=res[0]["links"]["self"], anime=True),
+                caption=sort_caps(caption, c_id=res[0]["id"], anime=True),
                 reply_markup=InlineKeyboardMarkup(
                     keyboard(
                         title=data["titles"].get("en"),
