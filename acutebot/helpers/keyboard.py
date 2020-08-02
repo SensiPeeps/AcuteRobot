@@ -24,6 +24,7 @@ def keyboard(
     tv_id=None,
     mv_id=None,
     anime_ytkey=None,
+    anime_id=None,
 ):
     """
     Attach InlineKeyboardButton dynamically from data
@@ -85,4 +86,10 @@ def keyboard(
             )
         )
 
+    if anime_id:
+        keyblist[0].append(
+            InlineKeyboardButton(
+                text="Information", url=f"https://kitsu.io/anime/{anime_id}"
+            )
+        )
     return keyblist

@@ -87,6 +87,7 @@ def anime(update, context):
                     keyboard(
                         title=data["titles"].get("en"),
                         anime_ytkey=data.get("youtubeVideoId"),
+                        anime_id=res[0]["id"],
                     )
                 ),
                 timeout=60,
@@ -101,6 +102,7 @@ def anime(update, context):
                     keyboard(
                         title=data["titles"].get("en"),
                         anime_ytkey=data.get("youtubeVideoId"),
+                        anime_id=res[0]["id"],
                     )
                 ),
                 disable_web_page_preview=True,
