@@ -14,10 +14,8 @@
 
 
 import requests as r
-import subprocess
-import random
+import subprocess, random
 
-from pythonping import ping as pingger
 from acutebot.helpers.database import users_sql as sql
 from acutebot.helpers.database.favorites_sql import fav_count
 import acutebot.helpers.strings as st
@@ -34,18 +32,6 @@ from telegram.error import BadRequest
 def get_ip(update, context):
     res = r.get("http://ipinfo.io/ip")
     update.message.reply_text(res.text)
-
-
-@run_async
-@typing
-def ping(update, context):
-    tg_api = pingger("api.telegram.org", count=4)
-    text = "*Pong!*\n"
-    text += (
-        f"Average speed to Telegram bot API server - <pre>{tg_api.rtt_avg_ms}</pre> ms"
-    )
-    update.effective_message.reply_text(text)
-
 
 @run_async
 def rmemes(update, context):
@@ -143,7 +129,6 @@ def log_user(update, context):
 
 
 IP_HANDLER = CommandHandler("ip", get_ip, filters=Filters.chat(DEV_ID))
-PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(DEV_ID))
 REDDIT_HANDLER = CommandHandler("reddit", rmemes)
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
@@ -152,7 +137,6 @@ LOG_HANDLER = MessageHandler(Filters.all, log_user)
 
 
 dp.add_handler(IP_HANDLER)
-dp.add_handler(PING_HANDLER)
 dp.add_handler(REDDIT_HANDLER)
 dp.add_handler(STATS_HANDLER)
 dp.add_handler(GREET_HANDLER)
