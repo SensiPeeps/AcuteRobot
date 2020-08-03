@@ -87,7 +87,7 @@ def sendlyrics(update, context):
             )
             os.remove("acute-lyrics.txt")
         else:
-            LOG.error("Error in lyrics" + excp.message)
+            LOG.error(excp.message)
 
     rep.delete()
     return -1
