@@ -13,14 +13,14 @@
 # SOFTWARE.
 
 
-import lyricsgenius
+import os, lyricsgenius
 
-from os import remove
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
+from telegram.error import BadRequest
 from telegram import ForceReply
 
-from acutebot import dp, typing, GENIUS
+from acutebot import dp, typing, LOG, GENIUS
 from acutebot.helpers import strings as st
 
 ARTIST, LYRICS = range(2)
@@ -72,20 +72,27 @@ def sendlyrics(update, context):
         msg.reply_text(st.LYRIC_NOT_FOUND)
         rep.delete()
         return -1
-    if len(lyrics.lyrics) > 4096:
-        msg.reply_text(st.LYRICS_TOO_BIG)
-        with open("acute-lyrics.txt", "w+") as f:
-            f.write(f"🎧 {song} by {artist}\n\n{lyrics.lyrics}")
-        context.bot.sendDocument(
-            chat_id=chat.id,
-            document=open("acute-lyrics.txt", "rb"),
-            caption=f"🎸 {song} - {artist}",
-        )
-        remove("acute-lyrics.txt")
-    else:
-        msg.reply_text(f"🎧 <b>{song}</b> by <b>{artist}</b>: " f"\n\n{lyrics.lyrics}")
-    rep.delete()
-    return -1
+    try:
+        msg.reply_text(f"🎧 <b>{song}</b> by <b>{artist}</b>:\n\n{lyrics.lyrics}")
+
+    except BadRequest as excp:
+        if excp.message == "Message is too long":
+            msg.reply_text(st.LYRICS_TOO_BIG)
+            with open("acute-lyrics.txt", "w+") as f:
+                f.write(f"🎧 {song} by {artist}\n\n{lyrics.lyrics}")
+            context.bot.sendDocument(
+                chat_id=chat.id,
+                document=open("acute-lyrics.txt", "rb"),
+                caption=f"🎸 {song} - {artist}",
+            )
+        else:
+            LOG.error(excp)
+
+    finally:
+        if os.path.isfile("acute-lyrics.txt"):
+            os.remove("acute-lyrics.txt")
+        rep.delete()
+        return -1
 
 
 @run_async

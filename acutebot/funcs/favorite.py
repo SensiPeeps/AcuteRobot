@@ -42,7 +42,7 @@ def list_favorite(update, context):
     user = update.effective_user
     fav = sql.get_fav(user.id)
     if fav:
-        text = "🔖 Your watchlist :\n\n"
+        text = "<b>🔖 Your watchlist:</b>\n\n"
         for title in fav:
             text += f"• {title.data}\n"
         keyb = [
