@@ -73,7 +73,7 @@ def sendlyrics(update, context):
         rep.delete()
         return -1
     try:
-        msg.reply_text(f"🎧 <b>{song}</b> by <b>{artist}</b>:\n\n{lyrics.lyrics}")
+        msg.reply_text(f"🎸 <b>{song}</b> by <b>{artist}</b>:\n\n{lyrics.lyrics}")
 
     except BadRequest as excp:
         if excp.message == "Message is too long":
@@ -85,14 +85,12 @@ def sendlyrics(update, context):
                 document=open("acute-lyrics.txt", "rb"),
                 caption=f"🎸 {song} - {artist}",
             )
-        else:
-            LOG.error(excp)
-
-    finally:
-        if os.path.isfile("acute-lyrics.txt"):
             os.remove("acute-lyrics.txt")
-        rep.delete()
-        return -1
+        else:
+            LOG.error("Error in lyrics" + excp.message)
+
+    rep.delete()
+    return -1
 
 
 @run_async

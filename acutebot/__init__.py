@@ -13,9 +13,7 @@
 # SOFTWARE.
 
 
-import logging
-import os
-import sys
+import os, sys, logging
 from functools import wraps
 from telegram.ext import Updater, Defaults
 from telegram import ChatAction, ParseMode
@@ -55,7 +53,7 @@ else:
         level=logging.INFO,
     )
 
-__version__ = "1.0.8-rev05"
+__version__ = "1.0.8-rev06"
 
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)
