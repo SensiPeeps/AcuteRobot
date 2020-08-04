@@ -110,10 +110,9 @@ def inlinequery(update, context):
             query = query.replace("<anime>", "").replace(" ", "%20")
             res = r.get(f"{anime_url}/anime?filter%5Btext%5D={query}")
             if res.status_code != 200:
-                msg.reply_text(st.API_ERR)
-                return -1
-
+                return
             res = res.json()["data"]
+
             for con in res:
                 data = con["attributes"]
                 results.append(
