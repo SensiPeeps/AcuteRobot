@@ -136,7 +136,7 @@ def inlinequery(update, context):
                         + f"<a href='{data['posterImage']['original']}'>&#xad</a>",
                         reply_markup=InlineKeyboardMarkup(
                             keyboard(
-                                title=data["titles"].get("en", "NA"),
+                                title=data["titles"].get("en"),
                                 anime_ytkey=data.get("youtubeVideoId"),
                                 anime_id=con["id"],
                             )

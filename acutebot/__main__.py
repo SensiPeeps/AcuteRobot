@@ -39,7 +39,7 @@ def send_start(update):
             [
                 [
                     InlineKeyboardButton(
-                        text="Movies", switch_inline_query_current_chat="<movie> ",
+                        text="Movie", switch_inline_query_current_chat="<movie> ",
                     ),
                     InlineKeyboardButton(
                         text="TVshow", switch_inline_query_current_chat="<tv> ",
