@@ -101,7 +101,7 @@ def inlinequery(update, context):
                             )
                             + f"<a href='{pic_url}/w500/{con['poster_path']}'>&#xad</a>",
                             reply_markup=InlineKeyboardMarkup(
-                                keyboard(title=con["title"], mv_id=con["id"])
+                                keyboard(title=con["original_title"], mv_id=con["id"])
                             ),
                         )
                     )
