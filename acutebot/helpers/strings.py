@@ -81,8 +81,9 @@ INLINE_DESC = """
 <b>Usage:</b> <pre>&lt;tv&gt; title</pre> <b>or</b> <pre>&lt;movie&gt; title</pre> <b>in inline query.</b>
 
 Examples:
-× <pre>&lt;movie&gt; Avengers Endgame</pre>.
+× <pre>&lt;movie&gt; Avengers Endgame</pre>
 × <pre>&lt;tv&gt; Breaking Bad</pre>
+× <pre>&lt;anime&gt; Attack on Titan</pre>
 • You can try on buttons below!
 """
 
@@ -136,9 +137,9 @@ HELP_STR = """
 × <pre>/watchlist</pre> : Get list of saved shows from your watchlist :D.
 × <pre>/cancel</pre> : Do this when you get stuck & bot is not replying to you.
 
-🏷 Notes: You can also search movies & tvshows inline \
+🏷 Notes: You can also search movies, tvshows & anime inline! \
 just type <pre>@acutebot</pre> in your message box \
-and follow the instructions. [Anime inline search coming soon]
+and follow the instructions.
 
 """
 

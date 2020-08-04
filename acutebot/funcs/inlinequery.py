@@ -27,6 +27,7 @@ from acutebot.helpers.database import users_sql as sql
 
 pic_url = "https://image.tmdb.org/t/p"
 base_url = "https://api.themoviedb.org/3"
+anime_url = "https://kitsu.io/api/edge"
 
 
 @run_async
@@ -38,7 +39,7 @@ def inlinequery(update, context):
     results = [][:50]
     if len(query) > 0:
         if query.startswith("<tv>"):
-            query = query.replace("<tv>", "")
+            query = query.replace("<tv>", "").replace(" ", "%20")
             res = r.get(
                 f"{base_url}/search/tv?api_key={TMDBAPI}"
                 + f"&language=en&query={query}"
@@ -72,7 +73,7 @@ def inlinequery(update, context):
                     )
 
         elif query.startswith("<movie>"):
-            query = query.replace("<movie>", "")
+            query = query.replace("<movie>", "").replace(" ", "%20")
             res = r.get(
                 f"{base_url}/search/movie?api_key={TMDBAPI}"
                 + f"&language=en&query={query}"
@@ -105,10 +106,49 @@ def inlinequery(update, context):
                         )
                     )
 
+        elif query.startswith("<anime>"):
+            query = query.replace("<anime>", "").replace(" ", "%20")
+            res = r.get(f"{anime_url}/anime?filter%5Btext%5D={query}")
+            if res.status_code != 200:
+                msg.reply_text(st.API_ERR)
+                return -1
+
+            res = res.json()["data"]
+            for con in res:
+                data = con["attributes"]
+                results.append(
+                    article(
+                        title=data["titles"].get("en", ""),
+                        description=data["titles"].get("ja_jp", ""),
+                        thumb_url=data["posterImage"]["original"],
+                        message_text=st.ANIME_STR.format(
+                            data["titles"].get("en", ""),
+                            data["titles"].get("ja_jp", ""),
+                            data.get("subtype", "N/A"),
+                            data.get("ageRatingGuide", "N/A"),
+                            data.get("averageRating", "N/A"),
+                            data.get("status", "N/A"),
+                            data.get("startDate", "N/A"),
+                            data.get("endDate", "N/A"),
+                            data.get("episodeLength", "N/A"),
+                            data.get("episodeCount", "N/A"),
+                            data.get("synopsis", "N/A"),
+                        )
+                        + f"<a href='{data['posterImage']['original']}'>&#xad</a>",
+                        reply_markup=InlineKeyboardMarkup(
+                            keyboard(
+                                title=data["titles"].get("en"),
+                                anime_ytkey=data.get("youtubeVideoId"),
+                                anime_id=con["id"],
+                            )
+                        ),
+                    )
+                )
+
     else:
         results.append(
             article(
-                title="Usage: <movie> or <tv> ",
+                title="Usage: <movie> | <tv> | <anime>",
                 description="Example: <movie> Avengers endgame",
                 message_text=st.INLINE_DESC,
                 thumb_url="https://telegra.ph/file/292eb6f335bdb3b397806.jpg",
@@ -116,12 +156,16 @@ def inlinequery(update, context):
                     [
                         [
                             InlineKeyboardButton(
-                                text="Search Movies",
+                                text="Movies",
                                 switch_inline_query_current_chat="<movie> ",
                             ),
                             InlineKeyboardButton(
-                                text="Search TVshows",
+                                text="TVshows",
                                 switch_inline_query_current_chat="<tv> ",
+                            ),
+                            InlineKeyboardButton(
+                                text="Anime",
+                                switch_inline_query_current_chat="<anime> ",
                             ),
                         ]
                     ]

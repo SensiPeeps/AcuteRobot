@@ -42,7 +42,10 @@ def send_start(update):
                         text="Movies", switch_inline_query_current_chat="<movie> ",
                     ),
                     InlineKeyboardButton(
-                        text="TVshows", switch_inline_query_current_chat="<tv> ",
+                        text="TVshow", switch_inline_query_current_chat="<tv> ",
+                    ),
+                    InlineKeyboardButton(
+                        text="Anime", switch_inline_query_current_chat="<anime> ",
                     ),
                 ],
                 [InlineKeyboardButton(text="🐾  About me  🐾", callback_data="about")],
