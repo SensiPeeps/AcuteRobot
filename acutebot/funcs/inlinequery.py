@@ -39,7 +39,7 @@ def inlinequery(update, context):
     results = [][:50]
     if len(query) > 0:
         if query.startswith("<tv>"):
-            query = query.replace("<tv>", "").replace(" ", "%20")
+            query = query.replace("<tv>", "")
             res = r.get(
                 f"{base_url}/search/tv?api_key={TMDBAPI}"
                 + f"&language=en&query={query}"
@@ -73,7 +73,7 @@ def inlinequery(update, context):
                     )
 
         elif query.startswith("<movie>"):
-            query = query.replace("<movie>", "").replace(" ", "%20")
+            query = query.replace("<movie>", "")
             res = r.get(
                 f"{base_url}/search/movie?api_key={TMDBAPI}"
                 + f"&language=en&query={query}"
@@ -101,13 +101,13 @@ def inlinequery(update, context):
                             )
                             + f"<a href='{pic_url}/w500/{con['poster_path']}'>&#xad</a>",
                             reply_markup=InlineKeyboardMarkup(
-                                keyboard(title=con["original_title"], mv_id=con["id"])
+                                keyboard(title=con["title"], mv_id=con["id"])
                             ),
                         )
                     )
 
         elif query.startswith("<anime>"):
-            query = query.replace("<anime>", "").replace(" ", "%20")
+            query = query.replace("<anime>", "")
             res = r.get(f"{anime_url}/anime?filter%5Btext%5D={query}")
             if res.status_code != 200:
                 return
@@ -117,7 +117,7 @@ def inlinequery(update, context):
                 data = con["attributes"]
                 results.append(
                     article(
-                        title=data["titles"].get("en", ""),
+                        title=data["titles"].get("en", "NA"),
                         description=data["titles"].get("ja_jp", ""),
                         thumb_url=data["posterImage"]["original"],
                         message_text=st.ANIME_STR.format(
@@ -136,7 +136,7 @@ def inlinequery(update, context):
                         + f"<a href='{data['posterImage']['original']}'>&#xad</a>",
                         reply_markup=InlineKeyboardMarkup(
                             keyboard(
-                                title=data["titles"].get("en"),
+                                title=data["titles"].get("en", "NA"),
                                 anime_ytkey=data.get("youtubeVideoId"),
                                 anime_id=con["id"],
                             )
