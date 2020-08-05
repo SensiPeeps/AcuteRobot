@@ -80,7 +80,6 @@ def _artist(update, context):
 
 
 @run_async
-@typing
 def sendmusic(update, context):
     user = user = update.effective_user
     msg = update.effective_message
@@ -147,13 +146,13 @@ def sendmusic(update, context):
             send_file_telethon(
                 context.bot.token, file, chat.id, loop, title, artist, duration
             )
+        rep.delete()
 
     except Exception as e:
         LOG.error(e)
     if os.path.isfile(file):
         os.remove(file)
-    rep.delete()
-    return -1
+    return ConversationHandler.END
 
 
 def send_file_telethon(bot_token, file, chatid, loop, title, artist, duration):
