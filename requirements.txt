@@ -1,11 +1,10 @@
 python-telegram-bot==12.8
-telethon
+pyrogram
 requests
 sqlalchemy
 psycopg2
 ujson
-cryptg
-hachoir
+tgcrypto
 lyricsgenius
 deezloader
 mutagen

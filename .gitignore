@@ -1,5 +1,6 @@
 #Config and db logfile
 acutebot/config.py
+acute.session
 logfile
 acute-lyrics.txt
 temp/

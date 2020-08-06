@@ -21,10 +21,9 @@ from pathlib import Path
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 from telegram import ForceReply, ReplyKeyboardMarkup
-from telethon import TelegramClient
-from telethon.tl import types
+from pyrogram import Client
 
-from acutebot import dp, typing, ARLTOKEN, APIID, APIHASH, LOG
+from acutebot import dp, typing, ARLTOKEN, LOG, APIID, APIHASH
 from acutebot.helpers import strings as st
 
 MUSIC, ARTIST, SENDMUSIC = range(3)
@@ -141,10 +140,8 @@ def sendmusic(update, context):
             )
         else:
             rep = msg.reply_text(st.UPLOAD_TELETHON)
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            send_file_telethon(
-                context.bot.token, file, chat.id, loop, title, artist, duration
+            send_file_pyro(
+                context.bot.token, file, chat.id, title, artist, duration
             )
         rep.delete()
 
@@ -155,25 +152,16 @@ def sendmusic(update, context):
     return ConversationHandler.END
 
 
-def send_file_telethon(bot_token, file, chatid, loop, title, artist, duration):
-    api_id = APIID
-    api_hash = APIHASH
-    bot = TelegramClient("acute", api_id, api_hash, loop=loop).start(
-        bot_token=bot_token
-    )
+def send_file_pyro(bot_token, file, chatid, title, artist, duration):
+    bot = Client("acute", bot_token=bot_token, api_id=APIID, api_hash=APIHASH)
     with bot:
-        loop.run_until_complete(
-            bot.send_file(
-                chatid,
-                open(file, "rb"),
+            bot.send_audio(
+                chat_id=chatid,
+                audio=open(file, "rb"),
                 caption="Via @acutebot 🎸",
-                attributes=[
-                    types.DocumentAttributeAudio(
-                        title=title, performer=artist, duration=duration
-                    )
-                ],
-            )
-        )
+                title=title,
+                duration=duration,
+                performer=artist)
 
 
 @run_async
