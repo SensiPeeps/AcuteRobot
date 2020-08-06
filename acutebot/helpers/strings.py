@@ -12,6 +12,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
 from acutebot import __version__
 from platform import python_version
 from telegram import __version__ as _libv_
@@ -112,6 +113,7 @@ feel free to report him if you find any rough edge inside me.
 × Movies & TV data : <pre>themoviedb.org</pre>
 × Anime data from : <pre>kitsu.io</pre>
 × Music data from : <pre>deezer.com</pre>
+× Lyrics data from : <pre>genius.com</pre>
 
 If you enjoyed using me & wanna support my creator \
 hit the donate button below, since he's just a student so \
