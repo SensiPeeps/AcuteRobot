@@ -13,8 +13,7 @@
 # SOFTWARE.
 
 
-import asyncio, os
-import deezloader, mutagen
+import os, deezloader, mutagen
 from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
 
 from pathlib import Path
@@ -140,9 +139,7 @@ def sendmusic(update, context):
             )
         else:
             rep = msg.reply_text(st.UPLOAD_TELETHON)
-            send_file_pyro(
-                context.bot.token, file, chat.id, title, artist, duration
-            )
+            send_file_pyro(context.bot.token, file, chat.id, title, artist, duration)
         rep.delete()
 
     except Exception as e:
@@ -155,13 +152,14 @@ def sendmusic(update, context):
 def send_file_pyro(bot_token, file, chatid, title, artist, duration):
     bot = Client("acute", bot_token=bot_token, api_id=APIID, api_hash=APIHASH)
     with bot:
-            bot.send_audio(
-                chat_id=chatid,
-                audio=open(file, "rb"),
-                caption="Via @acutebot 🎸",
-                title=title,
-                duration=duration,
-                performer=artist)
+        bot.send_audio(
+            chat_id=chatid,
+            audio=open(file, "rb"),
+            caption="Via @acutebot 🎸",
+            title=title,
+            duration=duration,
+            performer=artist,
+        )
 
 
 @run_async
