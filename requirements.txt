@@ -1,8 +1,9 @@
 python-telegram-bot==12.8
 telethon
-requests==2.24.0
+requests
 sqlalchemy
 psycopg2
+ujson
 cryptg
 hachoir
 lyricsgenius

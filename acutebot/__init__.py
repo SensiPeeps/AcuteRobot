@@ -21,6 +21,7 @@ from telegram import ChatAction, ParseMode
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
     TOKEN = os.environ.get("TOKEN")
+    WORKERS = int(os.environ.get("WORKERS", 8))
     TMDBAPI = os.environ.get("TMDBAPI")
     DB_URI = os.environ.get("DATABASE_URL")
     GENIUS = os.environ.get("GENIUS")
@@ -34,6 +35,7 @@ else:
     from acutebot.config import Config
 
     TOKEN = Config.TOKEN
+    WORKERS = Config.WORKERS
     TMDBAPI = Config.TMDBAPI
     DB_URI = Config.DB_URI
     GENIUS = Config.GENIUS
@@ -53,7 +55,7 @@ else:
         level=logging.INFO,
     )
 
-__version__ = "1.0.9-rev05"
+__version__ = "1.0.9-rev06"
 
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)
@@ -79,6 +81,5 @@ def typing(func):
 
 # Use HTML treewide;
 defaults = Defaults(parse_mode=ParseMode.HTML)
-
-updater = Updater(TOKEN, use_context=True, defaults=defaults)
+updater = Updater(TOKEN, use_context=True, workers=WORKERS, defaults=defaults)
 dp = updater.dispatcher
