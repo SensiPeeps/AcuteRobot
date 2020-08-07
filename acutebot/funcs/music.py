@@ -13,6 +13,7 @@
 # SOFTWARE.
 
 
+
 import os, deezloader, mutagen
 from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
 
@@ -138,7 +139,7 @@ def sendmusic(update, context):
                 timeout=120,
             )
         else:
-            rep = msg.reply_text(st.UPLOAD_TELETHON)
+            rep = msg.reply_text(st.UPLOAD_MTPROTO)
             send_file_pyro(context.bot.token, file, chat.id, title, artist, duration)
         rep.delete()
 

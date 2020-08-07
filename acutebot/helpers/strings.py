@@ -125,19 +125,19 @@ every little helps to pay for my server, and ofcourse boosting morale ;)
 HELP_STR = """
 <b>🗒️ Documentation for possible commands :</b>
 
-🎬 <b>Movies, TV & Anime commands :</b>
-× <pre>/movies</pre> : Get information about movies.
-× <pre>/tvshows</pre> : Get information about tvshows.
-× <pre>/anime</pre> : Get information about your favorite anime.
+❄️ <b>Movies, TV & Anime commands :</b>
+✓ /movies : Get information about movies.
+✓ /tvshows : Get information about tvshows.
+✓ /anime : Get information about your favorite anime.
 
-🎸 <b>Music & lyrics related commands :</b>
-× <pre>/music</pre> : Download your favorite songs in high resolution
-× <pre>/lyrics</pre> : Get lyrics for your favorite songs.
+❄️ <b>Music & lyrics related commands :</b>
+√ /music : Download your favorite songs in high resolution
+√ /lyrics : Get lyrics for your favorite songs.
 
-💫 <b>Miscellaneous commands :</b>
-× <pre>/reddit</pre> : Gets you random memes scraped from popular subreddits.
-× <pre>/watchlist</pre> : Get list of saved shows from your watchlist :D.
-× <pre>/cancel</pre> : Do this when you get stuck & bot is not replying to you.
+❄️ <b>Miscellaneous commands :</b>
+√ /reddit : Gets you random memes scraped from popular subreddits.
+√ /watchlist : Get list of saved shows from your watchlist :D.
+√ /cancel : Do this when you get stuck & bot is not replying to you.
 
 🏷 Notes: You can also search movies, tvshows & anime inline! \
 just type <pre>@acutebot</pre> in your message box \
@@ -193,6 +193,6 @@ LYRICS_TOO_BIG = (
 # Music
 MUSICQ = "Please choose the quality of music :)"
 MUSICNAME = "Okay! tell me name of the song you're looking for."
-UPLOAD_BOTAPI = "🎧 uploading song please wait..."
-UPLOAD_TELETHON = "Hmm, file size is more than 50MBs, uploading via mtproto this might take around 5 mins, please wait..."
+UPLOAD_BOTAPI = "⌛ uploading song please wait..."
+UPLOAD_MTPROTO = "Hmm, file size is more than 50MBs, uploading via mtproto this might take around 5 mins, please wait..."
 MUSICNOTFOUND = "Sorry i couldn't find that song :("
