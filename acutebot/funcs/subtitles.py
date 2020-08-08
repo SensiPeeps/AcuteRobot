@@ -82,7 +82,7 @@ def subsbutton(update, context):
     dl_content = BytesIO(r.get(dl_link).content)
     dl_content.name = dl_content_name
 
-    query.message.reply_document(dl_content, caption="Subtile via @acutebot 🎸")
+    query.message.reply_document(dl_content, caption="Subtitle via @acutebot 🎸")
     query.message.delete()
 
 
