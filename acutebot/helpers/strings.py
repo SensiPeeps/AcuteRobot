@@ -129,10 +129,11 @@ HELP_STR = """
 ✓ /movies : Get information about movies.
 ✓ /tvshows : Get information about tvshows.
 ✓ /anime : Get information about your favorite anime.
+√ /subtitle : Get substitles for your favorite movies.
 ✓ /popular : (Soon..) | Get trending movies tv & anime shows.
 
 ❄️ <b>Music & lyrics related commands :</b>
-√ /music : Download your favorite songs in high resolution
+√ /music : Download your favorite songs in high resolution.
 √ /lyrics : Get lyrics for your favorite songs.
 
 ❄️ <b>Miscellaneous commands :</b>
@@ -205,3 +206,8 @@ BAD_FILE = "No sauce found; invalid file size..."
 L_LIMIT = "Looks like i've reached my API limits, please try later!"
 S_LIMIT = "Short limit reached please try after few minutes!"
 LOOKUP_NOREPLY = "Please reply to some photo, gif, or sticker to lookup!"
+LOOKUP_NOT_FOUND = "Sorry i couldn't find any similar sauce for this..."
+
+# Subtitles
+TOSEARCHSUBS = "Please reply with the Movie | Anime name you want subs for."
+SUBS_STR = "❄️ Subtitles for <b>{}</b>.\nClick on buttons below to download!"

@@ -58,6 +58,7 @@ def send_start(update):
 @run_async
 def about_button(update, context):
     query = update.callback_query
+    query.answer()
     query.message.delete()
     query.message.reply_text(
         st.ABOUT_STR,
@@ -74,12 +75,12 @@ def about_button(update, context):
             ]
         ),
     )
-    context.bot.answer_callback_query(query.id)
 
 
 @run_async
 def help_button(update, context):
     query = update.callback_query
+    query.answer()
     query.message.delete()
     query.message.reply_text(
         st.HELP_STR,
@@ -87,8 +88,6 @@ def help_button(update, context):
             [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")]]
         ),
     )
-    context.bot.answer_callback_query(query.id)
-
 
 @run_async
 def start(update, context):

@@ -77,7 +77,7 @@ def lookup(update, context):
 
             # Return if results not similar more than 55%
             if similarity < 55:
-               return tmsg.edit_text(st.NOT_FOUND)
+               return tmsg.edit_text(st.LOOKUP_NOT_FOUND)
 
             text = LOOKUP_STR.format(similarity, title, author)
             if isinstance(results[0], VideoSauce):
@@ -92,7 +92,7 @@ def lookup(update, context):
             tmsg.delete()
         # Catch all exceptions:
         except (IndexError, UnknownClientError, UnknownServerError):
-            return tmsg.edit_text(st.NOT_FOUND)
+            return tmsg.edit_text(st.LOOKUP_NOT_FOUND)
         except BadFileSizeError:
             return tmsg.edit_text(st.BAD_FILE)
         except ShortLimitReachedError:
