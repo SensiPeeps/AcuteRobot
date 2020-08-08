@@ -75,6 +75,10 @@ def lookup(update, context):
             print(results.short_remaining)
             print(results.long_remaining)
 
+            # Return if results not similar more than 55%
+            if similarity < 55:
+               return tmsg.edit_text(st.NOT_FOUND)
+
             text = LOOKUP_STR.format(similarity, title, author)
             if isinstance(results[0], VideoSauce):
                 year = results[0].year
@@ -85,6 +89,7 @@ def lookup(update, context):
                 thumb, text, reply_markup=InlineKeyboardMarkup(saucekeyb(results))
             )
 
+            tmsg.delete()
         # Catch all exceptions:
         except (IndexError, UnknownClientError, UnknownServerError):
             return tmsg.edit_text(st.NOT_FOUND)

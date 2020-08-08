@@ -129,6 +129,7 @@ HELP_STR = """
 ✓ /movies : Get information about movies.
 ✓ /tvshows : Get information about tvshows.
 ✓ /anime : Get information about your favorite anime.
+✓ /popular : (Soon..) | Get trending movies tv & anime shows.
 
 ❄️ <b>Music & lyrics related commands :</b>
 √ /music : Download your favorite songs in high resolution
@@ -136,6 +137,7 @@ HELP_STR = """
 
 ❄️ <b>Miscellaneous commands :</b>
 √ /reddit : Gets you random memes scraped from popular subreddits.
+√ /lookup : Lookup for source of stickers & images.
 √ /watchlist : Get list of saved shows from your watchlist :D.
 √ /cancel : Do this when you get stuck & bot is not replying to you.
 

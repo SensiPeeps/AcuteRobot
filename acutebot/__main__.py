@@ -74,6 +74,7 @@ def about_button(update, context):
             ]
         ),
     )
+    context.bot.answer_callback_query(query.id)
 
 
 @run_async
