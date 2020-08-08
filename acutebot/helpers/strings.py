@@ -133,14 +133,14 @@ HELP_STR = """
 ✓ /popular : (Soon..) | Get trending movies tv & anime shows.
 
 ❄️ <b>Music & lyrics related commands :</b>
-√ /music : Download your favorite songs in high resolution.
-√ /lyrics : Get lyrics for your favorite songs.
+✓ /music : Download your favorite songs in high resolution.
+✓ /lyrics : Get lyrics for your favorite songs.
 
 ❄️ <b>Miscellaneous commands :</b>
-√ /reddit : Gets you random memes scraped from popular subreddits.
-√ /lookup : Lookup for source of stickers & images.
-√ /watchlist : Get list of saved shows from your watchlist :D.
-√ /cancel : Do this when you get stuck & bot is not replying to you.
+✓ /reddit : Gets you random memes scraped from popular subreddits.
+✓ /lookup : Lookup for source of stickers & images.
+✓ /watchlist : Get list of saved shows from your watchlist :D.
+✓ /cancel : Do this when you get stuck & bot is not replying to you.
 
 🏷 Notes: You can also search movies, tvshows & anime inline! \
 just type <pre>@acutebot</pre> in your message box \
