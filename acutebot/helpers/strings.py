@@ -129,7 +129,7 @@ HELP_STR = """
 ✓ /movies : Get information about movies.
 ✓ /tvshows : Get information about tvshows.
 ✓ /anime : Get information about your favorite anime.
-√ /subtitle : Get substitles for your favorite movies.
+✓ /subtitle : Get substitles for your favorite movies.
 ✓ /popular : (Soon..) | Get trending movies tv & anime shows.
 
 ❄️ <b>Music & lyrics related commands :</b>
