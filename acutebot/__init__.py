@@ -25,6 +25,7 @@ if ENV:
     TMDBAPI = os.environ.get("TMDBAPI")
     DB_URI = os.environ.get("DATABASE_URL")
     GENIUS = os.environ.get("GENIUS")
+    SAUCEAPI = os.environ.get("SAUCEAPI")
     DEBUG = bool(os.environ.get("DEBUG", False))
     ARLTOKEN = os.environ.get("ARL")
     APIID = os.environ.get("APIID")
@@ -39,10 +40,12 @@ else:
     TMDBAPI = Config.TMDBAPI
     DB_URI = Config.DB_URI
     GENIUS = Config.GENIUS
+    SAUCEAPI = Config.SAUCEAPI
     DEBUG = Config.DEBUG
     ARLTOKEN = Config.ARL
     APIID = Config.APIID
     APIHASH = Config.APIHASH
+
 
 if DEBUG:
     logging.basicConfig(
@@ -55,7 +58,7 @@ else:
         level=logging.INFO,
     )
 
-__version__ = "1.1.0-rev00"
+__version__ = "1.1.0-rev01"
 
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)
