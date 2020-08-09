@@ -73,7 +73,11 @@ def getsubs(update, context):
 @run_async
 def subsbutton(update, context):
     query = update.callback_query
+    chat = update.effective_chat
     query.answer()
+    tm = query.message.reply_text("⌛ Hold on . . .")
+    query.message.delete()
+
     subs_id = query.data.split("_")[1]
     res = r.get(f"{base_url}/get/{subs_id}/").json()
     dl_link = base_url + res.get("DL_LINK")
@@ -81,9 +85,8 @@ def subsbutton(update, context):
 
     dl_content = BytesIO(r.get(dl_link).content)
     dl_content.name = dl_content_name
-
-    query.message.reply_document(dl_content, caption="Subtitle via @acutebot 🎸")
-    query.message.delete()
+    context.bot.sendDocument(chat.id, dl_content, caption="Subtitle via @acutebot 🎸")
+    tm.delete()
 
 
 @run_async
