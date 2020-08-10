@@ -138,7 +138,6 @@ HELP_STR = """
 
 ❄️ <b>Miscellaneous commands :</b>
 ✓ /reddit : Gets you random memes scraped from popular subreddits.
-✓ /lookup : Lookup for source of stickers & images.
 ✓ /watchlist : Get list of saved shows from your watchlist :D.
 ✓ /cancel : Do this when you get stuck & bot is not replying to you.
 
@@ -199,14 +198,6 @@ MUSICNAME = "Okay! tell me name of the song you're looking for."
 UPLOAD_BOTAPI = "⌛ uploading song please wait..."
 UPLOAD_MTPROTO = "Hmm, file size is more than 50MBs, uploading via mtproto this might take around 5 mins, please wait..."
 MUSICNOTFOUND = "Sorry i couldn't find that song :("
-
-# Lookup
-WRONG_FILE = "Sorry but i can only lookup for images, sticker and gifs!"
-BAD_FILE = "No sauce found; invalid file size..."
-L_LIMIT = "Looks like i've reached my API limits, please try later!"
-S_LIMIT = "Short limit reached please try after few minutes!"
-LOOKUP_NOREPLY = "Please reply to some photo, gif, or sticker to lookup!"
-LOOKUP_NOT_FOUND = "Sorry i couldn't find any similar sauce for this..."
 
 # Subtitles
 TOSEARCHSUBS = "Please reply with the Movie | Anime name you want subs for."
