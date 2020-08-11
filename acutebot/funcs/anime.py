@@ -20,16 +20,19 @@ from telegram.ext import (
     CommandHandler,
     Filters,
     ConversationHandler,
+    CallbackQueryHandler,
 )
-from telegram.ext.dispatcher import run_async
-from telegram import InlineKeyboardMarkup, ForceReply
 
-from acutebot import dp, typing, LOG
+from telegram.ext.dispatcher import run_async
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
+
+from acutebot import dp, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import sort_caps
 from acutebot.helpers.keyboard import keyboard
 
 base_url = "https://kitsu.io/api/edge"
+tempdict = {}
 
 
 @run_async
@@ -45,12 +48,9 @@ def anime_entry(update, context):
 @run_async
 @typing
 def anime(update, context):
-    bot = context.bot
-    msg = update.effective_message
-    chat = update.effective_chat
-
-    query = update.message.text
-    query = query.replace(" ", "%20")
+    msg = update.message
+    user = update.effective_user
+    query = msg.text.replace(" ", "%20")
 
     res = r.get(f"{base_url}/anime?filter%5Btext%5D={query}")
     if res.status_code != 200:
@@ -58,12 +58,53 @@ def anime(update, context):
         return -1
 
     res = res.json()["data"]
-    try:
-        data = res[0]["attributes"]
-    except IndexError:
+    if len(res) <= 0:
         msg.reply_text(st.NOT_FOUND)
         return -1
 
+    # Add results array with user's id as key
+    tempdict[user.id] = res
+
+    keyb = []
+    for x in range(len(res)):
+        titles = res[x]["attributes"]["titles"]
+        keyb.append(
+            [
+                InlineKeyboardButton(
+                    text=f"{titles.get('en', '')} | {titles.get('ja_jp', '')}",
+                    callback_data=f"anime_{x}_{user.id}",
+                )
+            ]
+        )
+
+    msg.reply_text(
+        f"Search results for <b>{msg.text}</b>:",
+        reply_markup=InlineKeyboardMarkup(keyb[:6]),
+    )
+
+    return ConversationHandler.END
+
+
+@run_async
+def anime_button(update, context):
+    query = update.callback_query
+    chat = update.effective_chat
+    user = update.effective_user
+
+    spl = query.data.split("_")
+    x, user_id = int(spl[1]), spl[2]
+    if user.id != int(user_id):
+        return query.answer(st.NOT_ALLOWED, show_alert=True)
+
+    try:
+        res = tempdict[user.id]
+    except KeyError:
+        return query.answer(st.KEYERROR, show_alert=True)
+
+    query.answer("Hold on...")
+    query.message.delete()
+
+    data = res[x]["attributes"]
     caption = st.ANIME_STR.format(
         data["titles"].get("en", ""),
         data["titles"].get("ja_jp", ""),
@@ -78,41 +119,35 @@ def anime(update, context):
         data.get("synopsis", "N/A"),
     )
 
-    try:
-        if data.get("posterImage"):
-            bot.sendPhoto(
-                chat_id=chat.id,
-                photo=data["posterImage"]["original"],
-                caption=sort_caps(caption, c_id=res[0]["id"], anime=True),
-                reply_markup=InlineKeyboardMarkup(
-                    keyboard(
-                        title=data["titles"].get("en"),
-                        anime_ytkey=data.get("youtubeVideoId"),
-                        anime_id=res[0]["id"],
-                    )
-                ),
-                timeout=60,
-                disable_web_page_preview=True,
-            )
+    if data.get("posterImage"):
+        context.bot.sendPhoto(
+            chat_id=chat.id,
+            photo=data["posterImage"]["original"],
+            caption=sort_caps(caption, c_id=res[x]["id"], anime=True),
+            reply_markup=InlineKeyboardMarkup(
+                keyboard(
+                    title=data["titles"].get("en"),
+                    anime_ytkey=data.get("youtubeVideoId"),
+                    anime_id=res[x]["id"],
+                )
+            ),
+            timeout=60,
+            disable_web_page_preview=True,
+        )
 
-        else:
-            bot.sendMessage(
-                chat.id,
-                text=caption,
-                reply_markup=InlineKeyboardMarkup(
-                    keyboard(
-                        title=data["titles"].get("en"),
-                        anime_ytkey=data.get("youtubeVideoId"),
-                        anime_id=res[0]["id"],
-                    )
-                ),
-                disable_web_page_preview=True,
-            )
-
-    except Exception as e:
-        LOG.error(e)
-
-    return ConversationHandler.END
+    else:
+        context.bot.sendMessage(
+            chat.id,
+            text=caption,
+            reply_markup=InlineKeyboardMarkup(
+                keyboard(
+                    title=data["titles"].get("en"),
+                    anime_ytkey=data.get("youtubeVideoId"),
+                    anime_id=res[x]["id"],
+                )
+            ),
+            disable_web_page_preview=True,
+        )
 
 
 @run_async
@@ -128,5 +163,7 @@ ANIME_HANDLER = ConversationHandler(
     fallbacks=[CommandHandler("cancel", cancel)],
     conversation_timeout=120,
 )
+AN_BUTTON_HANDLER = CallbackQueryHandler(anime_button, pattern=r"anime_")
 
 dp.add_handler(ANIME_HANDLER)
+dp.add_handler(AN_BUTTON_HANDLER)

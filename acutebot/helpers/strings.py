@@ -152,6 +152,7 @@ and follow the instructions.
 API_ERR = "Sorry, couldn't reach API at the moment :("
 NOT_FOUND = "Sorry, couldn't find any results for the query :("
 INVALIDCAT = "Hmmm.. maybe you've sent wrong category to look for, please try again!"
+KEYERROR = "Oops! something went wrong. Please try again :("
 
 # Cancel
 CANCEL = "Cancelled the current task!"
