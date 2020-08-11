@@ -26,7 +26,7 @@ from telegram.ext import (
 from telegram.ext.dispatcher import run_async
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
 
-from acutebot import dp, LOG, TMDBAPI, typing
+from acutebot import dp, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import byname, currency, sort_caps
 from acutebot.helpers.keyboard import keyboard
@@ -83,21 +83,15 @@ def movie_entry(update, context):
 @run_async
 @typing
 def movie(update, context):
-    bot = context.bot
     msg = update.message
     user = update.effective_user
-
     query = msg.text.replace(" ", "%20")
 
-    payload = {
-        "api_key": TMDBAPI,
-        "language": "en-US",
-        "query": query,
-        "page": 1,
-        "include_adult": "true",
-    }
-
-    results = r.get(f"{base_url}/search/movie?", params=payload)
+    results = r.get(
+        f"{base_url}/search/movie?api_key={TMDBAPI}"
+        + f"&language=en&query={query}"
+        + "&page=1&include_adult=true"
+    )
 
     if results.status_code != 200:
         msg.reply_text(st.API_ERR)
@@ -119,12 +113,13 @@ def movie(update, context):
         )
     msg.reply_text(
         f"Search results for <b>{msg.text}</b>:",
-        reply_markup=InlineKeyboardMarkup(keyb),
+        reply_markup=InlineKeyboardMarkup(keyb[:6]),
     )
 
     return ConversationHandler.END
 
 
+@run_async
 def movie_button(update, context):
     query = update.callback_query
     chat = update.effective_chat

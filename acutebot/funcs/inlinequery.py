@@ -36,7 +36,7 @@ def inlinequery(update, context):
     sql.update_user(
         update.inline_query.from_user.id, update.inline_query.from_user.username
     )
-    results = [][:50]
+    results = []
     if len(query) > 0:
         if query.startswith("<tv>"):
             query = query.replace("<tv>", "")
@@ -172,7 +172,7 @@ def inlinequery(update, context):
             )
         )
 
-    update.inline_query.answer(results, cache_time=10)
+    update.inline_query.answer(results[:50], cache_time=10)
 
 
 INLINE_HANDLER = InlineQueryHandler(inlinequery)
