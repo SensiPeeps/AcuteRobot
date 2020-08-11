@@ -66,13 +66,13 @@ def anime(update, context):
     tempdict[user.id] = res
 
     keyb = []
-    for x in range(len(res)):
-        titles = res[x]["attributes"]["titles"]
+    for x in enumerate(res):
+        titles = x[1]["attributes"]["titles"]
         keyb.append(
             [
                 InlineKeyboardButton(
                     text=f"{titles.get('en', '')} | {titles.get('ja_jp', '')}",
-                    callback_data=f"anime_{x}_{user.id}",
+                    callback_data=f"anime_{x[0]}_{user.id}",
                 )
             ]
         )
