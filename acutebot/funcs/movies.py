@@ -20,15 +20,16 @@ from telegram.ext import (
     CommandHandler,
     Filters,
     ConversationHandler,
+    CallbackQueryHandler,
 )
+
 from telegram.ext.dispatcher import run_async
-from telegram import InlineKeyboardMarkup, ForceReply
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ForceReply
 
 from acutebot import dp, LOG, TMDBAPI, typing
 from acutebot.helpers import strings as st
 from acutebot.helpers.parsedata import byname, currency, sort_caps
 from acutebot.helpers.keyboard import keyboard
-from acutebot.helpers.getid import getid
 
 
 base_url = "https://api.themoviedb.org/3"
@@ -39,12 +40,9 @@ def moviedata(c_id):
     """
     Parse movie data for the id and return class obj
     """
+    payload = {"api_key": TMDBAPI, "language": "en-US", "append_to_response": "videos"}
 
-    data = r.get(
-        f"{base_url}/movie/{c_id}?api_key={TMDBAPI}"
-        + "&language=en"
-        + "&append_to_response=videos"
-    ).json()
+    data = r.get(f"{base_url}/movie/{c_id}?", params=payload).json()
 
     class res:
 
@@ -87,16 +85,58 @@ def movie_entry(update, context):
 def movie(update, context):
     bot = context.bot
     msg = update.message
-    chat = update.effective_chat
+    user = update.effective_user
 
-    c_id = getid(msg.text, category="MOVIE")
-    if c_id == "api_error":
+    query = msg.text.replace(" ", "%20")
+
+    payload = {
+        "api_key": TMDBAPI,
+        "language": "en-US",
+        "query": query,
+        "page": 1,
+        "include_adult": "true",
+    }
+
+    results = r.get(f"{base_url}/search/movie?", params=payload)
+
+    if results.status_code != 200:
         msg.reply_text(st.API_ERR)
         return -1
 
-    if c_id == "not_found":
+    results = results.json()["results"]
+    if len(results) <= 0:
         msg.reply_text(st.NOT_FOUND)
         return -1
+
+    keyb = []
+    for x in results:
+        keyb.append(
+            [
+                InlineKeyboardButton(
+                    text=x.get("title"), callback_data=f"movie_{x.get('id')}_{user.id}"
+                )
+            ]
+        )
+    msg.reply_text(
+        f"Search results for <b>{msg.text}</b>:",
+        reply_markup=InlineKeyboardMarkup(keyb),
+    )
+
+    return ConversationHandler.END
+
+
+def movie_button(update, context):
+    query = update.callback_query
+    chat = update.effective_chat
+    user = update.effective_user
+
+    spl = query.data.split("_")
+    c_id, user_id = spl[1], spl[2]
+    if user.id != int(user_id):
+        return query.answer(st.NOT_ALLOWED, show_alert=True)
+
+    query.answer("Hold on...")
+    query.message.delete()
 
     res = moviedata(c_id)
     caption = st.MOVIE_STR.format(
@@ -114,31 +154,26 @@ def movie(update, context):
         res.overview,
     )
 
-    try:
-        if res.posterpath:
-            bot.sendPhoto(
-                chat_id=chat.id,
-                photo=f"{pic_url}/w500/{res.posterpath}",
-                caption=sort_caps(caption, c_id=res.c_id, mv=True),
-                reply_markup=InlineKeyboardMarkup(
-                    keyboard(res.ytkey, res.homepage, res.title, res.imdbid)
-                ),
-                timeout=60,
+    if res.posterpath:
+        context.bot.sendPhoto(
+            chat_id=chat.id,
+            photo=f"{pic_url}/w500/{res.posterpath}",
+            caption=sort_caps(caption, c_id=res.c_id, mv=True),
+            reply_markup=InlineKeyboardMarkup(
+                keyboard(res.ytkey, res.homepage, res.title, res.imdbid)
+            ),
+            timeout=60,
+            disable_web_page_preview=True,
+        )
+    else:
+        context.bot.sendMessage(
+            chat.id,
+            text=caption,
+            reply_markup=InlineKeyboardMarkup(
+                keyboard(res.ytkey, res.homepage, res.title, res.imdbid),
                 disable_web_page_preview=True,
-            )
-        else:
-            bot.sendMessage(
-                chat.id,
-                text=caption,
-                reply_markup=InlineKeyboardMarkup(
-                    keyboard(res.ytkey, res.homepage, res.title, res.imdbid),
-                    disable_web_page_preview=True,
-                ),
-            )
-    except Exception as e:
-        LOG.error(e)
-
-    return ConversationHandler.END
+            ),
+        )
 
 
 @run_async
@@ -154,5 +189,7 @@ MOVIE_HANDLER = ConversationHandler(
     fallbacks=[CommandHandler("cancel", cancel)],
     conversation_timeout=120,
 )
+MV_BUTTON_HANDLER = CallbackQueryHandler(movie_button, pattern=r"movie_")
 
 dp.add_handler(MOVIE_HANDLER)
+dp.add_handler(MV_BUTTON_HANDLER)
