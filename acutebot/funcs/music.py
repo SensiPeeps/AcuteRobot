@@ -13,7 +13,6 @@
 # SOFTWARE.
 
 
-
 import os, deezloader, mutagen
 from deezloader.exceptions import BadCredentials, TrackNotFound, NoDataApi
 

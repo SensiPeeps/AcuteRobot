@@ -13,7 +13,6 @@
 # SOFTWARE.
 
 
-
 import threading
 from acutebot.helpers.database import SESSION, BASE
 from sqlalchemy import Column, UnicodeText, Numeric
@@ -32,6 +31,7 @@ class Favourites(BASE):
 Favourites.__table__.create(checkfirst=True)
 FAV_INSERTION_LOCK = threading.RLock()
 
+
 def check_fav(user_id, data):
     try:
         return SESSION.query(Favourites).get((int(user_id), str(data)))
@@ -41,8 +41,9 @@ def check_fav(user_id, data):
 
 def get_fav(user_id):
     try:
-        return SESSION.query(Favourites).filter(
-            Favourites.user_id == int(user_id)).all()
+        return (
+            SESSION.query(Favourites).filter(Favourites.user_id == int(user_id)).all()
+        )
     finally:
         SESSION.close()
 
@@ -74,4 +75,3 @@ def fav_count():
         return SESSION.query(Favourites).count()
     finally:
         SESSION.close()
-

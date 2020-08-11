@@ -33,6 +33,7 @@ def get_ip(update, context):
     res = r.get("http://ipinfo.io/ip")
     update.message.reply_text(res.text)
 
+
 @run_async
 def rmemes(update, context):
     msg = update.effective_message

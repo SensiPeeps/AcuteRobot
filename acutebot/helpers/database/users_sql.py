@@ -13,12 +13,12 @@
 # SOFTWARE.
 
 
-
 import threading
 
 from sqlalchemy import Column, Integer, UnicodeText
 from acutebot.helpers.database import SESSION, BASE
 from acutebot import dp
+
 
 class Users(BASE):
     __tablename__ = "users"
@@ -35,6 +35,7 @@ class Users(BASE):
 
 Users.__table__.create(checkfirst=True)
 INSERTION_LOCK = threading.RLock()
+
 
 def ensure_bot_in_db():
     with INSERTION_LOCK:
@@ -63,4 +64,3 @@ def users_count():
         return SESSION.query(Users).count()
     finally:
         SESSION.close()
-
