@@ -71,7 +71,7 @@ def anime(update, context):
         keyb.append(
             [
                 InlineKeyboardButton(
-                    text=f"{titles.get('en', '')} | {titles.get('ja_jp', '')}",
+                    text=f"{titles.get('en') if titles.get('en') else titles.get('ja_jp')}",
                     callback_data=f"anime_{x[0]}_{user.id}",
                 )
             ]
@@ -79,7 +79,7 @@ def anime(update, context):
 
     msg.reply_text(
         f"Search results for <b>{msg.text}</b>:",
-        reply_markup=InlineKeyboardMarkup(keyb[:6]),
+        reply_markup=InlineKeyboardMarkup(keyb[:8]),
     )
 
     return ConversationHandler.END
@@ -92,12 +92,12 @@ def anime_button(update, context):
     user = update.effective_user
 
     spl = query.data.split("_")
-    x, user_id = int(spl[1]), spl[2]
-    if user.id != int(user_id):
+    x, user_id = int(spl[1]), int(spl[2])
+    if user.id != user_id:
         return query.answer(st.NOT_ALLOWED, show_alert=True)
 
     try:
-        res = tempdict[user.id]
+        res = tempdict[user_id]
     except KeyError:
         return query.answer(st.KEYERROR, show_alert=True)
 

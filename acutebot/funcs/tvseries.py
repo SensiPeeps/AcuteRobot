@@ -114,7 +114,7 @@ def tv(update, context):
         )
     msg.reply_text(
         f"Search results for <b>{msg.text}</b>:",
-        reply_markup=InlineKeyboardMarkup(keyb[:6]),
+        reply_markup=InlineKeyboardMarkup(keyb[:8]),
     )
 
     return ConversationHandler.END
