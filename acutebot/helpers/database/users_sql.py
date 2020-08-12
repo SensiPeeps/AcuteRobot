@@ -56,7 +56,11 @@ def update_user(user_id, username):
         SESSION.commit()
 
 
-ensure_bot_in_db()
+def get_all_users():
+    try:
+        return SESSION.query(Users).all()
+    finally:
+        SESSION.close()
 
 
 def users_count():
@@ -64,3 +68,5 @@ def users_count():
         return SESSION.query(Users).count()
     finally:
         SESSION.close()
+
+ensure_bot_in_db()

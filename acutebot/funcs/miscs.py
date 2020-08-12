@@ -15,13 +15,14 @@
 
 import requests as r
 import subprocess, random
+from time import sleep
 
 from acutebot.helpers.database import users_sql as sql
 from acutebot.helpers.database.favorites_sql import fav_count
 import acutebot.helpers.strings as st
 from acutebot import dp, typing, DEV_ID, LOG
 
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton, TelegramError
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.error import BadRequest
@@ -115,6 +116,31 @@ def shell(update, context):
 
 
 @run_async
+def broadcast(update, context):
+    to_send = update.effective_message.text.split(None, 1)
+    if len(to_send) >= 2:
+        users = sql.get_all_users() or []
+        failed = 0
+        for user in users:
+            try:
+                context.bot.sendMessage(int(user.user_id), to_send[1])
+                sleep(0.1)
+            except TelegramError:
+                failed += 1
+                LOG.warning(
+                    "Couldn't send broadcast to %s, username %s",
+                    str(user.user_id),
+                    str(user.username),
+                )
+
+        update.effective_message.reply_text(
+            "Broadcast complete. {} users failed to receive the message, probably "
+            "due to being Blocked.".format(failed)
+        )
+
+
+
+@run_async
 def log_user(update, context):
     msg = update.effective_message
 
@@ -135,7 +161,9 @@ STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(DEV_ID))
 GREET_HANDLER = MessageHandler(Filters.status_update.new_chat_members, greet)
 SHELL_HANDLER = CommandHandler("shell", shell, filters=Filters.user(DEV_ID))
 LOG_HANDLER = MessageHandler(Filters.all, log_user)
-
+BROADCAST_HANDLER = CommandHandler(
+    "broadcast", broadcast, filters=Filters.user(DEV_ID)
+)
 
 dp.add_handler(IP_HANDLER)
 dp.add_handler(REDDIT_HANDLER)
@@ -143,3 +171,4 @@ dp.add_handler(STATS_HANDLER)
 dp.add_handler(GREET_HANDLER)
 dp.add_handler(SHELL_HANDLER)
 dp.add_handler(LOG_HANDLER, 1)
+dp.add_handler(BROADCAST_HANDLER)
