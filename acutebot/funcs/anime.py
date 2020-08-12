@@ -78,7 +78,7 @@ def anime(update, context):
         )
 
     msg.reply_text(
-        f"Search results for <b>{msg.text}</b>:",
+        f"🔍 Search results for <b>{msg.text}</b>:",
         reply_markup=InlineKeyboardMarkup(keyb[:8]),
     )
 
