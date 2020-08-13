@@ -16,15 +16,11 @@
 from pyfy import Spotify as Pyfy, ClientCreds, UserCreds
 from pyfy.excs import ApiError
 from dataclasses import dataclass
-from telegram import Bot
 
 from acutebot import TOKEN, SPT_CLIENT_SECRET, SPT_CLIENT_ID, APP_URL
-from acutebot.helpers.database.spotify_sql import update_creds, get_sptuser
+from acutebot.helpers.database.spotify_sql import get_sptuser
 
-import tornado.web
 import typing
-
-bot = Bot(TOKEN)
 
 
 @dataclass
@@ -48,11 +44,11 @@ class Spotify:
 
         try:
             self._client = SpotifyClient(
-            access_token=user["spotify_access_token"],
-            refresh_token=user["spotify_refresh_token"],
+                access_token=user["spotify_access_token"],
+                refresh_token=user["spotify_refresh_token"],
             )
         except ApiError:
-                raise Exception("tokens invalid")
+            raise Exception("tokens invalid")
 
     @property
     def current_music(self) -> typing.Optional[Music]:
@@ -81,9 +77,9 @@ class SpotifyClient(Pyfy):
         user_creds = None
 
         if access_token and refresh_token:
-           user_creds = UserCreds(
-            access_token=access_token, refresh_token=refresh_token
-           )
+            user_creds = UserCreds(
+                access_token=access_token, refresh_token=refresh_token
+            )
 
         super().__init__(
             client_creds=ClientCreds(
@@ -102,30 +98,3 @@ def get_spotify_data(user_id):
         return Spotify(user)
     except Exception:
         return False
-
-
-# Tornado web handlers for login.
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("test")
-
-
-class SpotifyCallback(tornado.web.RequestHandler):
-    def get(self):
-        if self.get_argument("code", ""):
-            grant = self.get_argument("code", "")
-            callback_state = self.get_argument("state", "")
-            spotify = SpotifyClient()
-            user_creds = spotify.build_user_creds(grant=grant)
-            update_creds(
-                callback_state,
-                user_creds.id,
-                user_creds.access_token,
-                user_creds.refresh_token,
-            )
-            print("user logged in successfully")
-            bot.sendMessage(callback_state, "Successfully logged in!")
-            self.redirect("https://t.me/" + bot.username)
-
-
-urls = [(r"/", MainHandler), (r"/acutebot/webserver", SpotifyCallback)]

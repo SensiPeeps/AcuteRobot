@@ -19,7 +19,6 @@ from threading import Thread
 
 from acutebot import LOG, dp, updater, DEV_ID
 from acutebot.funcs import ALL_FUNCS
-from acutebot.helpers.spthelper import urls
 import acutebot.helpers.strings as st
 
 
@@ -145,12 +144,6 @@ def main():
 
     # Start the bot.
     updater.start_polling(timeout=15, read_latency=4)
-
-    # Start tornado web server.
-    app = tornado.web.Application(urls)
-    app.listen(8888)
-    tornado.ioloop.IOLoop.current().start()
-
     updater.idle()
 
 
