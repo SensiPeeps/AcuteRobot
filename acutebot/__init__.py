@@ -13,6 +13,7 @@
 # SOFTWARE.
 
 
+import sys
 import os, sys, logging
 from functools import wraps
 from telegram.ext import Updater, Defaults
@@ -70,7 +71,7 @@ LOG = logging.getLogger(__name__)
 # Check python version:
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     LOG.info("You MUST need to have python version 3.6! shutting down...")
-    quit(1)
+    sys.exit(1)
 
 
 def typing(func):
