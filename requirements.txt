@@ -5,6 +5,7 @@ sqlalchemy
 psycopg2
 ujson
 tgcrypto
+pyfy
 lyricsgenius
 deezloader
 mutagen

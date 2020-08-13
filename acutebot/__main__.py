@@ -12,13 +12,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import tornado.web
 
 import os, sys, importlib
 from threading import Thread
 
 from acutebot import LOG, dp, updater, DEV_ID
 from acutebot.funcs import ALL_FUNCS
+from acutebot.helpers.spthelper import urls
 import acutebot.helpers.strings as st
+
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext.dispatcher import run_async
@@ -139,9 +142,15 @@ def main():
     dp.add_handler(back_btn_handler)
 
     LOG.info("%s", BANNER)
-    updater.start_polling(timeout=15, read_latency=4)
-    updater.idle()
 
+    app = tornado.web.Application(urls)
+    app.listen(8888)
+
+    # Start the bot
+    updater.start_polling(timeout=15, read_latency=4)
+    tornado.ioloop.IOLoop.current().start()
+    updater.idle()
 
 if __name__ == "__main__":
     main()
+

@@ -202,3 +202,7 @@ MUSICNOTFOUND = "Sorry i couldn't find that song :("
 # Subtitles
 TOSEARCHSUBS = "Please reply with the Movie | Anime name you want subs for."
 SUBS_STR = "❄️ Subtitles for <b>{}</b>.\nClick on buttons below to download!"
+
+# Spotify
+SPT_LOGIN = "Click the button below to login with your spotify account."
+SPT_LOGIN_PM = "Please contact me in PM to login with your spotify account"

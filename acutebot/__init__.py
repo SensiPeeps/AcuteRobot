@@ -25,8 +25,11 @@ if ENV:
     TMDBAPI = os.environ.get("TMDBAPI")
     DB_URI = os.environ.get("DATABASE_URL")
     GENIUS = os.environ.get("GENIUS")
+    SPT_CLIENT_SECRET = os.environ.get("SPT_CLIENT_SECRET")
+    SPT_CLIENT_ID = os.environ.get("SPT_CLIENT_ID")
     DEBUG = bool(os.environ.get("DEBUG", False))
     ARLTOKEN = os.environ.get("ARL")
+    APP_URL = os.environ.get("APP_URL")
     APIID = os.environ.get("APIID")
     APIHASH = os.environ.get("APIHASH")
 
@@ -39,8 +42,11 @@ else:
     TMDBAPI = Config.TMDBAPI
     DB_URI = Config.DB_URI
     GENIUS = Config.GENIUS
+    SPT_CLIENT_SECRET = Config.SPT_CLIENT_SECRET
+    SPT_CLIENT_ID = Config.SPT_CLIENT_ID
     DEBUG = Config.DEBUG
     ARLTOKEN = Config.ARL
+    APP_URL = Config.APP_URL
     APIID = Config.APIID
     APIHASH = Config.APIHASH
 
@@ -56,7 +62,7 @@ else:
         level=logging.INFO,
     )
 
-__version__ = "1.1.1-rev06"
+__version__ = "1.1.1-rev07"
 
 DEV_ID = 894380120
 LOG = logging.getLogger(__name__)
