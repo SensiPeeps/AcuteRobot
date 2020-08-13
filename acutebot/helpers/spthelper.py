@@ -25,7 +25,7 @@ class Music:
         self.name = music["name"]
         self.artist = music["artists"][0]["name"]
         self.url = music["external_urls"]["spotify"]
-        self.thumbnail = music["album"]["images"][-1]["url"]
+        self.thumbnail = music["album"]["images"][1]["url"]
 
 
 class Spotify:
@@ -58,7 +58,6 @@ class SpotifyClient(Pyfy):
         scopes = [
             "user-read-recently-played",
             "user-read-playback-state",
-            "user-modify-playback-state",
         ]
 
         user_creds = None
@@ -90,9 +89,11 @@ def get_spotify_data(user_id):
 
 # Tornado web handlers for login.
 
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("test")
+
 
 class SpotifyCallback(tornado.web.RequestHandler):
     def get(self):
@@ -102,13 +103,13 @@ class SpotifyCallback(tornado.web.RequestHandler):
             spotify = SpotifyClient()
             user_creds = spotify.build_user_creds(grant=grant)
             update_creds(
-                    callback_state,
-                    user_creds.id,
-                    user_creds.access_token,
-                    user_creds.refresh_token,
-                )
-            print("Logind")
-            bot.sendMessage(callback_state, "logined")
+                callback_state,
+                user_creds.id,
+                user_creds.access_token,
+                user_creds.refresh_token,
+            )
+            print("user logged in successfully")
+            bot.sendMessage(callback_state, "Successfully logged in!")
             self.redirect("https://t.me/" + bot.username)
 
 

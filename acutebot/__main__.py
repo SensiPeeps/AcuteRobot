@@ -12,7 +12,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import tornado.web
+import tornado
 
 import os, sys, importlib
 from threading import Thread
@@ -143,14 +143,16 @@ def main():
 
     LOG.info("%s", BANNER)
 
+    # Start the bot.
+    updater.start_polling(timeout=15, read_latency=4)
+
+    # Start tornado web server.
     app = tornado.web.Application(urls)
     app.listen(8888)
-
-    # Start the bot
-    updater.start_polling(timeout=15, read_latency=4)
     tornado.ioloop.IOLoop.current().start()
+
     updater.idle()
+
 
 if __name__ == "__main__":
     main()
-

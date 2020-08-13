@@ -134,6 +134,7 @@ HELP_STR = """
 ❄️ <b>Music & lyrics related commands :</b>
 ✓ /music : Download your favorite songs in high resolution.
 ✓ /lyrics : Get lyrics for your favorite songs.
+✓ /nowplaying : Flex you currently or last played song in spotify.
 
 ❄️ <b>Miscellaneous commands :</b>
 ✓ /reddit : Gets you random memes scraped from popular subreddits.
@@ -204,5 +205,5 @@ TOSEARCHSUBS = "Please reply with the Movie | Anime name you want subs for."
 SUBS_STR = "❄️ Subtitles for <b>{}</b>.\nClick on buttons below to download!"
 
 # Spotify
-SPT_LOGIN = "Click the button below to login with your spotify account."
-SPT_LOGIN_PM = "Please contact me in PM to login with your spotify account"
+SPT_LOGIN = "Hey {}, Please click the button below to login with your spotify account."
+SPT_LOGIN_PM = "Please contact me in PM to login with your spotify account, inorder to use this feature."
