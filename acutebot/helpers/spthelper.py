@@ -31,10 +31,13 @@ class Music:
 class Spotify:
     def __init__(self, user: dict):
 
-        self._client = SpotifyClient(
+        try:
+            self._client = SpotifyClient(
             access_token=user["spotify_access_token"],
             refresh_token=user["spotify_refresh_token"],
-        )
+            )
+        except ApiError:
+                raise Exception("tokens invalid")
 
     @property
     def current_music(self) -> typing.Optional[Music]:
@@ -63,9 +66,9 @@ class SpotifyClient(Pyfy):
         user_creds = None
 
         if access_token and refresh_token:
-            user_creds = UserCreds(
-                access_token=access_token, refresh_token=refresh_token
-            )
+           user_creds = UserCreds(
+            access_token=access_token, refresh_token=refresh_token
+           )
 
         super().__init__(
             client_creds=ClientCreds(
@@ -81,15 +84,12 @@ class SpotifyClient(Pyfy):
 def get_spotify_data(user_id):
     try:
         user = get_sptuser(user_id)
+        return Spotify(user)
     except Exception:
         return False
 
-    return Spotify(user)
-
 
 # Tornado web handlers for login.
-
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("test")
