@@ -60,7 +60,7 @@ def now_playing(update, context):
         music = spt.last_music
         text = f"<b>{user.first_name} was listening to</b>"
 
-    text += f"\n<a href='{music.url}'>{music.name}</a> by <b>{music.artist}</b>"
+    text += f" <a href='{music.url}'>{music.name}</a> by <b>{music.artist}</b>"
     msg.reply_text(
         text,
         reply_markup=InlineKeyboardMarkup(
