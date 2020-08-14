@@ -63,6 +63,6 @@ def update_creds(
 
 def get_sptuser(user_id):
     try:
-        return (SESSION.query(SpotifyCreds).get(user_id)).__dict__
+        return SESSION.query(SpotifyCreds).get(user_id)
     finally:
         SESSION.close()

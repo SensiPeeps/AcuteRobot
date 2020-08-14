@@ -22,6 +22,7 @@ from acutebot.helpers.spthelper import SpotifyClient
 
 bot = Bot(TOKEN)
 
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello World!")
@@ -48,13 +49,15 @@ class SpotifyCallback(tornado.web.RequestHandler):
 urls = [(r"/", MainHandler), (r"/acutebot/webserver", SpotifyCallback)]
 PORT = os.environ.get("PORT", 8888)
 
+
 def start():
 
     print("Tornado server started")
 
     app = tornado.web.Application(urls)
-    app.listen(PORT, address='0.0.0.0')
+    app.listen(PORT, address="0.0.0.0")
     tornado.ioloop.IOLoop.current().start()
 
-if __name__ == '__main__':
-   start()
+
+if __name__ == "__main__":
+    start()

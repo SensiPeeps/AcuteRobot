@@ -40,12 +40,12 @@ class Music:
 
 
 class Spotify:
-    def __init__(self, user: dict):
+    def __init__(self, user):
 
         try:
             self._client = SpotifyClient(
-                access_token=user["spotify_access_token"],
-                refresh_token=user["spotify_refresh_token"],
+                access_token=user.spotify_access_token,
+                refresh_token=user.spotify_refresh_token,
             )
         except ApiError:
             raise Exception("tokens invalid")
