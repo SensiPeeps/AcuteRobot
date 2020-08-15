@@ -31,12 +31,11 @@ for func_name in ALL_FUNCS:
     imported_module = importlib.import_module("acutebot.funcs." + func_name)
 
 
-def send_start(update):
-    msg = update.effective_message
-    msg.reply_photo(
-        "https://telegra.ph/file/35c83c568502b9944c76d.jpg",
-        st.START_STRING.format(update.effective_user.first_name),
-        reply_markup=InlineKeyboardMarkup(
+class Starter:
+    def __init__(self, name):
+        self.photo = "https://telegra.ph/file/35c83c568502b9944c76d.jpg"
+        self.text = st.START_STRING.format(name)
+        self.reply_markup = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
@@ -52,17 +51,26 @@ def send_start(update):
                 [InlineKeyboardButton(text="🐾  About me  🐾", callback_data="about")],
                 [InlineKeyboardButton(text="Help and Commands❔", callback_data="help")],
             ]
-        ),
-    )
+        )
+
+
+@run_async
+def start(update, context):
+    if update.effective_chat.type == "private":
+        start = Starter(update.effective_user.first_name)
+        return update.effective_message.reply_photo(
+            photo=start.photo, caption=start.text, reply_markup=start.reply_markup
+        )
+
+    update.effective_message.reply_text(st.START_STRING_GRP)
 
 
 @run_async
 def about_button(update, context):
     query = update.callback_query
     query.answer()
-    query.message.delete()
-    query.message.reply_text(
-        st.ABOUT_STR,
+    query.message.edit_caption(
+        caption=st.ABOUT_STR,
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
             [
@@ -82,9 +90,8 @@ def about_button(update, context):
 def help_button(update, context):
     query = update.callback_query
     query.answer()
-    query.message.delete()
-    query.message.reply_text(
-        st.HELP_STR,
+    query.message.edit_caption(
+        caption=st.HELP_STR,
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")]]
         ),
@@ -92,18 +99,11 @@ def help_button(update, context):
 
 
 @run_async
-def start(update, context):
-    if update.effective_chat.type == "private":
-        return send_start(update)
-    update.effective_message.reply_text(st.START_STRING_GRP)
-
-
-@run_async
 def back_btn(update, context):
     query = update.callback_query
-    query.message.delete()
-    send_start(update)
-    context.bot.answer_callback_query(query.id)
+    query.answer()
+    start = Starter(update.effective_user.first_name)
+    query.message.edit_caption(caption=start.text, reply_markup=start.reply_markup)
 
 
 BANNER = r"""
