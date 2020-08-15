@@ -57,9 +57,9 @@ class Starter:
 @run_async
 def start(update, context):
     if update.effective_chat.type == "private":
-        start = Starter(update.effective_user.first_name)
+        stuff = Starter(update.effective_user.first_name)
         return update.effective_message.reply_photo(
-            photo=start.photo, caption=start.text, reply_markup=start.reply_markup
+            photo=stuff.photo, caption=stuff.text, reply_markup=stuff.reply_markup
         )
 
     update.effective_message.reply_text(st.START_STRING_GRP)
@@ -102,8 +102,8 @@ def help_button(update, context):
 def back_btn(update, context):
     query = update.callback_query
     query.answer()
-    start = Starter(update.effective_user.first_name)
-    query.message.edit_caption(caption=start.text, reply_markup=start.reply_markup)
+    stuff = Starter(update.effective_user.first_name)
+    query.message.edit_caption(caption=stuff.text, reply_markup=stuff.reply_markup)
 
 
 BANNER = r"""
