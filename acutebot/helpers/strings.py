@@ -96,6 +96,10 @@ information about your favorite movies, tv and anime shows, you can also downloa
 music & can view song lyrics using me! Just click the button \
 below to get started with list of possible commands...
 
+You can also search movies, tvshows & \
+anime inline! just type <pre>@acutebot</pre> in \
+your message box and follow the instructions.
+
 And don't forget to smile, atleast once in a while ;)
 """
 START_STRING_GRP = "Hmmm?"

@@ -109,19 +109,26 @@ def h_for_funcs(update, context):
     elif match == "misc":
         query.message.edit_caption(caption=st.MISC_HELP, reply_markup=markup)
     elif match == "about":
-        query.message.edit_caption(caption=st.ABOUT_STR,
-         reply_markup=InlineKeyboardMarkup(
-            [
+        query.message.edit_caption(
+            caption=st.ABOUT_STR,
+            reply_markup=InlineKeyboardMarkup(
                 [
-                    InlineKeyboardButton(
-                        text="Github 🔭", url="https://github.com/starry69"
-                    ),
-                    InlineKeyboardButton(text="Donate 🖤", url="paypal.me/starryrays"),
-                ],
-                [InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn_help")],
-            ]
-        ),
-    )
+                    [
+                        InlineKeyboardButton(
+                            text="Github 🔭", url="https://github.com/starry69"
+                        ),
+                        InlineKeyboardButton(
+                            text="Donate 🖤", url="paypal.me/starryrays"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Go back 🔙", callback_data="back_btn_help"
+                        )
+                    ],
+                ]
+            ),
+        )
 
 
 @run_async
