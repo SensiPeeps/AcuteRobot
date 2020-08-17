@@ -48,7 +48,6 @@ class Starter:
                         text="Anime", switch_inline_query_current_chat="<anime> ",
                     ),
                 ],
-                [InlineKeyboardButton(text="🐾  About me  🐾", callback_data="about")],
                 [InlineKeyboardButton(text="Help and Commands❔", callback_data="help")],
             ]
         )
@@ -66,19 +65,27 @@ def start(update, context):
 
 
 @run_async
-def about_button(update, context):
+def help_button(update, context=None):
     query = update.callback_query
     query.answer()
     query.message.edit_caption(
-        caption=st.ABOUT_STR,
-        disable_web_page_preview=True,
+        caption=st.HELP_STR,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
+                    InlineKeyboardButton(text="Movies & TV", callback_data="h_mv"),
                     InlineKeyboardButton(
-                        text="Github 🔭", url="https://github.com/starry69"
+                        text="Music & lyrics", callback_data="h_music"
                     ),
-                    InlineKeyboardButton(text="Donate 🖤", url="paypal.me/starryrays"),
+                ],
+                [
+                    InlineKeyboardButton(text="Anime & manga", callback_data="h_anime"),
+                    InlineKeyboardButton(text="Miscellaneous", callback_data="h_misc"),
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="🖤 About and donate 🖤", callback_data="h_about"
+                    )
                 ],
                 [InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")],
             ]
@@ -86,14 +93,33 @@ def about_button(update, context):
     )
 
 
-@run_async
-def help_button(update, context):
+def h_for_funcs(update, context):
     query = update.callback_query
     query.answer()
-    query.message.edit_caption(
-        caption=st.HELP_STR,
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn")]]
+    match = query.data.split("_")[1]
+    markup = InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn_help")]]
+    )
+    if match == "mv":
+        query.message.edit_caption(caption=st.MOVIE_HELP, reply_markup=markup)
+    elif match == "music":
+        query.message.edit_caption(caption=st.MUSIC_HELP, reply_markup=markup)
+    elif match == "anime":
+        query.message.edit_caption(caption=st.ANIME_HELP, reply_markup=markup)
+    elif match == "misc":
+        query.message.edit_caption(caption=st.MISC_HELP, reply_markup=markup)
+    elif match == "about":
+        query.message.edit_caption(caption=st.ABOUT_STR,
+         reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="Github 🔭", url="https://github.com/starry69"
+                    ),
+                    InlineKeyboardButton(text="Donate 🖤", url="paypal.me/starryrays"),
+                ],
+                [InlineKeyboardButton(text="Go back 🔙", callback_data="back_btn_help")],
+            ]
         ),
     )
 
@@ -102,6 +128,9 @@ def help_button(update, context):
 def back_btn(update, context):
     query = update.callback_query
     query.answer()
+    match = query.data.split("_")
+    if "help" in match:
+        return help_button(update)
     stuff = Starter(update.effective_user.first_name)
     query.message.edit_caption(caption=stuff.text, reply_markup=stuff.reply_markup)
 
@@ -129,13 +158,13 @@ def main():
 
     restart_handler = CommandHandler("reboot", restart, filters=Filters.user(DEV_ID))
     start_handler = CommandHandler("start", start)
-    about_handler = CallbackQueryHandler(about_button, pattern=r"about")
+    help_funcs_handler = CallbackQueryHandler(h_for_funcs, pattern=r"h_")
     help_handler = CallbackQueryHandler(help_button, pattern=r"help")
     back_btn_handler = CallbackQueryHandler(back_btn, pattern=r"back_btn")
 
     dp.add_handler(restart_handler)
     dp.add_handler(start_handler)
-    dp.add_handler(about_handler)
+    dp.add_handler(help_funcs_handler)
     dp.add_handler(help_handler)
     dp.add_handler(back_btn_handler)
 

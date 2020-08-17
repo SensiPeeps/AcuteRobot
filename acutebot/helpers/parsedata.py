@@ -13,6 +13,7 @@
 # SOFTWARE.
 
 
+import itertools
 from uuid import uuid4
 from telegram.constants import MAX_CAPTION_LENGTH as MAX_CAP_LEN
 from telegram import InlineQueryResultArticle, InputTextMessageContent
@@ -65,7 +66,18 @@ def article(
     )
 
 
-# Cut down text to fit in tg limited chars.
+def paginate(iterable, page_size):
+    while True:
+        i1, i2 = itertools.tee(iterable)
+        iterable, page = (
+            itertools.islice(i1, page_size, None),
+            list(itertools.islice(i2, page_size)),
+        )
+        if len(page) == 0:
+            break
+        yield list(page)
+
+
 def sort_caps(text, c_id, tv=False, mv=False, anime=False):
     if len(text) > MAX_CAP_LEN:
         text = text[: MAX_CAP_LEN - 80]

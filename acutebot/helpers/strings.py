@@ -123,30 +123,37 @@ every little helps to pay for my server, and ofcourse boosting morale ;)
 
 # Help
 HELP_STR = """
-<b>🗒️ Documentation for possible commands :</b>
-
-❄️ <b>Movies, TV & Anime commands :</b>
-✓ /movies : Get information about movies.
-✓ /tvshows : Get information about tvshows.
-✓ /anime : Get information about your favorite anime.
-✓ /subtitle : Get substitles for your favorite movies.
-
-❄️ <b>Music & lyrics related commands :</b>
-✓ /music : Download your favorite songs in high resolution.
-✓ /lyrics : Get lyrics for your favorite songs.
-✓ /nowplaying : Flex you currently or last played song in spotify.
-
-❄️ <b>Miscellaneous commands :</b>
-✓ /reddit : Gets you random memes scraped from popular subreddits.
-✓ /watchlist : Get list of saved shows from your watchlist :D.
-✓ /cancel : Do this when you get stuck & bot is not replying to you.
-
-🏷 Notes: You can also search movies, tvshows & anime inline! \
-just type <pre>@acutebot</pre> in your message box \
-and follow the instructions.
-
+Hey there, click on the buttons below to get documentations \
+for the related functions.
 """
 
+MOVIE_HELP = """
+<b>🗒️ Documentation for Movies & TV related functions:</b>
+
+• /movies : Search for info about your favorite movies.
+• /tvshows : Get information for your favotite TV shows.
+• /toprated : View information about top rated, Movie & TV titles.
+"""
+ANIME_HELP = """
+<b>🗒️ Documentation for Anime & Manga related functionsfunctions:</b>
+
+• /anime : Search for info about your favorite anime titles.
+• /manga : Get information about your favorite manga titles.
+"""
+MUSIC_HELP = """
+<b>🗒️ Documentation for music & lyrics related functions:</b>
+
+• /music : Download your favorite music in high resolution.
+• /lyrics : Get lyrics for your favorite songs.
+• /nowplaying : Flex you currently or last played song in spotify.
+"""
+MISC_HELP = """
+<b>🗒️ Documentation for some miscs command which don't fit anywhere!</b>
+
+• /reddit : Gets you random memes scraped from popular subreddits.
+• /subtitle : Download subtitles for your movies.
+• /watchlist : Get list of saved shows from your watchlist :D.
+"""
 
 # Errors
 API_ERR = "Sorry, couldn't reach API at the moment :("
