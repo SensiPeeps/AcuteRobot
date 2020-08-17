@@ -33,7 +33,7 @@ for func_name in ALL_FUNCS:
 
 class Starter:
     def __init__(self, name):
-        self.photo = "https://telegra.ph/file/7d76172f26f7f3c6d2f9a.jpg"
+        self.photo = "https://telegra.ph/file/8109bf8f6b27ce9b45ff1.jpg"
         self.text = st.START_STRING.format(name)
         self.reply_markup = InlineKeyboardMarkup(
             [
