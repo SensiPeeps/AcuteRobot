@@ -91,7 +91,7 @@ Examples:
 
 # Start
 START_STRING = """
-Hey {}, my name is acutebot and i can help you to get \
+Hey {}, I'm acutebot and i can help you to get \
 information about your favorite movies, tv and anime shows, you can also download \
 music & can view song lyrics using me! Just click the button \
 below to get started with list of possible commands...
