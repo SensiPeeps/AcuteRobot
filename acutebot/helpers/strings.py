@@ -125,13 +125,13 @@ I'm fully written in \
 Python3 by <a href="tg://user?id=894380120">starry</a>, \
 feel free to report him if you find any rough edge inside me.
 
-× Bot version : <pre>{__version__}</pre>
-× Python version : <pre>{python_version()}</pre>
-× Library version : <pre>PTB {_libv_}</pre>
-× Movies & TV data : <pre>themoviedb.org</pre>
-× Anime data from : <pre>kitsu.io</pre>
-× Music data from : <pre>deezer.com</pre>
-× Lyrics data from : <pre>genius.com</pre>
+<b>×</b> Bot version : <pre>{__version__}</pre>
+<b>×</b> Python version : <pre>{python_version()}</pre>
+<b>×</b> Library version : <pre>PTB {_libv_}</pre>
+<b>×</b> Movies & TV data : <pre>themoviedb.org</pre>
+<b>×</b> Anime data from : <pre>kitsu.io</pre>
+<b>×</b> Music data from : <pre>deezer.com</pre>
+<b>×</b> Lyrics data from : <pre>genius.com</pre>
 
 If you enjoyed using me & wanna support my creator \
 hit the donate button below, since he's just a student so \
@@ -148,29 +148,29 @@ for the related functions.
 MOVIE_HELP = """
 <b>🗒️ Documentation for Movies & TV related functions:</b>
 
-• /movies : Search for info about your favorite movies.
-• /tvshows : Get information for your favotite TV shows.
-• /toprated : (Soon) | View information about top rated, Movie & TV titles.
+<b>×</b> /movies : Search for info about your favorite movies.
+<b>×</b> /tvshows : Get information for your favotite TV shows.
+<b>×</b> /toprated : (Soon) | View information about top rated, Movie & TV titles.
 """
 ANIME_HELP = """
 <b>🗒️ Documentation for Anime & Manga related functionsfunctions:</b>
 
-• /anime : Search for info about your favorite anime titles.
-• /manga : Get information about your favorite manga titles.
+<b>×</b> /anime : Search for info about your favorite anime titles.
+<b>×</b> /manga : Get information about your favorite manga titles.
 """
 MUSIC_HELP = """
 <b>🗒️ Documentation for music & lyrics related functions:</b>
 
-• /music : Download your favorite music in high resolution.
-• /lyrics : Get lyrics for your favorite songs.
-• /nowplaying : Flex you currently or last played song in spotify.
+<b>×</b> /music : Download your favorite music in high resolution.
+<b>×</b> /lyrics : Get lyrics for your favorite songs.
+<b>×</b> /nowplaying : Flex you currently or last played song in spotify.
 """
 MISC_HELP = """
 <b>🗒️ Documentation for some miscs command which don't fit anywhere!</b>
 
-• /reddit : Gets you random memes scraped from popular subreddits.
-• /subtitle : Download subtitles for your movies.
-• /watchlist : Get list of saved shows from your watchlist :D.
+<b>×</b> /reddit : Gets you random memes scraped from popular subreddits.
+<b>×</b> /subtitle : Download subtitles for your movies.
+<b>×</b> /watchlist : Get list of saved shows from your watchlist :D.
 """
 
 # Errors
