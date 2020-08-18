@@ -78,7 +78,7 @@ def paginate(iterable, page_size):
         yield list(page)
 
 
-def sort_caps(text, c_id, tv=False, mv=False, anime=False):
+def sort_caps(text, c_id, tv=False, mv=False, anime=False, manga=False):
     if len(text) > MAX_CAP_LEN:
         text = text[: MAX_CAP_LEN - 80]
         text += "</em>"
@@ -90,5 +90,7 @@ def sort_caps(text, c_id, tv=False, mv=False, anime=False):
             )
         if anime:
             text += f"<a href='https://kitsu.io/anime/{c_id}'>...read more</a>"
+        if manga:
+            text += f"<a href='https://kitsu.io/manga/{c_id}'>...read more</a>"
 
     return text

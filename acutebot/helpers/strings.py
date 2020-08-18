@@ -67,6 +67,20 @@ ANIME_STR = """
 • Synopsis : <em>{}</em>
 """
 
+MANGA_STR = """
+<b>{}</b> | <b>{}</b>
+• Type : <pre>{}</pre>
+• Average Rating : <pre>{}</pre>
+• Status : <pre>{}</pre>
+• First release : <pre>{}</pre>
+• Last release : <pre>{}</pre>
+• Volume count : <pre>{}</pre>
+• No of chapters : <pre>{}</pre>
+• Serialization : <pre>{}</pre>
+
+• Synopsis : <em>{}</em>
+"""
+
 # Inline Content
 INLINE_STR = """
 • <b>Title</b> : {}
@@ -172,6 +186,7 @@ CANCEL = "Cancelled the current task!"
 TOSEARCHMOVIE = "Please reply with the movie title you wanna look for."
 TOSEARCHTV = "Please reply with the TV title you wanna look for."
 TOSEARCH_ANIME = "Please reply with the anime title you want to look for."
+TOSEARCH_MANGA = "Please reply with the manga name you wanna look for."
 
 # Favs
 NOFAVS = "Hmmm 🤔 looks like you don't have any title saved in your watchlist yet!"
@@ -213,7 +228,7 @@ MUSICNOTFOUND = "Sorry i couldn't find that song :("
 
 # Subtitles
 TOSEARCHSUBS = "Please reply with the Movie | Anime name you want subs for."
-SUBS_STR = "❄️ Subtitles for <b>{}</b>.\nClick on buttons below to download!"
+SUBS_STR = "🏷 Subtitles for <b>{}</b>.\nClick on buttons below to download!"
 
 # Spotify
 SPT_LOGIN = "Hey {}, Please click the button below to login with your spotify account."
