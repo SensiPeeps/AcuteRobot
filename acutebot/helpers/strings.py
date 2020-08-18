@@ -150,7 +150,7 @@ MOVIE_HELP = """
 
 • /movies : Search for info about your favorite movies.
 • /tvshows : Get information for your favotite TV shows.
-• /toprated : View information about top rated, Movie & TV titles.
+• /toprated : (Soon) | View information about top rated, Movie & TV titles.
 """
 ANIME_HELP = """
 <b>🗒️ Documentation for Anime & Manga related functionsfunctions:</b>
