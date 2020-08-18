@@ -45,7 +45,7 @@ def manga_entry(update, context):
     return 1
 
 
-run_async
+@run_async
 @typing
 def manga(update, context):
     msg = update.message
@@ -124,11 +124,7 @@ def manga_button(update, context):
             chat_id=chat.id,
             photo=data["posterImage"]["original"],
             caption=sort_caps(caption, c_id=data["slug"], manga=True),
-            reply_markup=InlineKeyboardMarkup(
-                keyboard(
-                    manga_id=data["slug"],
-                )
-            ),
+            reply_markup=InlineKeyboardMarkup(keyboard(manga_id=data["slug"],)),
             timeout=60,
             disable_web_page_preview=True,
         )
@@ -137,14 +133,9 @@ def manga_button(update, context):
         context.bot.sendMessage(
             chat.id,
             text=caption,
-            reply_markup=InlineKeyboardMarkup(
-                keyboard(
-                    manga_id=data["slug"],
-                )
-            ),
+            reply_markup=InlineKeyboardMarkup(keyboard(manga_id=data["slug"],)),
             disable_web_page_preview=True,
         )
-
 
 
 @run_async
@@ -152,7 +143,6 @@ def manga_button(update, context):
 def cancel(update, context):
     context.bot.sendMessage(update.effective_chat.id, (st.CANCEL))
     return ConversationHandler.END
-
 
 
 MANGA_HANDLER = ConversationHandler(
