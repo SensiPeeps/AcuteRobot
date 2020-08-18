@@ -90,6 +90,7 @@ def sendlyrics(update, context):
             LOG.error(excp.message)
 
     rep.delete()
+    del SONGDICT[user.id]
     return -1
 
 

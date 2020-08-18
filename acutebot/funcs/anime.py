@@ -148,6 +148,7 @@ def anime_button(update, context):
             ),
             disable_web_page_preview=True,
         )
+    del tempdict[user_id]
 
 
 @run_async

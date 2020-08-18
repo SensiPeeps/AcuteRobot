@@ -136,6 +136,7 @@ def manga_button(update, context):
             reply_markup=InlineKeyboardMarkup(keyboard(manga_id=data["slug"],)),
             disable_web_page_preview=True,
         )
+    del tempdict[user_id]
 
 
 @run_async

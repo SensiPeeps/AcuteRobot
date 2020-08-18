@@ -144,8 +144,10 @@ def sendmusic(update, context):
 
     except Exception as e:
         LOG.error(e)
+
     if os.path.isfile(file):
         os.remove(file)
+    del MUSICDICT[user.id]
     return ConversationHandler.END
 
 
