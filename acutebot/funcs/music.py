@@ -79,7 +79,7 @@ def _artist(update, context):
 
 @run_async
 def sendmusic(update, context):
-    user = user = update.effective_user
+    user = update.effective_user
     msg = update.effective_message
     chat = update.effective_chat
 
