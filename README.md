@@ -32,6 +32,7 @@ This bot scrapes details of movies and TV shows, using [TheMovieDB](https://deve
 Manga data from [Kitsu](https://kitsu.io/explore/anime), &
 Music stuffs from deezer using [deezloader](https://github.com/An0nimia/deezloader).
 Can be found in telegram as [𝙰𝚌𝚞𝚝𝚎𝙱𝚘𝚝](https://t.me/acutebot)!
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/python-telegram-bot/python-telegram-bot
 
 
 <b>Contributions of all sizes are welcome :)</b>
