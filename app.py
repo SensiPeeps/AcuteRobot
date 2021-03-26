@@ -25,14 +25,14 @@ bot = Bot(TOKEN)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello World!")
+        self.write('Hello World!')
 
 
 class SpotifyCallback(tornado.web.RequestHandler):
     def get(self):
-        if self.get_argument("code", ""):
-            grant = self.get_argument("code", "")
-            callback_state = self.get_argument("state", "")
+        if self.get_argument('code', ''):
+            grant = self.get_argument('code', '')
+            callback_state = self.get_argument('state', '')
             spotify = SpotifyClient()
             user_creds = spotify.build_user_creds(grant=grant)
             update_creds(
@@ -41,23 +41,23 @@ class SpotifyCallback(tornado.web.RequestHandler):
                 user_creds.access_token,
                 user_creds.refresh_token,
             )
-            print("user logged in successfully")
-            bot.sendMessage(callback_state, "Successfully logged in!")
-            self.redirect("https://t.me/" + bot.username)
+            print('user logged in successfully')
+            bot.sendMessage(callback_state, 'Successfully logged in!')
+            self.redirect('https://t.me/' + bot.username)
 
 
-urls = [(r"/", MainHandler), (r"/acutebot/webserver", SpotifyCallback)]
-PORT = os.environ.get("PORT", 8888)
+urls = [(r'/', MainHandler), (r'/acutebot/webserver', SpotifyCallback)]
+PORT = os.environ.get('PORT', 8888)
 
 
 def start():
 
-    print("Tornado server started")
+    print('Tornado server started...')
 
     app = tornado.web.Application(urls)
-    app.listen(PORT, address="0.0.0.0")
+    app.listen(PORT, address='0.0.0.0')
     tornado.ioloop.IOLoop.current().start()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     start()
